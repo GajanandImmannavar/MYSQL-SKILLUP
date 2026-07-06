@@ -1,48 +1,124 @@
 # MYSQL-SKILLUP
-A beginner-friendly MySQL learning repository containing SQL queries, database creation, table design, CRUD operations, and daily SQL practice using VS Code and MySQL.
 
+A beginner-friendly MySQL learning repository documenting my daily SQL practice, database design, query writing, Git/GitHub workflow, and hands-on learning using Visual Studio Code and MySQL.
 
 # MySQL Learning Journey 🚀
 
-This repository documents my daily MySQL learning journey. I am practicing SQL concepts, solving database problems, and building a strong foundation for software development and data-related roles.
+This repository documents my daily MySQL learning journey. My goal is to build a strong SQL foundation by solving real-world database problems, preparing interview notes, and maintaining consistency through GitHub.
 
-## Topics Covered
-- Database Creation
-- Table Creation
-- SQL Constraints
-- INSERT Statements
-- SELECT Queries
-- WHERE Clause
-- ORDER BY
-- UPDATE
-- DELETE
-- DESC Command
-- CRUD Operations
+## 🛠️ Environment & Tools
 
-## Technologies Used
 - MySQL
 - Visual Studio Code
 - SQLTools Extension
+- MySQL/MariaDB Driver
 - WAMP Server
+- Git & GitHub
 
-## Project Structure
+## 📌 What I Learned
 
-MySQL-Learning-Journey/
+### Database Fundamentals
+- SHOW DATABASES
+- CREATE DATABASE
+- USE DATABASE
+- CREATE TABLE
+- DESC TABLE
+
+### Table Constraints
+- PRIMARY KEY
+- AUTO_INCREMENT
+- UNIQUE
+- DEFAULT
+- ENUM
+
+### SQL Operations
+- INSERT (Single & Multiple Records)
+- SELECT
+- WHERE Clause
+- CRUD Operations
+
+### Operators
+- Comparison Operators
+  - `>`
+  - `<`
+  - `>=`
+  - `<=`
+- Logical Operators
+  - `AND`
+  - `OR`
+
+### NULL Handling
+- Understanding NULL values
+- Difference between `= NULL` and `IS NULL`
+- SQL interview concepts related to NULL
+
+### Query Practice
+- Filtering records
+- Selecting specific columns
+- Scenario-based SQL queries
+- Hospital Management database examples
+
+## 📝 Notes Included
+
+This repository also contains:
+- Simple explanations of SQL concepts
+- Operator comparisons
+- Interview-focused notes
+- Real-world practice questions
+- Step-by-step SQL queries for revision
+
+## 💻 VS Code Configuration
+
+During this journey, I also learned how to:
+
+- Configure MySQL in Visual Studio Code
+- Connect SQLTools with WAMP MySQL
+- Execute SQL queries directly from VS Code
+- Troubleshoot database connection issues
+- Understand MySQL, MariaDB, and SQLTools configuration
+
+## 🌱 Git & GitHub Learning
+
+Along with SQL, I also practiced:
+
+- Initializing a Git repository
+- Tracking files using Git
+- Creating commits
+- Pushing projects to GitHub
+- Using `.gitignore`
+- Managing project versions
+
+## 📂 Project Structure
+
+```
+MYSQL-SKILLUP/
 │
-├── Day-1.sql
-├── Day-2.sql
-├── Day-3.sql
-└── README.md
+├── Day-1_SQL_Basics.sql
+├── README.md
+├── LICENSE
+└── .gitignore
+```
 
-## Day 1 Highlights
-- Created a MySQL database.
-- Created a `Users` table with constraints.
-- Inserted multiple records.
-- Retrieved data using SELECT.
-- Practiced filtering and sorting queries.
-- Learned CRUD operations.
+## 🎯 Current Project
 
-## Goal
-To consistently improve SQL skills through daily practice and build a public portfolio of database concepts and interview preparation.
+**Hospital Management Database**
 
-⭐ Feel free to explore the repository and follow my learning journey!
+Topics covered:
+- Patient table creation
+- Constraints
+- Data insertion
+- Filtering records
+- Comparison operators
+- Logical operators
+- NULL handling
+- Scenario-based SQL queries
+
+## 🚀 Goal
+
+- Learn SQL consistently every day.
+- Build strong database fundamentals.
+- Prepare interview-ready SQL notes.
+- Showcase progress through GitHub.
+- Improve Git & GitHub skills alongside SQL.
+
+⭐ Feel free to explore the repository, review my SQL notes, and share your suggestions or feedback. Every contribution and recommendation helps me learn and improve!
