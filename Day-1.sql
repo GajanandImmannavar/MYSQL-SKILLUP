@@ -1,8 +1,8 @@
 -- show databases;
 
--- create database if not exists   Day2;
+-- create database if not exists   Day1;
 
--- use Day2;
+-- use Day1;
 
 -- create table Patients (
 --     PATIENT_ID INT PRIMARY KEY AUTO_INCREMENT,
