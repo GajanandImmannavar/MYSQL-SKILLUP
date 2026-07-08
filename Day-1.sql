@@ -136,42 +136,42 @@
 
 -- Write an SQL query to display all columns and all records from the Patients table.
 
-select * from Patients;
+-- select * from Patients;
 
 
-Write an SQL query to display all details of patients whose blood group is A+.
+-- Write an SQL query to display all details of patients whose blood group is A+.
 
-select * from Patients where BLOOD_GROUP='A+';
+-- select * from Patients where BLOOD_GROUP='A+';
 
-Write an SQL query to display all details of patients whose age is greater than 40.
+-- Write an SQL query to display all details of patients whose age is greater than 40.
 
-select * from Patients where AGE > 40;
+-- select * from Patients where AGE > 40;
 
-| Operator | Meaning                  | Includes 40?   |
-| -------- | ------------------------ | ------------ |
-| `>`      | Greater than             | ❌ No         |
-| `>=`     | Greater than or equal to | ✅ Yes        |
-| `<`      | Less than                | ❌ No         |
-| `<=`     | Less than or equal to    | ✅ Yes        |
+-- | Operator | Meaning                  | Includes 40?   |
+-- | -------- | ------------------------ | ------------ |
+-- | `>`      | Greater than             | ❌ No         |
+-- | `>=`     | Greater than or equal to | ✅ Yes        |
+-- | `<`      | Less than                | ❌ No         |
+-- | `<=`     | Less than or equal to    | ✅ Yes        |
 
-Write an SQL query to display all details of patients whose age is less than 30.
+-- Write an SQL query to display all details of patients whose age is less than 30.
 
-select * from Patients where AGE < 30;
+-- select * from Patients where AGE < 30;
 
-⚠️ Challenge (Optional):
-Without changing the logic, can you write a query that returns only the patient's:
+-- ⚠️ Challenge (Optional):
+-- Without changing the logic, can you write a query that returns only the patient's:
 
-FIRST_NAME
-LAST_NAME
-AGE
+-- FIRST_NAME
+-- LAST_NAME
+-- AGE
 
-instead of all columns?
+-- instead of all columns?
 
-select FIRST_NAME, LAST_NAME, AGE from Patients where AGE < 30;
+-- select FIRST_NAME, LAST_NAME, AGE from Patients where AGE < 30;
 
-Write an SQL query to display all patient details where the patient's age is 30 or greater.
+-- Write an SQL query to display all patient details where the patient's age is 30 or greater.
 
-select * from patients where AGE >= 30; 
+-- select * from patients where AGE >= 30; 
 
 -- Write another query to return only these columns:
 
@@ -200,7 +200,7 @@ select * from patients where AGE >= 30;
 
 -- Write an SQL query to display all details of such patients.
 
--- select * from patients where AGE <= 30 and AMOUNT_STATUS = 'UNPAID';
+--  select * from patients where AGE <= 30 and AMOUNT_STATUS = 'UNPAID';
 
 -- ⭐ Very Important Concept: NULL
 
@@ -321,8 +321,6 @@ select * from patients where AGE >= 30;
 -- WHERE AGE = NULL   -- Incorrect
 
 -- This is a very common interview question.
-
-
 
 
 
