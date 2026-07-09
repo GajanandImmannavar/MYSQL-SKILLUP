@@ -3,7 +3,7 @@
 | `'A%'`       | Starts with **A**                                           | Anjali, Apple, Amazon         |
 | `'%A'`       | Ends with **A**                                             | Pooja, Suma                   |
 | `'%A%'`      | Contains **A** anywhere                                     | Gajanand, Raj, Harsh          |
-| `'A_'`       | Starts with **A** and has **exactly 2 characters**          | AB, A1                        |
+| `'A_'`        | Starts with **A** and has **exactly 2 characters**          | AB, A1                        |
 | `'A__'`      | Starts with **A** and has **exactly 3 characters**          | ABC, A12                      |
 | `'____'`     | Exactly **4 characters**                                    | Ravi, Amit                    |
 | `'______'`   | Exactly **6 characters**                                    | Sanjay, Kiran1                |
