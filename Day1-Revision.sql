@@ -6,6 +6,7 @@ Write an SQL query to display all details of patients whose AMOUNT_STATUS is not
 
 select * from patients where AMOUNT_STATUS != 'PAID';
 
+
 Another 2 ways to write the same query:
 
 select * from patients where AMOUNT_STATUS <> 'PAID';
