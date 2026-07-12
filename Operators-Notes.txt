@@ -699,3 +699,309 @@ Wrong	    Correct
 = NULL	    IS NULL
 != NULL	    IS NOT NULL
 <> NULL	    IS NOT NULL
+
+
+ORDER BY (Multiple Columns)
+
+
+📖 What is Multiple Column Sorting?
+
+It means sorting by more than one column.
+
+SQL sorts using the first column.
+
+If two rows have the same value, SQL moves to the second column.
+
+If the second column is also the same, SQL checks the third column, and so on.
+
+🧠 Real-Life Example
+
+Imagine your class results.
+
+Name	Marks
+Rahul	95
+Akash	95
+Zoya	90
+
+If you sort only by Marks:
+
+95
+95
+90
+
+Who comes first?
+
+Rahul or Akash?
+
+👉 SQL doesn't know.
+
+So we tell SQL:
+
+If marks are the same, sort by Name.
+
+Now:
+
+Name	Marks
+Akash	95
+Rahul	95
+Zoya	90
+SQL Syntax
+ORDER BY column1, column2;
+
+Example:
+
+ORDER BY PRICE DESC,
+         PRODUCT_NAME ASC;
+
+Meaning:
+
+Sort by PRICE from highest to lowest.
+If two products have the same price, sort them alphabetically by PRODUCT_NAME.
+
+Rule to Remember
+
+SQL thinks like this:
+
+First Column
+      ↓
+Same value?
+      ↓
+Check Second Column
+      ↓
+Still same?
+      ↓
+Check Third Column
+
+🎯 Interview Question
+
+If I write:
+
+ORDER BY PRICE DESC,
+         PRODUCT_NAME ASC;
+
+Which column has higher priority?
+
+✅ Answer: PRICE.
+
+PRODUCT_NAME is only used when two rows have the same price.
+
+
+
+🧠 Interview Tip of the Day
+
+Many beginners think:
+
+ORDER BY PRICE DESC, PRODUCT_NAME ASC;
+
+means:
+
+"Sort both columns at the same time."
+
+❌ That's not how SQL works.
+
+SQL sorts hierarchically:
+
+Step 1:
+PRICE
+
+65000
+65000
+65000
+50000
+50000
+10000
+
+Now only the rows with the same PRICE are compared:
+
+65000
+---------
+Laptop
+Monitor
+Phone
+
+Those are then sorted by:
+
+PRODUCT_NAME ASC
+
+Laptop
+Monitor
+Phone
+
+So the final result is:
+
+PRICE DESC
+        ↓
+PRODUCT_NAME ASC
+
+This "hierarchical sorting" explanation is something interviewers love because it shows you understand the logic, not just the syntax.
+
+📘 Day 6 – DISTINCT
+📖 What is DISTINCT?
+
+DISTINCT is used to remove duplicate values from the result.
+
+It returns only unique values.
+
+Think of it as saying:
+
+"Don't show me repeated values. Show each value only once."
+
+🏢 Real-World Example
+
+Suppose your Orders table has:
+
+ORDER_ID	BRAND
+1	Samsung
+2	Apple
+3	Samsung
+4	Dell
+5	Apple
+6	HP
+
+Now imagine your manager asks:
+
+"Which brands do we sell?"
+
+If you write:
+
+SELECT BRAND
+FROM Orders;
+
+Result:
+
+Samsung
+Apple
+Samsung
+Dell
+Apple
+HP
+
+❌ Samsung and Apple appear multiple times.
+
+Now use:
+
+SELECT DISTINCT BRAND
+FROM Orders;
+
+Result:
+
+Samsung
+Apple
+Dell
+HP
+
+✅ Each brand appears only once.
+
+💡 Why Do We Need DISTINCT?
+
+Imagine your table has 1 million orders.
+
+Your manager asks:
+
+"How many different payment methods do customers use?"
+
+You don't want:
+
+UPI
+UPI
+UPI
+UPI
+UPI
+COD
+COD
+COD
+CARD
+CARD
+
+You want:
+
+UPI
+COD
+CARD
+
+That's exactly what DISTINCT does.
+
+🧠 Syntax
+SELECT DISTINCT column_name
+FROM table_name;
+
+Example:
+
+SELECT DISTINCT CATEGORY
+FROM Orders;
+DISTINCT with Multiple Columns
+
+Many beginners get confused here.
+
+Suppose:
+
+BRAND	CATEGORY
+Samsung	Electronics
+Samsung	Electronics
+Samsung	Mobile
+Apple	Electronics
+
+Query:
+
+SELECT DISTINCT BRAND, CATEGORY
+FROM Orders;
+
+Result:
+
+BRAND	CATEGORY
+Samsung	Electronics
+Samsung	Mobile
+Apple	Electronics
+
+Notice something important:
+
+❌ SQL is not making BRAND unique.
+
+It is making the combination of:
+
+BRAND + CATEGORY
+
+unique.
+
+This is a very common interview question.
+
+DISTINCT Does NOT Change the Table
+
+Many beginners think:
+
+SELECT DISTINCT BRAND
+FROM Orders;
+
+removes duplicate rows from the database.
+
+❌ Wrong.
+
+It only removes duplicates from the output.
+
+Your original table remains exactly the same.
+
+DISTINCT and NULL
+
+Another interview favorite.
+
+Suppose:
+
+REVIEW
+Excellent
+NULL
+Good
+NULL
+Excellent
+
+Query:
+
+SELECT DISTINCT REVIEW
+FROM Orders;
+
+Result:
+
+Excellent
+Good
+NULL
+
+Even if there are many NULL values, DISTINCT shows only one NULL.

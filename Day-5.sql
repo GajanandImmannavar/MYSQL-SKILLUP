@@ -406,3 +406,6 @@ Sort the results by PRICE from highest to lowest.
 select * from Orders 
 where  Category =' Electronics' and Payment_status = 'Paid'
 order by Price desc;
+
+
+
