@@ -291,3 +291,39 @@ select distinct Payment_Status
 from  orders 
 order by Payment_status asc;
 
+
+🏢 Business Scenario
+
+The operations manager wants to know which cities customers are ordering from. They don't want duplicate city names because they're preparing a city-wise delivery expansion plan.
+
+📝 Problem Statement
+
+Write an SQL query to display all unique customer cities from the Orders table.
+
+Sort the cities in alphabetical order (A → Z).
+
+📚 Topics Covered
+✅ SELECT
+✅ DISTINCT
+✅ ORDER BY
+✅ ASC
+
+select distinct CUSTOMER_CITY 
+from orders 
+order by Customer_city asc;
+
+
+⭐ Interview Bonus 2 (Revision)
+
+Write a query to display all unique delivery statuses, sorted from Z → A.
+
+📚 Topics Covered
+DISTINCT
+ORDER BY
+DESC
+
+select distinct DELIVERY_STATUS 
+from orders
+order by DELIVERY_STATUS desc;
+
+
