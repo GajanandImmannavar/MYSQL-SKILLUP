@@ -226,7 +226,7 @@
 
 -- Write an SQL query to display all unique Cities  from the Employee table where:
 
--- EMPLOYEE_STATUS = 'JOINED'
+-- EMPLOYEE_STATUS = 'QUIT'
 
 -- Sort the result alphabetically.
 
@@ -248,20 +248,124 @@
 
 -- Write a query to display all unique brands where:
 
--- CATEGORY = 'Electronics'
+-- PERFORMANCE_RATING >= 5
 
 -- Sort the result alphabetically.
 
 -- 📚 Topics Covered
 -- DISTINCT
 -- WHERE
--- ORDER BY
+-- ORDER BY 
 
 
-select DISTINCT  DESIGNATION 
-from Employee 
-where PERFORMANCE_RATING >= 5 
-order by DESIGNATION asc;
+-- select DISTINCT  DESIGNATION  
+-- from Employee 
+-- where PERFORMANCE_RATING >= 5 
+-- order by DESIGNATION asc;
 
+
+-- 🏢 Business Scenario
+
+-- The HR manager wants to know which department-city combinations currently have active employees. 
+-- Duplicate department-city combinations should not appear in the report.
+
+-- 📝 Problem Statement
+
+-- Write an SQL query to display the following unique combinations:
+
+-- DEPARTMENT
+-- CITY
+
+-- Display only employees where:
+
+-- EMPLOYMENT_STATUS = 'JOINED'
+
+-- Sort the results:
+
+-- By DEPARTMENT (A → Z)
+-- If the department is the same, sort by CITY (A → Z)
+-- 📚 Topics Covered
+-- ✅ DISTINCT (Multiple Columns)
+-- ✅ WHERE
+-- ✅ ORDER BY
+-- ✅ Multiple Column Sorting
+-- ✅ ASC
+
+
+-- select distinct department, city 
+-- from employee 
+-- where EMPLOYMENT_STATUS = "JOINED"
+-- order by DEPARTMENT asc;
+
+-- ⭐ Interview Bonus 3 (Mixed Revision)
+
+-- Write an SQL query to display the unique combinations of:
+
+-- DESIGNATION
+-- CITY
+
+-- where:
+
+-- PERFORMANCE_RATING >= 4
+-- BONUS > 5000
+
+-- Sort by:
+
+-- DESIGNATION (A → Z)
+-- CITY (Z → A)
+
+
+-- select distinct designation, city
+-- from employee
+-- where PERFORMANCE_RATING >= 4 and BONUS > 5000
+-- order by designation asc , city desc
+
+-- 🎯 Interview Tip
+
+-- This is one of the most common mistakes:
+
+-- ❌ Thinking:
+
+-- SELECT DISTINCT DEPARTMENT, CITY
+
+-- means:
+
+-- "Show unique departments."
+
+-- ✅ Correct thinking:
+
+-- "Show unique (DEPARTMENT, CITY) combinations."
+
+-- If the same department exists in multiple cities, each department-city combination appears once.
+
+-- 🧠 Interview Tip of the Day
+
+-- Here's a question that appears in interviews.
+
+-- Suppose you write:
+
+-- SELECT DISTINCT DEPARTMENT, CITY
+-- FROM Employee
+-- ORDER BY CITY;
+-- Is this valid?
+
+-- ✅ Yes.
+
+-- Because CITY is one of the selected columns.
+
+-- Now consider:
+
+-- SELECT DISTINCT DEPARTMENT
+-- FROM Employee
+-- ORDER BY CITY;
+
+-- This is where SQL behavior depends on the database. 
+-- In MySQL, this may work in some cases, but in standards-compliant SQL 
+-- (and databases like PostgreSQL), 
+-- it is generally not allowed because CITY is not part of the selected distinct result. 
+-- We'll discuss these database differences later,
+--  but for now, the safest practice is:
+
+-- When using DISTINCT, order by the columns you selected.
 
 
