@@ -126,6 +126,217 @@
 -- order by PRODUCT_NAME;
 
 
-select * from Product 
-where Rating in (4,5) and stock > 20
-order by stock desc;
+-- Problem 3 ⭐
+
+-- Business Scenario
+
+-- Display all products where:
+
+-- Rating is 4 or 5
+-- Stock is greater than 20
+
+-- Display:
+
+-- Product Name
+-- Rating
+-- Stock
+
+-- Sort by Rating (Highest first).
+
+-- Topics Covered
+
+-- SELECT
+-- WHERE
+-- AND
+-- ORDER BY
+
+
+-- select * from Product 
+-- where Rating in (4,5) and stock > 20
+-- order by stock desc;
+
+
+
+-- Problem 4 ⭐
+
+-- Business Scenario
+
+-- The warehouse manager wants products that:
+
+-- belong to Furniture or Sports
+-- have a price less than ₹30,000
+
+-- Display:
+
+-- Product Name
+-- Category
+-- Price
+
+-- Sort by Category.
+
+-- Topics Covered
+
+-- SELECT
+-- WHERE
+-- OR
+-- ORDER BY
+
+-- select Product_Name, Category, Price
+-- from Product
+-- where CATEGORY = "Furniture"  and 
+--       Price < 30000
+-- order by Category ;
+
+
+
+-- Problem 5 ⭐
+
+-- Business Scenario
+
+-- Show all products whose brand name contains the letter A.
+
+-- Display:
+
+-- Product Name
+-- Brand
+
+-- Sort alphabetically by Brand.
+
+-- Topics Covered
+
+-- LIKE
+-- ORDER BY
+
+
+-- select Product_Name, Brand 
+-- from Product
+-- where Product_Name like "%A%"
+-- order by Brand asc;
+
+
+-- Problem 6 ⭐⭐
+
+-- Business Scenario
+
+-- Find products that:
+
+-- have a warranty between 2 and 5 years
+-- are Available
+-- have a rating of at least 4
+
+-- Display:
+
+-- Product Name
+-- Warranty Years
+-- Rating
+
+-- Sort by Warranty Years.
+
+-- Topics Covered
+
+-- WHERE
+-- BETWEEN
+-- AND
+-- ORDER BY
+
+
+-- select Product_Name, Warranty_Years, Rating
+-- from Product
+-- where WARRANTY_YEARS between 2 and 5 and rating <= 4
+-- order by Warranty_Years ;
+
+-- Problem 7 ⭐⭐
+
+-- Business Scenario
+
+-- Display all unique brands that sell Electronics products.
+
+-- Sort alphabetically.
+
+-- Topics Covered
+
+-- DISTINCT
+-- WHERE
+-- ORDER BY
+
+-- select DISTINCT brand
+-- from Product
+-- where Category = "Electronics"
+-- order by  Product_Name;
+
+-- Problem 8 ⭐⭐
+
+-- Business Scenario
+
+-- Find products whose names end with "er".
+
+-- Display:
+
+-- Product Name
+-- Price
+
+-- Sort by Price.
+
+-- Topics Covered
+
+-- LIKE
+-- ORDER BY
+
+-- select Product_Name, Price
+-- from Product 
+-- where Product_Name like "%er"
+-- order by Price;
+
+-- Problem 9 ⭐⭐
+
+-- Business Scenario
+
+-- Display products that:
+
+-- are Out of Stock
+-- cost more than ₹10,000
+
+-- Display:
+
+-- Product Name
+-- Price
+-- Product Status
+
+-- Sort by Price (Highest first).
+
+-- Topics Covered
+
+-- WHERE
+-- AND
+-- ORDER BY
+
+-- select Product_Name, Price, Product_Status
+-- from Product
+-- where PRICE > 10000 and Product_Status = 'OUT_OF_STOCK'
+-- order by  Price desc;
+
+-- Problem 10 ⭐⭐
+
+-- Business Scenario
+
+-- Find products launched between 2025-01-01 and 2025-12-31.
+
+-- Display:
+
+-- Product Name
+-- Launch Date
+-- Category
+
+-- Sort by Launch Date.
+
+-- Topics Covered
+
+-- BETWEEN
+-- DATE
+-- ORDER BY
+
+
+select Product_Name,Launch_Date,Category
+from Product
+where Launch_Date between '2025-01-01' and '2025-12-31'
+order by Launch_date;
