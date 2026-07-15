@@ -1187,3 +1187,22 @@ COUNT(DISTINCT Column)
 Counts Unique NON-NULL values
 
 This is one of the most frequently asked SQL interview questions.
+
+
+Aggregate Functions (Part 2)
+⭐ Topic: MAX()
+
+Difficulty: ⭐⭐⭐⭐☆ (5/10)
+
+📖 What is MAX()?
+
+MAX() returns the largest (maximum) value from a column.
+
+It works on:
+
+✅ Numbers
+✅ Dates
+✅ Text (alphabetically)
+
+
+select max()
