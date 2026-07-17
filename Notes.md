@@ -1418,3 +1418,549 @@ Because NULL is ignored.
 | MIN()    | Smallest value    |
 | SUM()    | Total of values   |
 | AVG()    | Average of values |
+
+
+#############################################################################################
+
+
+# GROUP BY
+
+📖 What is GROUP BY?
+
+GROUP BY is used to group rows that have the same value in one or more columns.
+
+Suppose your Product table has:
+
+| PRODUCT_NAME | CATEGORY    | PRICE |
+| ------------ | ----------- | ----: |
+| iPhone 16    | ELECTRONICS | 85000 |
+| Galaxy S25   | ELECTRONICS | 72000 |
+| Wooden Sofa  | FURNITURE   | 35000 |
+| Office Chair | FURNITURE   |  8500 |
+| Rice Bag     | GROCERY     |  2500 |
+
+If you ask:
+
+"How many products are there in each category?"
+
+SQL first creates groups.
+
+ELECTRONICS
+-------------
+iPhone 16
+Galaxy S25
+
+FURNITURE
+-------------
+Wooden Sofa
+Office Chair
+
+GROCERY
+-------------
+Rice Bag
+
+Then it performs COUNT(*) inside each group.
+
+Result:
+
+| CATEGORY    | TOTAL_PRODUCTS |
+| ----------- | -------------: |
+| ELECTRONICS |              2 |
+| FURNITURE   |              2 |
+| GROCERY     |              1 |
+
+Why do we need GROUP BY?
+
+Without GROUP BY, aggregate functions return one value.
+
+Example:
+
+SELECT COUNT(*)
+FROM Product;
+
+Output:
+
+COUNT(*)
+30
+
+This tells us there are 30 products in total.
+
+But suppose the manager asks:
+
+"How many products are in each category?"
+
+COUNT() alone cannot answer that.
+
+That's why we use GROUP BY.
+
+Syntax
+SELECT column_name, AGGREGATE_FUNCTION(column_name)
+FROM table_name
+GROUP BY column_name;
+
+Example:
+
+SELECT CATEGORY, COUNT(*) AS TOTAL_PRODUCTS
+FROM Product
+GROUP BY CATEGORY;
+How SQL Executes This Query
+
+This is very important for interviews.
+
+Suppose you write:
+
+SELECT CATEGORY, COUNT(*)
+FROM Product
+GROUP BY CATEGORY;
+
+SQL works like this:
+
+Step 1
+
+Read all rows.
+
+↓
+
+Step 2
+
+Create groups based on CATEGORY.
+
+↓
+
+Step 3
+
+Count rows inside each group.
+
+↓
+
+Step 4
+
+Display the result.
+
+Visual Example
+
+Original Table
+
+| Product | Category    |
+| ------- | ----------- |
+| iPhone  | Electronics |
+| Galaxy  | Electronics |
+| Sofa    | Furniture   |
+| Chair   | Furniture   |
+| Rice    | Grocery     |
+
+Electronics
+------------
+iPhone
+Galaxy
+
+Furniture
+------------
+Sofa
+Chair
+
+Grocery
+------------
+Rice
+
+Now SQL calculates:
+
+Electronics → 2
+
+Furniture → 2
+
+Grocery → 1
+
+
+Output:
+
+| CATEGORY    | COUNT |
+| ----------- | ----: |
+| Electronics |     2 |
+| Furniture   |     2 |
+| Grocery     |     1 |
+
+GROUP BY with SUM()
+SELECT CATEGORY,
+       SUM(STOCK) AS TOTAL_STOCK
+FROM Product
+GROUP BY CATEGORY;
+
+Now SQL adds stock inside each category.
+
+GROUP BY with AVG()
+SELECT CATEGORY,
+       AVG(PRICE) AS AVERAGE_PRICE
+FROM Product
+GROUP BY CATEGORY;
+
+Each category gets its own average.
+
+GROUP BY with MAX()
+SELECT CATEGORY,
+       MAX(PRICE) AS HIGHEST_PRICE
+FROM Product
+GROUP BY CATEGORY;
+
+Each category gets its most expensive product price.
+
+
+GROUP BY with MIN()
+SELECT CATEGORY,
+       MIN(PRICE) AS CHEAPEST_PRICE
+FROM Product
+GROUP BY CATEGORY;
+
+Very Important Rule (Interview Question ⭐)
+
+Suppose you write:
+
+SELECT PRODUCT_NAME, COUNT(*)
+FROM Product;
+
+❌ This is wrong because SQL doesn't know which product name to display.
+
+Now look at this:
+
+SELECT CATEGORY, COUNT(*)
+FROM Product
+GROUP BY CATEGORY;
+
+✅ Correct.
+
+Because every output row represents one category.
+
+Rule to Remember Forever
+
+When using GROUP BY:
+
+✅ Every selected column must be:
+
+Included in the GROUP BY clause, or
+Used inside an aggregate function (COUNT, SUM, AVG, MAX, MIN).
+
+This is one of the most common SQL interview questions.
+
+Difference Between DISTINCT and GROUP BY
+
+Many beginners confuse these.
+
+DISTINCT
+SELECT DISTINCT CATEGORY
+FROM Product;
+
+Output:
+
+CATEGORY
+ELECTRONICS
+FURNITURE
+CLOTHING
+GROCERY
+SPORTS
+
+It only removes duplicates.
+
+GROUP BY
+SELECT CATEGORY,
+       COUNT(*)
+FROM Product
+GROUP BY CATEGORY;
+
+Output:
+
+| CATEGORY    | COUNT |
+| ----------- | ----: |
+| ELECTRONICS |    10 |
+| FURNITURE   |     7 |
+| CLOTHING    |     5 |
+| GROCERY     |     4 |
+| SPORTS      |     4 |
+
+It creates groups and performs calculations.
+
+Execution Order (Interview Level)
+
+Remember this order:
+
+FROM
+
+↓
+
+WHERE
+
+↓
+
+GROUP BY
+
+↓
+
+Aggregate Functions
+
+↓
+
+HAVING (We'll learn next)
+
+↓
+
+ORDER BY
+
+Never forget this order.
+
+
+
+# 📘 GROUP BY Syntax
+
+## 1️⃣ Basic Syntax
+
+```sql
+SELECT column_name,
+       AGGREGATE_FUNCTION(column_name)
+FROM table_name
+GROUP BY column_name;
+```
+
+### Example
+
+```sql
+SELECT CATEGORY,
+       COUNT(*) AS TOTAL_PRODUCTS
+FROM Product
+GROUP BY CATEGORY;
+```
+
+---
+
+## 2️⃣ GROUP BY + WHERE
+
+`WHERE` filters rows **before** SQL creates groups.
+
+```sql
+SELECT column_name,
+       AGGREGATE_FUNCTION(column_name)
+FROM table_name
+WHERE condition
+GROUP BY column_name;
+```
+
+### Example
+
+```sql
+SELECT CATEGORY,
+       COUNT(*) AS AVAILABLE_PRODUCTS
+FROM Product
+WHERE PRODUCT_STATUS = 'AVAILABLE'
+GROUP BY CATEGORY;
+```
+
+---
+
+## 3️⃣ GROUP BY + ORDER BY
+
+Sort the grouped result.
+
+```sql
+SELECT column_name,
+       AGGREGATE_FUNCTION(column_name)
+FROM table_name
+GROUP BY column_name
+ORDER BY column_name ASC;
+```
+
+### Example
+
+```sql
+SELECT CATEGORY,
+       COUNT(*) AS TOTAL_PRODUCTS
+FROM Product
+GROUP BY CATEGORY
+ORDER BY CATEGORY ASC;
+```
+
+---
+
+## 4️⃣ GROUP BY + WHERE + ORDER BY
+
+This is one of the most common formats.
+
+```sql
+SELECT column_name,
+       AGGREGATE_FUNCTION(column_name)
+FROM table_name
+WHERE condition
+GROUP BY column_name
+ORDER BY column_name ASC;
+```
+
+### Example
+
+```sql
+SELECT BRAND,
+       COUNT(*) AS TOTAL_PRODUCTS
+FROM Product
+WHERE PRODUCT_STATUS = 'AVAILABLE'
+GROUP BY BRAND
+ORDER BY BRAND ASC;
+```
+
+---
+
+## 5️⃣ GROUP BY Multiple Columns
+
+SQL creates groups based on the **combination** of columns.
+
+```sql
+SELECT column1,
+       column2,
+       AGGREGATE_FUNCTION(column_name)
+FROM table_name
+GROUP BY column1, column2;
+```
+
+### Example
+
+```sql
+SELECT CATEGORY,
+       BRAND,
+       COUNT(*) AS TOTAL_PRODUCTS
+FROM Product
+GROUP BY CATEGORY, BRAND;
+```
+
+---
+
+## 6️⃣ GROUP BY + HAVING
+
+We'll learn `HAVING` next, but this is the syntax.
+
+```sql
+SELECT column_name,
+       AGGREGATE_FUNCTION(column_name)
+FROM table_name
+GROUP BY column_name
+HAVING condition;
+```
+
+Example:
+
+```sql
+SELECT CATEGORY,
+       COUNT(*) AS TOTAL_PRODUCTS
+FROM Product
+GROUP BY CATEGORY
+HAVING COUNT(*) > 5;
+```
+
+---
+
+# ⭐ General Syntax (Remember This)
+
+```sql
+SELECT column1,
+       column2,
+       AGGREGATE_FUNCTION(column3)
+FROM table_name
+WHERE condition
+GROUP BY column1, column2
+HAVING condition
+ORDER BY column1 ASC;
+```
+
+---
+
+# 🧠 Execution Order (Very Important)
+
+Even though we **write** the query like this:
+
+```sql
+SELECT ...
+FROM ...
+WHERE ...
+GROUP BY ...
+HAVING ...
+ORDER BY ...
+```
+
+SQL **executes** it in this order:
+
+```text
+FROM
+   ↓
+WHERE
+   ↓
+GROUP BY
+   ↓
+Aggregate Function
+   ↓
+HAVING
+   ↓
+SELECT
+   ↓
+ORDER BY
+```
+
+> 💡 **Interview Tip:**
+> `WHERE` filters **individual rows**, while `HAVING` filters **groups** after `GROUP BY`.
+
+---
+
+## 📌 Shortcut to Remember
+
+Whenever you need to write a `GROUP BY` query, think of this template:
+
+```sql
+SELECT group_column,
+       AGGREGATE_FUNCTION(column) AS alias
+FROM table_name
+WHERE condition
+GROUP BY group_column
+ORDER BY group_column;
+```
+
+This template will work for most of the `GROUP BY` problems you'll encounter. Next, we'll start solving business scenario problems using this syntax, one level at a time.
+
+
+
+Interview Rule
+DISTINCT → Removes duplicate values.
+GROUP BY → Creates groups.
+
+Question
+
+Which executes first?
+
+A. GROUP BY
+
+B. WHERE
+
+FROM
+   ↓
+WHERE
+   ↓
+GROUP BY
+   ↓
+Aggregate Functions
+   ↓
+HAVING
+   ↓
+SELECT
+   ↓
+ORDER BY
+
+
+Why?
+
+Imagine you write:
+
+SELECT CATEGORY,
+COUNT(*)
+FROM Product
+WHERE PRODUCT_STATUS = 'AVAILABLE'
+GROUP BY CATEGORY;
+
+SQL first removes all rows that are not AVAILABLE.
+
+Only then does it create groups.
+
+So:
+
+Filter first → Group later.
