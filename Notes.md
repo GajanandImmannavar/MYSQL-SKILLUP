@@ -1322,3 +1322,99 @@ NULL is ignored.
 | MAX()    | Largest value   |
 | MIN()    | Smallest value  |
 | SUM()    | Adds all values |
+
+
+Aggregate Functions (Part 5)
+⭐ Topic: AVG()
+
+Difficulty: ⭐⭐⭐⭐⭐⭐☆ (6.5/10)
+
+📖 What is AVG()?
+
+AVG() returns the average (mean) value of a numeric column.
+
+Formula:
+
+Average = Sum of all values / Number of values
+
+SQL does this calculation automatically.
+
+Example 1
+
+Suppose the PRICE column contains:
+
+PRICE
+100
+200
+300
+400
+
+Query:
+
+SELECT AVG(PRICE)
+FROM Product;
+Calculation
+100 + 200 + 300 + 400 = 1000
+
+1000 / 4 = 250
+Output
+AVG(PRICE)
+250.00
+Example 2
+
+Suppose RATING contains:
+
+RATING
+5
+4
+3
+4
+SELECT AVG(RATING)
+FROM Product;
+
+Calculation
+
+5+4+3+4=16
+
+16/4=4
+
+Output
+
+AVG(RATING)
+4.00
+AVG() ignores NULL
+
+Suppose STOCK contains
+
+STOCK
+20
+30
+NULL
+50
+
+Query
+
+SELECT AVG(STOCK)
+FROM Product;
+
+Calculation
+
+20+30+50=100
+
+100/3=33.33
+
+NOT
+
+100/4
+
+Because NULL is ignored.
+
+# Difference
+
+| Function | Purpose           |
+| -------- | ----------------- |
+| COUNT()  | Counts values     |
+| MAX()    | Largest value     |
+| MIN()    | Smallest value    |
+| SUM()    | Total of values   |
+| AVG()    | Average of values |
