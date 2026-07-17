@@ -1,0 +1,2 @@
+
+create DATABASE IF NOT EXISTS Day10;
