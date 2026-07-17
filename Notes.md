@@ -1188,8 +1188,8 @@ Counts Unique NON-NULL values
 
 This is one of the most frequently asked SQL interview questions.
 
-
-Aggregate Functions (Part 2)
+##########################################################################################
+# Aggregate Functions (Part 2)
 ⭐ Topic: MAX()
 
 Difficulty: ⭐⭐⭐⭐☆ (5/10)
@@ -1206,3 +1206,119 @@ It works on:
 
 
 select max()
+
+Aggregate Functions (Part 4)
+⭐ Topic: SUM()
+
+Difficulty: ⭐⭐⭐⭐⭐⭐ (6/10)
+
+📖 What is SUM()?
+
+SUM() returns the total (addition) of all values in a numeric column.
+
+Think of it like using a calculator to add all numbers together.
+
+It only works with numeric columns such as:
+
+✅ INT
+✅ DECIMAL
+✅ FLOAT
+
+It cannot be used on:
+
+❌ VARCHAR
+❌ ENUM
+❌ DATE
+Why do companies use SUM()?
+
+Imagine you're an inventory manager.
+
+You don't want to see every product's stock.
+
+Instead, you want to know:
+
+"How many products do we have in total?"
+
+or
+
+"What is the total value of all products?"
+
+That's where SUM() is used.
+
+Syntax
+SELECT SUM(column_name)
+FROM table_name;
+
+With alias
+
+SELECT SUM(STOCK) AS TOTAL_STOCK
+FROM Product;
+Example 1
+
+Suppose STOCK contains
+
+STOCK
+10
+20
+30
+40
+
+Query
+
+SELECT SUM(STOCK)
+FROM Product;
+
+Output
+
+SUM(STOCK)
+100
+
+Because
+
+10+20+30+40=100
+Example 2
+
+Suppose PRICE contains
+
+PRICE
+1000
+2500
+5000
+SELECT SUM(PRICE)
+FROM Product;
+
+Output
+
+SUM(PRICE)
+8500
+SUM() ignores NULL
+
+Suppose
+
+STOCK
+20
+NULL
+15
+10
+SELECT SUM(STOCK)
+FROM Product;
+
+Output
+
+45
+
+Because
+
+20+15+10
+
+NULL is ignored.
+
+
+# Difference
+
+| Function | Purpose         |
+| -------- | --------------- |
+| COUNT()  | Counts rows     |
+| MAX()    | Largest value   |
+| MIN()    | Smallest value  |
+| SUM()    | Adds all values |
