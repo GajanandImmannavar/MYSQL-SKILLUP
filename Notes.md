@@ -1964,3 +1964,93 @@ Only then does it create groups.
 So:
 
 Filter first → Group later.
+
+
+🧠 6. SQL Execution Trace (NEW)
+
+This is the part I think you'll enjoy most.
+
+We'll trace exactly how SQL executes the query.
+
+For example:
+
+SELECT CATEGORY,
+       SUM(STOCK) AS TOTAL_STOCK
+FROM Product
+WHERE PRODUCT_STATUS = 'AVAILABLE'
+GROUP BY CATEGORY
+ORDER BY TOTAL_STOCK DESC,
+         CATEGORY ASC;
+
+Then we'll walk through it.
+
+Step 1 — Original Table
+30 rows
+
+↓
+
+Step 2 — FROM
+SQL reads the Product table.
+
+↓
+
+Step 3 — WHERE
+Remove OUT_OF_STOCK
+
+Remove DISCONTINUED
+
+Remaining rows = 25
+
+↓
+
+Step 4 — GROUP BY
+Create groups
+
+Electronics
+Furniture
+Clothing
+Grocery
+Sports
+
+↓
+
+Step 5 — SUM()
+Electronics = 148
+
+Furniture = 110
+
+...
+
+↓
+
+Step 6 — Temporary Table
+CATEGORY	TOTAL_STOCK
+Electronics	148
+Furniture	110
+Clothing	285
+Grocery	490
+Sports	130
+
+↓
+
+Step 7 — ORDER BY
+
+Sort by TOTAL_STOCK DESC.
+
+If two totals are equal, sort by CATEGORY ASC.
+
+↓
+
+Final Output
+🎯 7. Interview Trap
+
+Example:
+
+Is this valid?
+
+SELECT PRODUCT_NAME,
+COUNT(*)
+FROM Product
+GROUP BY CATEGORY;
+
+Why or why not?
