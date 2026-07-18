@@ -204,8 +204,65 @@
 -- ✅ ASC
 
 
-select SUPPLIER_CITY, sum(Stock) as Total_Stock 
-from Product 
-group by  SUPPLIER_CITY
-order by Total_STOCK desc, SUPPLIER_CITY asc;
+-- select SUPPLIER_CITY, sum(Stock) as Total_Stock 
+-- from Product 
+-- group by  SUPPLIER_CITY
+-- order by Total_STOCK desc, SUPPLIER_CITY asc;
+
+
+-- ⭐ Think Like SQL
+
+-- Whenever you see:
+
+-- ORDER BY A DESC,
+--          B ASC
+
+-- SQL always thinks:
+
+-- Step 1
+
+-- Sort by A.
+
+-- ↓
+
+-- Any ties?
+
+-- ↓
+
+-- Yes
+
+-- ↓
+
+-- Sort those tied rows by B.
+
+-- ↓
+
+-- Done.
+
+-- It does not sort both columns together at the same time.
+
+-- It always follows the order you wrote.
+
+-- 📌 Rule to Remember Forever
+-- GROUP BY
+-- ↓
+-- Creates groups
+
+-- SUM(), COUNT(), AVG(), MAX(), MIN()
+-- ↓
+-- Calculates one value for each group
+
+-- ORDER BY First Column
+-- ↓
+-- Sorts all groups
+
+-- If two groups have the same first value
+-- ↓
+-- ORDER BY Second Column
+-- ↓
+-- Breaks the tie
+
+-- If still tied
+-- ↓
+-- Third ORDER BY column (if any)
 
