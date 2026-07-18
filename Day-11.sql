@@ -266,3 +266,130 @@
 -- ↓
 -- Third ORDER BY column (if any)
 
+
+-- 🏢 Business Scenario
+
+-- The sales manager wants to know how many AVAILABLE products each brand has.
+
+-- 📝 Problem Statement
+
+-- Write an SQL query to display:
+
+-- BRAND
+-- Number of AVAILABLE products.
+
+-- Display the count with the alias:
+
+-- AVAILABLE_PRODUCTS
+
+-- Sort the result by:
+
+-- AVAILABLE_PRODUCTS in descending order.
+-- If two brands have the same number of available products, sort by BRAND in ascending order.
+
+-- select BRAND , count(*) as AVAILABLE_PRODUCTS 
+-- from Product 
+-- where PRODUCT_STATUS = "AVAILABLE"
+-- group by BRAND 
+-- order by AVAILABLE_PRODUCTS desc , BRAND asc;
+
+
+-- SELECT BRAND, COUNT(*) AS AVAILABLE_PRODUCTS
+-- FROM Product
+-- WHERE PRODUCT_STATUS = 'AVAILABLE'
+-- GROUP BY BRAND
+-- ORDER BY AVAILABLE_PRODUCTS DESC, BRAND ASC;
+-- ✔️ Result
+
+-- 100% Correct ✅
+
+-- This is exactly how an experienced SQL developer would write it.
+
+-- ✅ SQL Execution Trace
+-- Step 1
+
+-- SQL reads the
+
+-- Your answer:
+
+-- Product
+
+-- ✅ Correct
+
+-- Step 2
+
+-- WHERE keeps only
+
+-- Your answer:
+
+-- AVAILABLE
+
+-- ✅ Better answer:
+
+-- PRODUCT_STATUS = 'AVAILABLE'
+-- Step 3
+
+-- GROUP BY creates groups based on
+
+-- Your answer:
+
+-- BRAND
+
+-- ✅ Correct
+
+-- Step 4
+
+-- COUNT(*) calculates
+
+-- Your answer:
+
+-- No of BRANDS uniquely if 2 brand same sql show once and count as 2
+
+-- ⚠️ Small correction.
+
+-- This is the biggest misunderstanding beginners have.
+
+-- Let's take an example.
+
+-- BRAND	PRODUCT
+-- Apple	iPhone
+-- Apple	Watch
+-- Samsung	TV
+-- Samsung	Phone
+-- Samsung	Tablet
+
+-- After
+
+-- GROUP BY BRAND
+
+-- SQL creates
+
+-- Apple Group
+
+-- iPhone
+-- Watch
+-- Samsung Group
+
+-- TV
+-- Phone
+-- Tablet
+
+-- Then
+
+-- COUNT(*)
+
+-- counts rows inside each group.
+
+-- Output
+
+-- BRAND	AVAILABLE_PRODUCTS
+-- Apple	2
+-- Samsung	3
+
+-- It is not counting unique brands.
+
+-- It is counting how many rows belong to each brand.
+
+-- Remember this sentence:
+
+-- GROUP BY creates groups. COUNT(*) counts rows inside each group.
