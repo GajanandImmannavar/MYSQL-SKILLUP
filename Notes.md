@@ -2044,13 +2044,3 @@ If two totals are equal, sort by CATEGORY ASC.
 Final Output
 🎯 7. Interview Trap
 
-Example:
-
-Is this valid?
-
-SELECT PRODUCT_NAME,
-COUNT(*)
-FROM Product
-GROUP BY CATEGORY;
-
-Why or why not?
