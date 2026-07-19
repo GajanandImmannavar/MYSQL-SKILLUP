@@ -2307,6 +2307,8 @@ Samsung Group
 
 Duplicates become groups, not removed.
 
+
+
 🎯 9. GROUP BY vs DISTIN📌 6. Syntax
 
 General syntax:
@@ -2417,3 +2419,455 @@ Duplicates become groups, not removed.
 | No calculations required | Used with aggregate functions |
 | Returns unique values    | Returns one row per group     |
 | Used for unique lists    | Used for summaries            |
+
+📖 GROUP BY Multiple Columns
+What is it?
+
+When we write:
+
+GROUP BY CATEGORY, BRAND;
+
+SQL does not create groups using only CATEGORY.
+
+Instead, it creates groups using the combination of both columns.
+
+Think of it like this:
+
+GROUP BY CATEGORY
+↓
+
+Group using ONE key
+
+vs
+
+GROUP BY CATEGORY, BRAND
+↓
+
+Group using TWO keys together
+Let's Use Your Product Table
+
+Suppose we have these rows:
+
+| PRODUCT_NAME | CATEGORY    | BRAND   | STOCK |
+| ------------ | ----------- | ------- | ----: |
+| iPhone 16    | ELECTRONICS | Apple   |    25 |
+| Smart Watch  | ELECTRONICS | Apple   |     0 |
+| Galaxy S25   | ELECTRONICS | Samsung |    40 |
+| Sony TV      | ELECTRONICS | Sony    |    10 |
+| Wooden Sofa  | FURNITURE   | IKEA    |    15 |
+| Bookshelf    | FURNITURE   | IKEA    |    18 |
+| Office Chair | FURNITURE   | Godrej  |    50 |
+
+Case 1 : GROUP BY CATEGORY
+
+Query
+
+SELECT CATEGORY,
+COUNT(*) AS TOTAL_PRODUCTS
+FROM Product
+GROUP BY CATEGORY;
+SQL Thinking
+
+Step 1
+
+Read table
+
+↓
+
+Step 2
+
+Look only at CATEGORY
+
+Electronics
+Electronics
+Electronics
+Electronics
+Furniture
+Furniture
+Furniture
+
+↓
+
+Step 3
+
+Create groups
+
+Electronics Group
+
+contains
+
+Apple
+
+Apple
+
+Samsung
+
+Sony
+
+Furniture Group
+
+contains
+
+IKEA
+
+IKEA
+
+Godrej
+
+COUNT(*)
+
+Output
+
+| CATEGORY    | TOTAL_PRODUCTS |
+| ----------- | -------------: |
+| Electronics |              4 |
+| Furniture   |              3 |
+
+Notice something.
+
+Apple and Samsung are mixed together because SQL only cares about CATEGORY.
+
+Case 2 : GROUP BY BRAND
+
+Query
+
+SELECT BRAND,
+COUNT(*) AS TOTAL_PRODUCTS
+FROM Product
+GROUP BY BRAND;
+
+Now SQL ignores CATEGORY.
+
+It only looks at BRAND.
+
+Groups become
+
+Apple
+
+iPhone
+
+Watch
+
+Samsung
+
+Galaxy
+
+Sony
+
+TV
+
+IKEA
+
+Sofa
+
+Bookshelf
+
+Godrej
+
+Chair
+
+Output
+
+BRAND	TOTAL_PRODUCTS
+Apple	2
+Samsung	1
+Sony	1
+IKEA	2
+Godrej	1
+Case 3 : GROUP BY CATEGORY, BRAND
+
+Now comes the important part.
+
+Query
+
+SELECT CATEGORY,
+BRAND,
+COUNT(*) AS TOTAL_PRODUCTS
+FROM Product
+GROUP BY CATEGORY, BRAND;
+How SQL Thinks
+
+SQL says
+
+I won't group only by CATEGORY.
+
+AND
+
+I won't group only by BRAND.
+
+Instead,
+
+I will group by BOTH columns together.
+
+SQL creates groups like
+
+Electronics + Apple
+
+contains
+
+iPhone
+
+Watch
+
+Second group
+
+Electronics + Samsung
+
+contains
+
+Galaxy
+
+Third group
+
+Electronics + Sony
+
+contains
+
+TV
+
+Fourth group
+
+Furniture + IKEA
+
+contains
+
+Sofa
+
+Bookshelf
+
+Fifth group
+
+Furniture + Godrej
+
+contains
+
+Chair
+
+Output
+
+| CATEGORY    | BRAND   | TOTAL_PRODUCTS |
+| ----------- | ------- | -------------: |
+| Electronics | Apple   |              2 |
+| Electronics | Samsung |              1 |
+| Electronics | Sony    |              1 |
+| Furniture   | IKEA    |              2 |
+| Furniture   | Godrej  |              1 |
+
+Notice
+
+SQL treats
+
+Electronics + Apple
+
+as one key.
+
+It is not
+
+Electronics
+
+and
+
+Apple
+
+separately.
+
+Think Like an Address
+
+Imagine an address.
+
+Country
+State
+City
+
+If someone asks
+
+Find everyone in India
+
+You check only
+
+Country
+
+If someone asks
+
+Find everyone in Karnataka
+
+You check only
+
+State
+
+If someone asks
+
+Find everyone in India AND Karnataka
+
+You check
+
+Country + State
+
+Both together.
+
+GROUP BY CATEGORY, BRAND works exactly the same way.
+
+SQL Execution Trace
+
+Suppose query is
+
+SELECT CATEGORY,
+BRAND,
+SUM(STOCK) AS TOTAL_STOCK
+FROM Product
+GROUP BY CATEGORY, BRAND
+ORDER BY TOTAL_STOCK DESC;
+
+Step 1
+
+Read Product table
+
+↓
+
+Step 2
+
+No WHERE clause
+
+↓
+
+Step 3
+
+Create groups using
+
+CATEGORY + BRAND
+
+Groups become
+
+Electronics + Apple
+Electronics + Samsung
+Electronics + Sony
+Furniture + IKEA
+Furniture + Godrej
+
+↓
+
+Step 4
+
+Calculate
+
+SUM(STOCK)
+
+inside each group
+
+↓
+
+Temporary Table
+
+| CATEGORY    | BRAND   | TOTAL_STOCK |
+| ----------- | ------- | ----------: |
+| Electronics | Apple   |          25 |
+| Electronics | Samsung |          40 |
+| Electronics | Sony    |          10 |
+| Furniture   | IKEA    |          33 |
+| Furniture   | Godrej  |          50 |
+
+
+↓
+
+ORDER BY
+
+Sort
+
+TOTAL_STOCK DESC
+
+↓
+
+Final Output
+
+Interview Trap 1
+
+Is this valid?
+
+SELECT CATEGORY,
+BRAND,
+PRODUCT_NAME,
+COUNT(*)
+FROM Product
+GROUP BY CATEGORY, BRAND;
+
+❌ No.
+
+Why?
+
+Each (CATEGORY, BRAND) group can contain many product names.
+
+Example:
+
+Electronics + Apple
+
+iPhone 16
+Smart Watch
+
+SQL asks:
+
+Which PRODUCT_NAME should I display?
+
+It doesn't know.
+
+So the query is invalid (in standard SQL, and in MySQL when ONLY_FULL_GROUP_BY is enabled).
+
+Interview Trap 2
+
+Suppose we have:
+
+| CATEGORY    | BRAND |
+| ----------- | ----- |
+| Electronics | Apple |
+| Electronics | Apple |
+| Furniture   | Apple |
+
+How many groups?
+
+Many beginners answer:
+
+Apple = 1
+
+Wrong.
+
+Correct groups are:
+
+Electronics + Apple
+
+Furniture + Apple
+
+Because SQL compares the entire combination.
+
+Rule to Remember Forever
+
+When you write:
+
+GROUP BY A, B, C
+
+SQL creates groups using:
+
+(A, B, C)
+
+as one combined key.
+
+Not
+
+A
+
+then
+
+B
+
+then
+
+C
+
+but the combination:
+
+A + B + C
+🎯 Visualization
+
+Think of GROUP BY keys as a lock.
+
+GROUP BY CATEGORY 🔑 = One-key lock.
+GROUP BY CATEGORY, BRAND 🔑🔑 = Two-key lock.
+GROUP BY CATEGORY, BRAND, SUPPLIER_CITY 🔑🔑🔑 = Three-key lock.
