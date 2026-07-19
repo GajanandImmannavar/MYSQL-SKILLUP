@@ -2871,3 +2871,374 @@ Think of GROUP BY keys as a lock.
 GROUP BY CATEGORY 🔑 = One-key lock.
 GROUP BY CATEGORY, BRAND 🔑🔑 = Two-key lock.
 GROUP BY CATEGORY, BRAND, SUPPLIER_CITY 🔑🔑🔑 = Three-key lock.
+
+Example 1: COUNT()
+
+
+Suppose we have this table.
+
+| PRODUCT_NAME | STOCK |
+| ------------ | ----: |
+| iPhone       |    25 |
+| Watch        |     0 |
+| Galaxy       |    40 |
+| Dell         |    18 |
+
+Now write:
+
+SELECT COUNT(STOCK)
+FROM Product;
+How SQL thinks
+
+SQL looks only at the STOCK column.
+
+25
+0
+40
+18
+
+Now SQL asks:
+
+"How many STOCK values exist?"
+
+It does not care whether the value is 25, 0, or 1000.
+
+It simply counts rows.
+
+25  ✔  = 1
+0   ✔  = 2
+40  ✔  = 3
+18  ✔  = 4
+Output
+
+| COUNT(STOCK) |
+| -----------: |
+|            4 |
+
+
+Example 2: SUM()
+
+Same table.
+
+| PRODUCT_NAME | STOCK |
+| ------------ | ----: |
+| iPhone       |    25 |
+| Watch        |     0 |
+| Galaxy       |    40 |
+| Dell         |    18 |
+
+Now write
+
+SELECT SUM(STOCK)
+FROM Product;
+
+SQL again looks at
+
+25
+0
+40
+18
+
+But now SQL asks
+
+"What is the total?"
+
+25
+
++
+
+0
+
++
+
+40
+
++
+
+18
+
+=
+
+83
+Output
+SUM(STOCK)
+83
+Visual Difference
+COUNT()
+25
+
+0
+
+40
+
+18
+
+SQL says
+
+How many rows?
+
+↓
+
+1
+
+2
+
+3
+
+4
+
+Output
+
+4
+SUM()
+25
+
+0
+
+40
+
+18
+
+SQL says
+
+Add them
+
+↓
+
+25+0+40+18
+
+↓
+
+83
+
+Output
+
+83
+Example 3 (With GROUP BY)
+
+Now suppose we have:
+
+CATEGORY	PRODUCT	STOCK
+Electronics	iPhone	25
+Electronics	Watch	0
+Electronics	Galaxy	40
+Furniture	Sofa	15
+Furniture	Chair	50
+Query A
+SELECT CATEGORY,
+       COUNT(STOCK)
+FROM Product
+GROUP BY CATEGORY;
+SQL creates groups
+
+Electronics
+
+25
+
+0
+
+40
+
+Furniture
+
+15
+
+50
+
+Now COUNT asks
+
+"How many STOCK values?"
+
+Electronics
+
+3
+
+Furniture
+
+2
+
+Output
+
+| CATEGORY    | COUNT(STOCK) |
+| ----------- | -----------: |
+| Electronics |            3 |
+| Furniture   |            2 |
+
+
+Query B
+SELECT CATEGORY,
+       SUM(STOCK)
+FROM Product
+GROUP BY CATEGORY;
+
+Same groups.
+
+Electronics
+
+25
+
+0
+
+40
+
+Furniture
+
+15
+
+50
+
+Now SUM asks
+
+"Add them."
+
+Electronics
+
+25+0+40
+
+=
+
+65
+
+Furniture
+
+15+50
+
+=
+
+65
+
+Output: 
+| CATEGORY    | SUM(STOCK) |
+| ----------- | ---------: |
+| Electronics |         65 |
+| Furniture   |         65 |
+
+
+Think Like a Manager
+
+Suppose your manager asks:
+
+Question 1
+
+How many products are in Electronics?
+
+You don't add stock.
+
+You count products.
+
+Answer
+
+3
+
+SQL
+
+COUNT(*)
+Question 2
+
+Manager asks
+
+How much stock is available in Electronics?
+
+Now you add
+
+25
+
++
+
+0
+
++
+
+40
+
+=
+
+65
+
+SQL
+
+SUM(STOCK)
+The Easiest Trick You'll Never Forget
+
+Imagine you have ₹100, ₹200, ₹300.
+
+COUNT()
+
+SQL says:
+
+"How many notes do you have?"
+
+₹100
+
+₹200
+
+₹300
+
+↓
+
+3 Notes
+SUM()
+
+SQL says:
+
+"How much money do you have?"
+
+100
+
++
+
+200
+
++
+
+300
+
+=
+
+600
+Interview Rule
+
+Whenever you read a question, ask yourself:
+
+Is the manager asking...
+
+"How many?"
+
+Use
+
+COUNT()
+
+"Total?"
+
+Use
+
+SUM()
+
+"Average?"
+
+Use
+
+AVG()
+
+"Highest?"
+
+Use
+
+MAX()
+
+"Lowest?"
+
+Use
+
+MIN()
+
+
+🧠 Final Memory Trick
+
+| Manager asks...                | SQL Function |
+| ------------------------------ | ------------ |
+| **How many products?**         | `COUNT()`    |
+| **What is the total stock?**   | `SUM()`      |
+| **What is the average price?** | `AVG()`      |
+| **What is the highest price?** | `MAX()`      |
+| **What is the lowest price?**  | `MIN()`      |
