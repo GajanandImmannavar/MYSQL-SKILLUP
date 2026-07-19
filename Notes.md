@@ -2043,3 +2043,377 @@ If two totals are equal, sort by CATEGORY ASC.
 
 Final Output
 🎯 7. Interview Trap
+
+
+📘 SQL GROUP BY (Complete Theory)
+📖 1. What is GROUP BY?
+
+GROUP BY is an SQL clause that groups rows having the same value in one or more columns.
+
+Once the groups are created, SQL can perform aggregate calculations on each group.
+
+Examples of aggregate functions:
+
+COUNT()
+SUM()
+AVG()
+MIN()
+MAX()
+Simple Definition
+
+GROUP BY combines rows with the same value into one group so aggregate functions can calculate results for each group.
+
+🤔 2. Why Do We Need GROUP BY?
+
+Suppose your Product table contains:
+
+| PRODUCT_NAME  | CATEGORY    | STOCK |
+| ------------- | ----------- | ----: |
+| iPhone 16     | ELECTRONICS |    25 |
+| Galaxy S25    | ELECTRONICS |    40 |
+| Dell Inspiron | ELECTRONICS |    18 |
+| Wooden Sofa   | FURNITURE   |    15 |
+| Office Chair  | FURNITURE   |    50 |
+| Rice Bag      | GROCERY     |   120 |
+
+
+Now imagine your manager asks:
+
+"How much stock do we have in each category?"
+
+Without GROUP BY, SQL only sees individual rows.
+
+It cannot automatically know:
+
+Electronics = ?
+
+Furniture = ?
+
+Grocery = ?
+
+It must first create groups.
+
+That's exactly why GROUP BY exists.
+
+
+🏢 3. Real Business Scenario
+
+Imagine you work at Amazon.
+
+The warehouse manager asks:
+
+"Tell me the total stock available for every category."
+
+He doesn't want:
+
+iPhone → 25
+
+Galaxy → 40
+
+Dell → 18
+
+He wants:
+
+Electronics → 83
+
+Furniture → 65
+
+Grocery → 120
+
+To answer this question, SQL must:
+
+Group all Electronics together.
+Group all Furniture together.
+Group all Grocery together.
+Calculate the total stock inside each group.
+
+This is the purpose of GROUP BY.
+
+🧠 4. How GROUP BY Thinks
+
+Suppose SQL reads this table.
+
+| PRODUCT_NAME | CATEGORY    | STOCK |
+| ------------ | ----------- | ----: |
+| iPhone       | ELECTRONICS |    25 |
+| Galaxy       | ELECTRONICS |    40 |
+| Dell         | ELECTRONICS |    18 |
+| Sofa         | FURNITURE   |    15 |
+| Chair        | FURNITURE   |    50 |
+| Rice         | GROCERY     |   120 |
+
+SQL first sees:
+
+Electronics
+Electronics
+Electronics
+Furniture
+Furniture
+Grocery
+
+Now SQL creates groups.
+
+ELECTRONICS
+-------------
+25
+40
+18
+FURNITURE
+-------------
+15
+50
+GROCERY
+-------------
+120
+
+Notice:
+
+❗ Nothing has been calculated yet.
+
+GROUP BY only creates groups.
+
+🧮 5. Aggregate Function Starts
+
+Now SQL sees:
+
+SUM(STOCK)
+
+It calculates:
+
+Electronics
+
+25
+40
+18
+
+=
+
+83
+
+Furniture
+
+15
+50
+
+=
+
+65
+
+Grocery
+
+120
+
+Now SQL creates a temporary (virtual) result table.
+
+| CATEGORY    | TOTAL_STOCK |
+| ----------- | ----------: |
+| ELECTRONICS |          83 |
+| FURNITURE   |          65 |
+| GROCERY     |         120 |
+
+This table exists only while the query is running.
+
+📌 6. Syntax
+
+General syntax:
+
+SELECT column_name,
+       AGGREGATE_FUNCTION(column_name)
+FROM table_name
+GROUP BY column_name;
+
+Example:
+
+SELECT CATEGORY,
+       SUM(STOCK) AS TOTAL_STOCK
+FROM Product
+GROUP BY CATEGORY;
+⚙️ 7. SQL Execution Order
+
+When SQL executes a query with GROUP BY, it thinks like this:
+
+FROM
+↓
+WHERE
+↓
+GROUP BY
+↓
+Aggregate Function
+(COUNT, SUM, AVG, MIN, MAX)
+↓
+SELECT
+↓
+ORDER BY
+↓
+Final Output
+
+This execution order is extremely important for interviews.
+
+🚫 8. Common Mistakes
+❌ Mistake 1
+SELECT PRODUCT_NAME,
+       COUNT(*)
+FROM Product
+GROUP BY CATEGORY;
+
+Why is it wrong?
+
+Because each category contains many product names.
+
+SQL doesn't know which PRODUCT_NAME to display.
+
+❌ Mistake 2
+GROUP BY CATEGORY DESC;
+
+Wrong.
+
+GROUP BY never sorts data.
+
+Sorting belongs to:
+
+ORDER BY
+❌ Mistake 3
+
+Thinking GROUP BY removes duplicates.
+
+It doesn't.
+
+Compare:
+
+DISTINCT
+Apple
+Apple
+Samsung
+Samsung
+
+↓
+
+Apple
+Samsung
+
+Duplicates disappear.
+
+GROUP BY
+Apple
+Apple
+Samsung
+Samsung
+
+↓
+
+Apple Group
+
+Samsung Group
+
+Duplicates become groups, not removed.
+
+🎯 9. GROUP BY vs DISTIN📌 6. Syntax
+
+General syntax:
+
+SELECT column_name,
+       AGGREGATE_FUNCTION(column_name)
+FROM table_name
+GROUP BY column_name;
+
+Example:
+
+SELECT CATEGORY,
+       SUM(STOCK) AS TOTAL_STOCK
+FROM Product
+GROUP BY CATEGORY;
+⚙️ 7. SQL Execution Order
+
+When SQL executes a query with GROUP BY, it thinks like this:
+
+FROM
+↓
+WHERE
+↓
+GROUP BY
+↓
+Aggregate Function
+(COUNT, SUM, AVG, MIN, MAX)
+↓
+SELECT
+↓
+ORDER BY
+↓
+Final Output
+
+This execution order is extremely important for interviews.
+
+🚫 8. Common Mistakes
+❌ Mistake 1
+SELECT PRODUCT_NAME,
+       COUNT(*)
+FROM Product
+GROUP BY CATEGORY;
+
+Why is it wrong?
+
+Because each category contains many product names.
+
+SQL doesn't know which PRODUCT_NAME to display.
+
+❌ Mistake 2
+GROUP BY CATEGORY DESC;
+
+Wrong.
+
+GROUP BY never sorts data.
+
+Sorting belongs to:
+
+ORDER BY
+❌ Mistake 3
+
+Thinking GROUP BY removes duplicates.
+
+It doesn't.
+
+Compare:
+
+DISTINCT
+Apple
+Apple
+Samsung
+Samsung
+
+↓
+
+Apple
+Samsung
+
+Duplicates disappear.
+
+GROUP BY
+Apple
+Apple
+Samsung
+Samsung
+
+↓
+
+Apple Group
+
+Samsung Group
+
+Duplicates become groups, not removed.
+
+🎯 9. GROUP BY vs DISTINCT
+
+| DISTINCT                 | GROUP BY                      |
+| ------------------------ | ----------------------------- |
+| Removes duplicate values | Creates groups                |
+| No calculations required | Used with aggregate functions |
+| Returns unique values    | Returns one row per group     |
+| Used for unique lists    | Used for summaries            |
+
+
+| DISTINCT                 | GROUP BY                      |
+| ------------------------ | ----------------------------- |
+| Removes duplicate values | Creates groups                |
+| No calculations required | Used with aggregate functions |
+| Returns unique values    | Returns one row per group     |
+| Used for unique lists    | Used for summaries            |
