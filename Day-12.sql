@@ -147,12 +147,52 @@
 -- ✅ DESC
 -- ✅ Aggregate Functions
 
+-- select Category, Brand , count(Brand) as Available_Products 
+-- from Product
+-- where PRODUCT_STATUS = "Available"
+-- Group by Category, Brand 
+-- order by Category asc, Available_Products desc, Brand asc;
+
+
+🏢 Business Scenario
+
+The sales manager wants to know the total stock available for each Brand in every Category.
+
+The manager wants to identify which brand has the highest stock within each category.
+
+📝 Problem Statement
+
+Write an SQL query to display:
+
+CATEGORY
+BRAND
+Total stock for each Category–Brand combination.
+
+Display the total stock with the alias:
+
+TOTAL_STOCK
+
+Sort the results by:
+
+CATEGORY in ascending order.
+If the category is the same, sort by TOTAL_STOCK in descending order.
+If both category and total stock are the same, sort by BRAND in ascending order.
+📚 Topics Covered
+✅ GROUP BY (Multiple Columns)
+✅ SUM()
+✅ ORDER BY (Multiple Columns)
+✅ ASC
+✅ DESC
+✅ Aggregate Functions
+
+select  Category ,  Brand,  sum(Stock) as TOTAL_STOCK
+from Product 
+group by Category, Brand
+order by Category asc, Total_Stock desc, Brand asc;
 
 
 
-select Category, Brand , count(Brand) as Available_Products 
-from Product
-where PRODUCT_STATUS = "Available"
-Group by Category, Brand 
-order by Category asc, Available_Products desc, Brand asc;
 
+
+
+-- select * from Product;
