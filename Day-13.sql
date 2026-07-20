@@ -319,12 +319,50 @@
 
 -- Also, he is interested only in brands whose name does not start with 'P'.
 
+-- 📝 Main Problem
 
-select Category , Brand, sum(Stock) as Total_Stock 
-from product
-where  Product_Status = "Available" 
-and  Brand not like 'P%' 
-and Category in ('Electronics','Sports')
-group by Category, BRAND
-having Total_Stock > 30
-order by Category asc,Total_Stock desc, Brand asc;
+-- Write an SQL query to display:
+
+-- CATEGORY
+-- BRAND
+-- Total stock
+
+-- Display the total stock with the alias:
+
+-- TOTAL_STOCK
+
+-- Show only those Category–Brand combinations where:
+
+-- PRODUCT_STATUS = 'AVAILABLE'
+-- CATEGORY IN ('ELECTRONICS','SPORTS')
+-- BRAND NOT LIKE 'P%'
+-- TOTAL_STOCK > 30
+
+-- Sort the result by:
+
+-- CATEGORY ASC
+-- TOTAL_STOCK DESC
+-- BRAND ASC
+-- 📚 Topics Covered (Revision)
+
+-- This single problem revises:
+
+-- ✅ WHERE
+-- ✅ IN
+-- ✅ NOT LIKE
+-- ✅ GROUP BY (Multiple Columns)
+-- ✅ SUM()
+-- ✅ HAVING
+-- ✅ ORDER BY (Multiple Columns)
+
+
+-- select Category , Brand, sum(Stock) as Total_Stock 
+-- from product
+-- where  Product_Status = "Available" 
+-- and  Brand not like 'P%' 
+-- and Category in ('Electronics','Sports')
+-- group by Category, BRAND
+-- having Total_Stock > 30
+-- order by Category asc,Total_Stock desc, Brand asc;
+
+
