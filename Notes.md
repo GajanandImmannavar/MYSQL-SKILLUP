@@ -3242,3 +3242,298 @@ MIN()
 | **What is the average price?** | `AVG()`      |
 | **What is the highest price?** | `MAX()`      |
 | **What is the lowest price?**  | `MIN()`      |
+
+
+
+
+
+📚 Next Topic: HAVING
+
+We'll follow the same learning format as always.
+
+📖 1. What is HAVING?
+
+Before SQL introduced HAVING, developers had a problem.
+
+Suppose the Product table contains:
+
+| CATEGORY    | STOCK |
+| ----------- | ----: |
+| Electronics |    25 |
+| Electronics |    40 |
+| Electronics |    18 |
+| Furniture   |    15 |
+| Furniture   |    50 |
+| Grocery     |   120 |
+
+
+The warehouse manager asks:
+
+Show only those categories whose total stock is greater than 100.
+
+Can we use WHERE?
+
+Many beginners try this:
+
+SELECT Category,
+       SUM(Stock)
+FROM Product
+WHERE SUM(Stock) > 100
+GROUP BY Category;
+
+❌ This is wrong.
+
+
+🤔 Why is it wrong?
+
+Let's see how SQL executes the query.
+
+FROM Product
+        ↓
+WHERE
+        ↓
+GROUP BY
+        ↓
+SUM()
+        ↓
+SELECT
+        ↓
+ORDER BY
+
+Notice something?
+
+WHERE runs before GROUP BY.
+
+At the WHERE stage:
+
+Groups do not exist.
+SUM(STOCK) has not been calculated.
+
+So SQL says:
+
+"You are asking me to check the sum, but I haven't created the groups yet."
+
+That's why this query fails.
+
+
+💡 Why HAVING Was Introduced
+
+HAVING is used to filter groups after they have been created.
+
+Think of it like this:
+
+WHERE filters rows.
+HAVING filters groups.
+
+🧠 Visual Explanation
+
+Imagine this table:
+
+| CATEGORY    | STOCK |
+| ----------- | ----: |
+| Electronics |    25 |
+| Electronics |    40 |
+| Electronics |    18 |
+| Furniture   |    15 |
+| Furniture   |    50 |
+| Grocery     |   120 |
+
+Step 1: WHERE (if present)
+
+Filters individual rows.
+
+↓
+
+Step 2: GROUP BY
+
+Creates groups.
+
+Electronics
+25
+40
+18
+Furniture
+15
+50
+Grocery
+120
+
+↓
+
+Step 3: SUM()
+
+Calculates totals.
+
+CATEGORY	TOTAL_STOCK
+Electronics	83
+Furniture	65
+Grocery	120
+
+↓
+
+Step 4: HAVING
+
+Now SQL can finally ask:
+
+HAVING SUM(STOCK) > 100
+
+Result:
+
+CATEGORY	TOTAL_STOCK
+Grocery	120
+📌 Syntax
+SELECT column_name,
+       AGGREGATE_FUNCTION(column_name)
+FROM table_name
+WHERE condition
+GROUP BY column_name
+HAVING aggregate_condition
+ORDER BY column_name;
+⚙️ SQL Execution Order
+
+This is one of the most asked interview questions.
+
+FROM
+        ↓
+WHERE
+        ↓
+GROUP BY
+        ↓
+Aggregate Functions
+        ↓
+HAVING
+        ↓
+SELECT
+        ↓
+ORDER BY
+        ↓
+Final Output
+
+
+🎯 Difference Between WHERE and HAVING
+
+| WHERE                                                           | HAVING                      |
+| --------------------------------------------------------------- | --------------------------- |
+| Filters rows                                                    | Filters groups              |
+| Executes before GROUP BY                                        | Executes after GROUP BY     |
+| Cannot use aggregate functions like `SUM()`, `COUNT()`, `AVG()` | Can use aggregate functions |
+| Example: `PRICE > 5000`                                         | Example: `SUM(STOCK) > 100` |
+
+
+🏢 Real Business Examples
+WHERE
+
+Show products where price is greater than ₹50,000.
+
+SQL checks each row.
+
+HAVING
+
+Show categories where total stock is greater than 100.
+
+SQL checks each group.
+
+❌ Common Mistakes
+Mistake 1
+WHERE SUM(STOCK) > 100
+
+❌ Wrong.
+
+Mistake 2
+HAVING PRICE > 50000
+
+Usually wrong for this type of query because PRICE is a row-level value. Row-level filtering should normally be done in WHERE.
+
+Mistake 3
+
+Thinking WHERE and HAVING are interchangeable.
+
+They are not.
+
+WHERE → rows.
+HAVING → groups.
+🧠 Memory Trick
+
+Think of a school.
+
+WHERE
+
+Teacher says:
+
+Only students with marks above 40 may enter the classroom.
+
+She checks each student.
+
+That's WHERE.
+
+HAVING
+
+Now students are divided into classes.
+
+Teacher says:
+
+Show only classes whose average marks are above 80.
+
+She checks the whole class, not individual students.
+
+That's HAVING.
+
+Which clause filters groups?
+
+The answer is:
+
+HAVING
+
+Remember:
+
+GROUP BY → creates groups.
+HAVING → filters groups.
+
+Think of it this way:
+
+GROUP BY
+↓
+
+Electronics
+
+Furniture
+
+Sports
+
+↓
+
+HAVING
+
+Keep Electronics ✅
+
+Remove Furniture ❌
+
+Keep Sports ✅
+✅ Question 5
+
+Your execution order:
+
+FROM
+↓
+
+WHERE
+↓
+
+GROUP BY
+↓
+
+Aggregation
+↓
+
+HAVING
+↓
+
+SELECT
+↓
+
+ORDER BY
+↓
+
+OUTPUT
+
+WHERE filters rows before grouping. HAVING filters groups after aggregate functions are calculated.
