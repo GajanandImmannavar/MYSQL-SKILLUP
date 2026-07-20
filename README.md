@@ -113,6 +113,34 @@ Topics covered:
 - NULL handling
 - Scenario-based SQL queries
 
+## 📈 Long-Term Roadmap
+
+✅ SELECT
+✅ WHERE
+✅ ORDER BY
+✅ DISTINCT
+✅ LIKE
+✅ IN / NOT IN
+✅ BETWEEN
+✅ Aggregate Functions
+✅ GROUP BY
+✅ HAVING (current)
+⏳ JOINS
+⏳ SELF JOIN
+⏳ CROSS JOIN
+⏳ UNION / UNION ALL
+⏳ Subqueries
+⏳ Correlated Subqueries
+⏳ CASE
+⏳ Views
+⏳ Indexes
+⏳ Stored Procedures
+⏳ Functions
+⏳ Triggers
+⏳ Window Functions
+⏳ CTEs
+⏳ Recursive CTEs
+
 ## 🚀 Goal
 
 - Learn SQL consistently every day.
