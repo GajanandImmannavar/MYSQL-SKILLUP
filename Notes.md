@@ -3769,3 +3769,4 @@ Output
 | Class | Students |
 | ----- | -------: |
 | C     |        5 |
+
