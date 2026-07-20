@@ -3537,3 +3537,235 @@ ORDER BY
 OUTPUT
 
 WHERE filters rows before grouping. HAVING filters groups after aggregate functions are calculated.
+
+⭐ Your real confusion
+
+You said:
+
+I am not able to understand why WHERE COUNT(...) > 5 is wrong but HAVING COUNT(...) > 5 is correct.
+
+This is the biggest confusion for almost every SQL beginner.
+
+Forget SQL for 5 minutes.
+
+Let's use a classroom example.
+
+
+Imagine a School
+
+There are 10 students.
+
+| Student | Class |
+| ------- | ----- |
+| Ram     | A     |
+| Ravi    | A     |
+| Amit    | A     |
+| Neha    | B     |
+| Pooja   | B     |
+| Kiran   | C     |
+| Raj     | C     |
+| Manu    | C     |
+| Ajay    | C     |
+| Arjun   | C     |
+
+
+Teacher asks
+
+Show classes having more than 3 students.
+
+First SQL Reads Table
+
+Ram   A
+
+Ravi  A
+
+Amit  A
+
+Neha  B
+
+Pooja B
+
+Kiran C
+
+Raj   C
+
+Manu  C
+
+Ajay  C
+
+Arjun C
+
+
+Nothing is grouped.
+
+Just rows.
+
+Step 1
+
+SQL executes
+
+FROM Student
+
+Reads table.
+
+Step 2
+
+Now SQL reaches
+
+WHERE
+
+Question
+
+Can SQL know
+
+Class A has 3 students?
+
+❌ NO
+
+Can SQL know
+
+Class C has 5 students?
+
+❌ NO
+
+Why?
+
+Because SQL hasn't created groups yet.
+
+SQL only sees
+
+Ram
+
+Ravi
+
+Amit
+
+Neha
+
+Pooja
+
+One row at a time.
+
+Imagine SQL Saying
+I only have one row.
+
+How can I know
+Class A has 3 students?
+
+I haven't counted anything yet.
+
+Exactly.
+
+Therefore
+
+WHERE COUNT(*) > 3
+
+is impossible.
+
+Now GROUP BY Starts
+
+SQL creates
+
+Class A
+
+Ram
+
+Ravi
+
+Amit
+
+Second group
+
+Class B
+
+Neha
+
+Pooja
+
+Third group
+
+Class C
+
+Kiran
+
+Raj
+
+Manu
+
+Ajay
+
+Arjun
+
+Now groups exist.
+
+COUNT() Starts
+
+SQL counts.
+
+Class A
+
+↓
+
+3
+Class B
+
+↓
+
+2
+Class C
+
+↓
+
+5
+
+Now SQL creates
+
+| Class | Students |
+| ----- | -------: |
+| A     |        3 |
+| B     |        2 |
+| C     |        5 |
+
+NOW HAVING Executes
+
+HAVING sees
+
+| Class | Students |
+| ----- | -------: |
+| A     |        3 |
+| B     |        2 |
+| C     |        5 |
+
+Now SQL asks
+
+Students > 3 ?
+
+A
+
+3 > 3
+
+NO
+
+Remove.
+
+B
+
+2 > 3
+
+NO
+
+Remove.
+
+C
+
+5 > 3
+
+YES
+
+Keep.
+
+Output
+
+| Class | Students |
+| ----- | -------: |
+| C     |        5 |
