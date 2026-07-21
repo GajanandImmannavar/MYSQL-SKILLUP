@@ -3770,3 +3770,6 @@ Output
 | ----- | -------: |
 | C     |        5 |
 
+WHERE → removes rows
+
+HAVING → removes groups
