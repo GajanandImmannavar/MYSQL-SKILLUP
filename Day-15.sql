@@ -270,50 +270,48 @@
 
 
 
-🏢 Business Scenario
+-- 🏢 Business Scenario
 
-An electronics retail company is planning to expand into new cities.
+-- An electronics retail company is planning to expand into new cities.
 
-Before opening new stores, the operations manager wants to identify product categories that have strong customer demand.
+-- Before opening new stores, the operations manager wants to identify product categories that have strong customer demand.
 
-He is interested only in products that are currently being sold and have received good customer feedback.
+-- He is interested only in products that are currently being sold and have received good customer feedback.
 
-Products supplied by brands whose names end with the letter 'y' should be excluded because those brands are ending their partnership with the company.
+-- Products supplied by brands whose names end with the letter 'y' should be excluded because those brands are ending their partnership with the company.
 
-The manager also wants to ignore products that are too inexpensive, since they do not represent the premium market segment.
+-- The manager also wants to ignore products that are too inexpensive, since they do not represent the premium market segment.
 
-Finally, he wants to consider only those categories whose total inventory is sufficient to support a new store launch.
+-- Finally, he wants to consider only those categories whose total inventory is sufficient to support a new store launch.
 
-📝 Main Problem
+-- 📝 Main Problem
 
-Write an SQL query to display:
+-- Write an SQL query to display:
 
-Category
-Total Stock
+-- Category
+-- Total Stock
 
-Alias:
+-- Alias:
 
-TOTAL_STOCK
+-- TOTAL_STOCK
 
-Sort the result:
+-- Sort the result:
 
-Highest total stock first.
-If two categories have the same stock, display the category name alphabetically.
+-- Highest total stock first.
+-- If two categories have the same stock, display the category name alphabetically.
 
-Important: I have intentionally not given any SQL conditions. You must translate the business scenario into SQL.
-
-
+-- Important: I have intentionally not given any SQL conditions. You must translate the business scenario into SQL.
 
 
-SELECT Category, SUM(Stock) AS TOTAL_STOCK
-FROM Product
-WHERE Product_Status = 'AVAILABLE'
-  AND Rating >= 5
-  AND Brand NOT LIKE '%Y'
-  AND Price > 20000
-GROUP BY Category
-HAVING SUM(Stock) > 30
-ORDER BY TOTAL_STOCK DESC, Category ASC;
+-- SELECT Category, SUM(Stock) AS TOTAL_STOCK
+-- FROM Product
+-- WHERE Product_Status = 'AVAILABLE'
+--   AND Rating >= 5
+--   AND Brand NOT LIKE '%Y'
+--   AND Price > 20000
+-- GROUP BY Category
+-- HAVING SUM(Stock) > 30
+-- ORDER BY TOTAL_STOCK DESC, Category ASC;
 
 
 
