@@ -236,16 +236,110 @@
 -- Category alphabetically.
 
 
+-- select Category, min(Price) as Lowest_Price
+-- from Product
+-- where Product_Status = "AVAILABLE"
+-- group by category
+-- order by min(Price) asc, category asc;
 
 
- 
 
-select Category, min(Price) as Lowest_Price
+
+-- 🟠 HAVING – Level 5 | Problem 13
+-- 🏢 Business Scenario
+
+-- A nationwide retail company wants to identify brand-category combinations that are performing well.
+
+-- Before launching a festive sales campaign, the marketing manager wants to analyze only products that satisfy the following business rules:
+
+-- Products are currently being sold
+-- Products have received good customer feedback (Rating 4 or 5)
+-- Products are not inexpensive (Assume premium products cost ₹30,000 or more)
+-- Products do not belong to the Grocery category
+-- Brand names must not end with the letter 'a'
+
+-- The manager wants to identify only those Category–Brand combinations whose total stock is greater than 25 units.
+
+-- 📝 Main Problem
+
+-- Write an SQL query to display:
+
+-- Category
+-- Brand
+-- Total Stock
+
+-- Alias:
+
+-- TOTAL_STOCK
+
+-- Sort the result:
+
+-- Category alphabetically.
+-- Within each category, show the highest total stock first.
+-- If two brands have the same total stock, sort the brand names alphabetically.
+
+-- select Category ,brand, sum(Stock) as Total_Stock
+-- from Product 
+-- where Product_Status = "AVAILABLE"
+--         and Rating >=4
+--         and price >=30000
+--         and category not in ('Grocery')
+--         and Brand not like '%a'
+--     group by Category, Brand
+--     having sum(Stock)>25
+--     order by Category asc, Total_Stock desc, brand asc;
+
+
+
+-- 🔄 Revision Challenge (No GROUP BY)
+-- 🏢 Business Scenario
+
+-- The purchasing manager wants the unique supplier cities that:
+
+-- supply Electronics or Furniture products
+-- have prices between ₹15,000 and ₹70,000
+-- have a product name that starts with 'S'
+-- have Rating 5
+-- are currently available
+
+-- Display only the supplier city names.
+
+-- Sort alphabetically.
+
+
+-- select distinct Supplier_City
+-- from Product
+-- where Category in ('Electronics','Furniture')
+--       and price Between 15000 and 70000
+--       and Product_Name like 'S%'
+--       and Rating = 5
+--       and Product_Status = "Available"
+--       order by Supplier_City asc;
+
+
+
+-- ⭐ Bonus Problem
+-- 🏢 Business Scenario
+
+-- The CEO wants to know the highest product rating available in each supplier city.
+
+-- Display:
+
+-- Supplier City
+-- Highest Rating
+
+-- Sort by:
+
+-- Highest rating first.
+-- Supplier city alphabetically.
+
+
+
+
+
+
+
+select Supplier_City, max(Rating) as Highest_Rating
 from Product
-where Product_Status = "AVAILABLE"
-group by category
-order by min(Price) asc, category asc;
-
-
-
-
+group by Supplier_City
+order by max(Rating) DESC, Supplier_City asc;
