@@ -335,11 +335,7 @@
 
 
 
-
-
-
-
-select Supplier_City, max(Rating) as Highest_Rating
-from Product
-group by Supplier_City
-order by max(Rating) DESC, Supplier_City asc;
+-- select Supplier_City, max(Rating) as Highest_Rating
+-- from Product
+-- group by Supplier_City
+-- order by max(Rating) DESC, Supplier_City asc;
