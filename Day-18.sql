@@ -216,3 +216,95 @@
 -- ↓
 
 -- Final Output
+
+
+-- 🔄 Revision Problem (Don't solve now)
+
+-- The finance manager wants the names of customers who:
+
+-- paid using CARD
+-- purchased products costing more than ₹50,000
+-- products are AVAILABLE
+
+-- Display only:
+
+-- Customer Name
+
+-- Remove duplicate names.
+
+-- Sort alphabetically.
+
+-- Concepts Revised
+
+-- INNER JOIN
+-- DISTINCT
+-- WHERE
+-- ORDER BY
+
+select distinct Customer.Customer_Name
+from Customer
+join Orders
+on Customer.Customer_Id = Orders.Customer_Id
+join Inventory
+on Orders.Product_Id = Inventory.Product_Id
+where Orders.Payment_Method = 'CARD' 
+    and Inventory.Price > 50000
+    and Inventory.Product_Status = 'AVAILABLE'
+    order by Customer.Customer_Name asc;
+
+
+-- AND Orders.Order_Date
+-- BETWEEN '2025-10-01' AND '2025-10-31'
+
+-- or
+
+-- -- AND MONTH(Orders.Order_Date)=10
+-- -- AND YEAR(Orders.Order_Date)=2025
+
+
+-- ⚙ SQL Execution Trace
+-- Customer
+
+-- ↓
+
+-- JOIN Orders
+
+-- ↓
+
+-- ON Customer.Customer_ID = Orders.Customer_ID
+
+-- ↓
+
+-- Virtual Table 1
+
+-- ↓
+
+-- JOIN Inventory
+
+-- ↓
+
+-- ON Orders.Product_ID = Inventory.Product_ID
+
+-- ↓
+
+-- Virtual Table 2
+
+-- ↓
+
+-- WHERE
+-- Payment_Method = 'CARD'
+-- Price > 50000
+-- Product_Status = 'AVAILABLE'
+-- Order_Date BETWEEN '2025-10-01' AND '2025-10-31'
+
+-- ↓
+
+-- SELECT DISTINCT Customer_Name
+
+-- ↓
+
+-- ORDER BY Customer_Name ASC
+
+-- ↓
+
+-- Final Output
