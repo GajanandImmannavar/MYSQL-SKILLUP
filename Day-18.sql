@@ -134,35 +134,85 @@
 --  Since three tables are involved, I used two JOINs to connect them through their Primary Key–Foreign Key relationships."
 
 
-🏢 Main Problem
-Business Scenario
+-- 🏢 Main Problem
+-- Business Scenario
 
-The sales manager wants to prepare a report of all successful purchases.
+-- The sales manager wants to prepare a report of all successful purchases.
 
-He wants to know:
+-- He wants to know:
 
-Customer Name
-Product Name
-Payment Method
+-- Customer Name
+-- Product Name
+-- Payment Method
 
-Only include orders that:
+-- Only include orders that:
 
-have Payment Status = 'PAID'
-belong to Available products
+-- have Payment Status = 'PAID'
+-- belong to Available products
 
-Sort the report by:
+-- Sort the report by:
 
-Customer Name (A → Z)
-Product Name (A → Z)
+-- Customer Name (A → Z)
+-- Product Name (A → Z)
 
 
-select Customer.Customer_name, Inventory.Product_name, Orders.Payment_Method
-from Customer
-join  Orders
-on Customer.Customer_Id = Orders.Customer_Id
-join Inventory
-on Inventory.Product_Id = Orders.Product_Id
-where Orders.Payment_Status = 'Paid'
-     and Inventory.Product_Status = 'Available'
-     order by Customer.Customer_Name asc, Inventory.Product_Name asc;
+-- select Customer.Customer_name, Inventory.Product_name, Orders.Payment_Method
+-- from Customer
+-- join  Orders
+-- on Customer.Customer_Id = Orders.Customer_Id
+-- join Inventory
+-- on Inventory.Product_Id = Orders.Product_Id
+-- where Orders.Payment_Status = 'Paid'
+--      and Inventory.Product_Status = 'Available'
+--      order by Customer.Customer_Name asc, Inventory.Product_Name asc;
 
+-- ⚙ SQL Execution Trace
+
+-- Customer
+
+-- ↓
+
+-- JOIN Orders
+
+-- ↓
+
+-- ON Customer.Customer_ID = Orders.Customer_ID
+
+-- ↓
+
+-- Virtual Table 1
+
+-- ↓
+
+-- JOIN Inventory
+
+-- ↓
+
+-- ON Orders.Product_ID = Inventory.Product_ID
+
+-- ↓
+
+-- Virtual Table 2
+
+-- ↓
+
+-- WHERE
+-- Payment_Status='PAID'
+-- Product_Status='AVAILABLE'
+
+-- ↓
+
+-- SELECT
+-- Customer_Name
+-- Product_Name
+-- Payment_Method
+
+-- ↓
+
+-- ORDER BY
+-- Customer_Name ASC
+-- Product_Name ASC
+
+-- ↓
+
+-- Final Output
