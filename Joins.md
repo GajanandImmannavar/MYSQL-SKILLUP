@@ -1870,3 +1870,380 @@ Inventory.Product_Name
 ```text
 This is your **INNER JOIN Interview Handbook**. Before placements, if you can confidently explain these 17 questions in your own words, you'll have a strong conceptual foundation for most fresher-level SQL interview discussions.
 ```
+
+Excellent! 👏 This is your **first 4-table JOIN**. That's a big step.
+
+However, there are **2 logical mistakes**. They are common mistakes that almost everyone makes when learning joins.
+
+Let's evaluate it.
+
+---
+
+# ⭐ Bonus Problem Evaluation
+
+## 📝 Your Query
+
+```sql
+SELECT Supplier.Supplier_Name,
+       Inventory.Product_Name,
+       Customer.Customer_Name,
+       Orders.Order_Date
+FROM Customer
+JOIN Orders
+ON Customer.Customer_Id = Orders.Customer_Id
+JOIN Supplier
+ON Supplier.Supplier_Id = Inventory.Supplier_Id
+JOIN Inventory
+ON Inventory.Product_Id = Inventory.Product_Id
+WHERE Inventory.Product_Status = 'AVAILABLE'
+  AND Orders.Payment_Status = 'PAID'
+ORDER BY Supplier.Supplier_Name ASC,
+         Orders.Order_Date ASC;
+```
+
+---
+
+# 🏢 Business Requirement
+
+Display:
+
+* ✅ Supplier Name
+* ✅ Product Name
+* ✅ Customer Name
+* ✅ Order Date
+
+Only:
+
+* ✅ Available Products
+* ✅ Paid Orders
+
+Sort by:
+
+* ✅ Supplier Name
+* ✅ Order Date
+
+---
+
+# ✅ 1. SELECT
+
+```sql
+SELECT Supplier.Supplier_Name,
+       Inventory.Product_Name,
+       Customer.Customer_Name,
+       Orders.Order_Date
+```
+
+✔ Perfect.
+
+**10/10**
+
+---
+
+# ✅ 2. FROM
+
+```sql
+FROM Customer
+```
+
+✔ Correct.
+
+---
+
+# ✅ 3. First JOIN
+
+```sql
+JOIN Orders
+ON Customer.Customer_Id = Orders.Customer_Id
+```
+
+✔ Perfect.
+
+---
+
+# ❌ 4. Second JOIN (Mistake #1)
+
+You wrote
+
+```sql
+JOIN Supplier
+ON Supplier.Supplier_Id = Inventory.Supplier_Id
+```
+
+### Why is this wrong?
+
+At this point, SQL only knows about:
+
+```text
+Customer
+Orders
+```
+
+It has **not joined the Inventory table yet**.
+
+So `Inventory.Supplier_Id` **does not exist yet**.
+
+SQL cannot use a table that hasn't been joined.
+
+---
+
+### Think of it like this
+
+Current virtual table:
+
+```text
+Customer
+
+↓
+
+Orders
+```
+
+Inventory is still outside.
+
+```text
+Inventory
+```
+
+So SQL says:
+
+> "What is Inventory.Supplier_ID?
+>
+> I don't know this table yet."
+
+---
+
+# ✅ Correct Order
+
+First join Inventory.
+
+```sql
+JOIN Inventory
+ON Orders.Product_Id = Inventory.Product_Id
+```
+
+Now SQL knows Inventory.
+
+Then join Supplier.
+
+```sql
+JOIN Supplier
+ON Inventory.Supplier_Id = Supplier.Supplier_Id
+```
+
+---
+
+# ❌ 5. Third JOIN (Mistake #2)
+
+You wrote
+
+```sql
+ON Inventory.Product_Id = Inventory.Product_Id
+```
+
+This compares the **same column with itself**.
+
+```text
+5 = 5
+
+6 = 6
+
+7 = 7
+```
+
+This condition is always true, so it doesn't create a relationship between two tables.
+
+---
+
+### The correct relationship is
+
+```sql
+ON Orders.Product_Id = Inventory.Product_Id
+```
+
+because:
+
+```text
+Orders
+        Product_ID
+
+Inventory
+        Product_ID
+```
+
+These are the related columns.
+
+---
+
+# ✅ WHERE
+
+```sql
+WHERE Inventory.Product_Status='AVAILABLE'
+AND Orders.Payment_Status='PAID'
+```
+
+✔ Perfect.
+
+---
+
+# ✅ ORDER BY
+
+```sql
+ORDER BY Supplier.Supplier_Name,
+         Orders.Order_Date
+```
+
+✔ Correct.
+
+---
+
+# ✅ Correct Query
+
+```sql
+SELECT Supplier.Supplier_Name,
+       Inventory.Product_Name,
+       Customer.Customer_Name,
+       Orders.Order_Date
+FROM Customer
+JOIN Orders
+ON Customer.Customer_Id = Orders.Customer_Id
+
+JOIN Inventory
+ON Orders.Product_Id = Inventory.Product_Id
+
+JOIN Supplier
+ON Inventory.Supplier_Id = Supplier.Supplier_Id
+
+WHERE Inventory.Product_Status = 'AVAILABLE'
+  AND Orders.Payment_Status = 'PAID'
+
+ORDER BY Supplier.Supplier_Name ASC,
+         Orders.Order_Date ASC;
+```
+
+---
+
+# ⚙ SQL Execution Trace
+
+```text
+Customer
+
+↓
+
+JOIN Orders
+
+↓
+
+ON Customer.Customer_ID = Orders.Customer_ID
+
+↓
+
+Virtual Table 1
+
+↓
+
+JOIN Inventory
+
+↓
+
+ON Orders.Product_ID = Inventory.Product_ID
+
+↓
+
+Virtual Table 2
+
+↓
+
+JOIN Supplier
+
+↓
+
+ON Inventory.Supplier_ID = Supplier.Supplier_ID
+
+↓
+
+Virtual Table 3
+
+↓
+
+WHERE
+Product_Status = 'AVAILABLE'
+Payment_Status = 'PAID'
+
+↓
+
+SELECT
+
+↓
+
+ORDER BY
+
+↓
+
+Final Output
+```
+
+---
+
+# ⭐ The Biggest Lesson Today
+
+## Rule 1
+
+**You can only use tables that SQL already knows.**
+
+Current joined tables:
+
+```text
+Customer
+
+↓
+
+Orders
+```
+
+Can you use Inventory?
+
+❌ No.
+
+---
+
+After joining Inventory
+
+```text
+Customer
+
+↓
+
+Orders
+
+↓
+
+Inventory
+```
+
+Now can you use Inventory?
+
+✅ Yes.
+
+---
+
+## Rule 2
+
+Every `ON` condition should connect **two different tables**.
+
+Good:
+
+```sql
+Orders.Product_Id = Inventory.Product_Id
+```
+
+Bad:
+
+```sql
+Inventory.Product_Id = Inventory.Product_Id
+```
+
+because it never relates Inventory to another table.
+
+---
+
+
