@@ -1575,3 +1575,298 @@ Aarav → Order 105
 ```
 
 > **One row in the parent table can generate many rows in the JOIN result if multiple matching rows exist in the related table.**
+
+Absolutely. Here is your **INNER JOIN Interview Q&A Sheet** containing all the questions we discussed, with **professional, concise, and interview-ready answers**. These are the kinds of answers expected from a fresher in placements.
+
+---
+
+# 📘 INNER JOIN – Interview Questions & Professional Answers
+
+---
+
+# Question 1
+
+## Why did you use INNER JOIN?
+
+### Professional Answer
+
+> I used **INNER JOIN** because the required information is stored in different tables. The `Customer` table contains customer details, the `Orders` table contains order details, and the `Inventory` table contains product details. These tables are related through **Primary Key–Foreign Key relationships**, so INNER JOIN combines only the matching records from both tables.
+
+---
+
+# Question 2
+
+## Why can't we get `Customer_Name` directly from the `Orders` table?
+
+### Professional Answer
+
+> `Customer_Name` is stored in the `Customer` table, while the `Orders` table stores only order-related information such as `Order_ID`, `Customer_ID`, `Product_ID`, and `Order_Date`. Since the customer name is not available in the `Orders` table, we use **INNER JOIN** to retrieve it.
+
+---
+
+# Question 3
+
+## What is the difference between a Primary Key and a Foreign Key?
+
+### Professional Answer
+
+> A **Primary Key** uniquely identifies each row in a table. It cannot contain duplicate or NULL values.
+>
+> A **Foreign Key** is a column that references the Primary Key of another table. It creates a relationship between two tables and helps maintain data integrity.
+
+---
+
+# Question 4
+
+## Why do we use the ON clause?
+
+### Professional Answer
+
+> The **ON** clause specifies the relationship between two tables. It tells SQL which columns should be compared to find matching rows during the JOIN operation.
+
+### Example
+
+```sql
+ON Customer.Customer_ID = Orders.Customer_ID
+```
+
+---
+
+# Question 5
+
+## What happens if we remove the ON clause from an INNER JOIN?
+
+### Professional Answer
+
+> The ON clause tells SQL how the tables are related. Without it, SQL cannot determine which rows should be matched. Therefore, a normal INNER JOIN query becomes invalid and usually results in an error.
+
+---
+
+# Question 6
+
+## Can an INNER JOIN return duplicate customer names?
+
+### Professional Answer
+
+> Yes.
+>
+> INNER JOIN returns one row for every matching record. If a customer has multiple orders, the customer's name appears once for each matching order.
+
+### Example
+
+Customer
+
+| Customer_ID | Name  |
+| ----------- | ----- |
+| 1           | Aarav |
+
+Orders
+
+| Order_ID | Customer_ID |
+| -------- | ----------- |
+| 101      | 1           |
+| 102      | 1           |
+| 103      | 1           |
+
+Output
+
+| Customer_Name | Order_ID |
+| ------------- | -------- |
+| Aarav         | 101      |
+| Aarav         | 102      |
+| Aarav         | 103      |
+
+The customer appears three times because there are three matching orders.
+
+---
+
+# Question 7
+
+## If one customer has 10 orders, how many rows will appear after the JOIN?
+
+### Professional Answer
+
+> The result will contain **10 rows** because INNER JOIN returns one row for each matching order. The customer information remains the same, while the order details are different.
+
+---
+
+# Question 8
+
+## Why did you start with `FROM Customer` instead of `FROM Orders`?
+
+### Professional Answer
+
+> For an INNER JOIN, either table can be used in the FROM clause because the result is the same. I started with `Customer` because the report focuses on customer information, making the query easier to read.
+
+---
+
+# Question 9
+
+## Can we write
+
+```sql
+FROM Orders
+JOIN Customer
+```
+
+instead of
+
+```sql
+FROM Customer
+JOIN Orders
+```
+
+### Professional Answer
+
+> Yes.
+>
+> For an INNER JOIN, both queries return the same result because the relationship is the same. The choice usually depends on readability and which table is the main focus of the report.
+
+---
+
+# Question 10
+
+## How do you decide which columns to use in the ON condition?
+
+### Professional Answer
+
+> I identify the relationship between the tables by finding the **Primary Key** in one table and the matching **Foreign Key** in the related table. These columns are used in the ON condition.
+
+### Example
+
+```sql
+Customer.Customer_ID = Orders.Customer_ID
+```
+
+---
+
+# Question 11
+
+## Why is
+
+```sql
+Customer.Customer_ID = Orders.Order_ID
+```
+
+wrong?
+
+### Professional Answer
+
+> Because `Customer_ID` identifies a customer, whereas `Order_ID` identifies an order. They represent different entities and have no relationship. The correct relationship is:
+
+```sql
+Customer.Customer_ID = Orders.Customer_ID
+```
+
+---
+
+# Question 12
+
+## How many JOINs are required for three tables?
+
+### Professional Answer
+
+> Three tables require **two JOINs** and **two ON conditions** because each additional table must be connected through its own relationship.
+
+### Example
+
+```sql
+FROM Customer
+
+JOIN Orders
+ON Customer.Customer_ID = Orders.Customer_ID
+
+JOIN Inventory
+ON Orders.Product_ID = Inventory.Product_ID
+```
+
+---
+
+# Question 13
+
+## How many JOINs are required for N tables?
+
+### Professional Answer
+
+> If there are **N tables**, then **N − 1 JOINs** and **N − 1 ON conditions** are required.
+
+| Tables | JOINs | ON Conditions |
+| ------ | ----: | ------------: |
+| 2      |     1 |             1 |
+| 3      |     2 |             2 |
+| 4      |     3 |             3 |
+| 5      |     4 |             4 |
+
+---
+
+# Question 14
+
+## Why do we use table names before column names?
+
+### Professional Answer
+
+> Prefixing columns with table names improves readability and removes ambiguity. If multiple tables contain columns with the same name, SQL can clearly identify which column is being referenced.
+
+### Example
+
+```sql
+Customer.Customer_Name
+Orders.Order_Date
+Inventory.Product_Name
+```
+
+---
+
+# Question 15
+
+## What is the execution order of an INNER JOIN query?
+
+### Professional Answer
+
+```text
+1. FROM
+2. JOIN
+3. ON
+4. WHERE
+5. SELECT
+6. ORDER BY
+7. Final Output
+```
+
+---
+
+# Question 16
+
+## Why do we use WHERE after JOIN?
+
+### Professional Answer
+
+> JOIN first combines the related rows from multiple tables. After the combined data is created, the WHERE clause filters the rows based on the specified conditions.
+
+---
+
+# Question 17
+
+## What is the main purpose of INNER JOIN?
+
+### Professional Answer
+
+> The main purpose of INNER JOIN is to combine related data stored in multiple tables and return only the rows that have matching values in both tables.
+
+---
+
+# ⭐ One-Line Definition (Placement Ready)
+
+> **INNER JOIN combines related data from two or more tables using a common column and returns only the matching rows.**
+
+---
+
+# 💼 30-Second Interview Answer
+
+> **INNER JOIN is used when related information is stored across multiple tables. It combines those tables using a common column, typically a Primary Key and its corresponding Foreign Key, and returns only the matching records. This helps retrieve meaningful business information without storing duplicate data in a single table.**
+
+---
+
+```text
+This is your **INNER JOIN Interview Handbook**. Before placements, if you can confidently explain these 17 questions in your own words, you'll have a strong conceptual foundation for most fresher-level SQL interview discussions.
+```
