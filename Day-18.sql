@@ -241,16 +241,16 @@
 -- WHERE
 -- ORDER BY
 
-select distinct Customer.Customer_Name
-from Customer
-join Orders
-on Customer.Customer_Id = Orders.Customer_Id
-join Inventory
-on Orders.Product_Id = Inventory.Product_Id
-where Orders.Payment_Method = 'CARD' 
-    and Inventory.Price > 50000
-    and Inventory.Product_Status = 'AVAILABLE'
-    order by Customer.Customer_Name asc;
+-- select distinct Customer.Customer_Name
+-- from Customer
+-- join Orders
+-- on Customer.Customer_Id = Orders.Customer_Id
+-- join Inventory
+-- on Orders.Product_Id = Inventory.Product_Id
+-- where Orders.Payment_Method = 'CARD' 
+--     and Inventory.Price > 50000
+--     and Inventory.Product_Status = 'AVAILABLE'
+--     order by Customer.Customer_Name asc;
 
 
 -- AND Orders.Order_Date
@@ -308,3 +308,110 @@ where Orders.Payment_Method = 'CARD'
 -- ↓
 
 -- Final Output
+
+
+-- ⭐ Bonus Problem 
+
+-- The operations manager wants to know:
+
+-- Supplier Name
+-- Product Name
+-- Customer Name
+-- Order Date
+
+-- Only for:
+
+-- Available products
+-- Paid orders
+
+-- Sort by:
+
+-- Supplier Name
+-- Order Date
+
+-- Concepts Introduced
+
+-- 4-table INNER JOIN
+-- Multiple JOIN relationships
+-- WHERE
+-- ORDER BY
+
+-- select Supplier.Supplier_Name, Inventory.Product_Name, Customer.Customer_Name,
+--         Orders.Order_Date
+-- from customer
+
+-- join orders
+-- on Customer.Customer_Id = Orders.customer_Id 
+
+-- join Inventory 
+-- on Inventory.Product_Id = Orders.Product_Id   
+
+-- join Supplier 
+-- on Supplier.Supplier_Id = Inventory.Supplier_Id
+
+--         where Inventory.Product_Status = 'AVAILABLE'
+--         and Orders.Payment_Status = 'PAID'
+--         order by Supplier.Supplier_Name asc, Orders.Order_Date asc;
+
+-- ⚙ SQL Execution Trace
+
+-- Customer
+
+-- ↓
+
+-- JOIN Orders
+
+-- ↓
+
+-- ON Customer.Customer_ID = Orders.Customer_ID
+
+-- ↓
+
+-- Virtual Table 1
+
+-- ↓
+
+-- JOIN Inventory
+
+-- ↓
+
+-- ON Orders.Product_ID = Inventory.Product_ID
+
+-- ↓
+
+-- Virtual Table 2
+
+-- ↓
+
+-- JOIN Supplier
+
+-- ↓
+
+-- ON Inventory.Supplier_ID = Supplier.Supplier_ID
+
+-- ↓
+
+-- Virtual Table 3
+
+-- ↓
+
+-- WHERE
+-- Product_Status = 'AVAILABLE'
+-- Payment_Status = 'PAID'
+
+-- ↓
+
+-- SELECT
+
+-- ↓
+
+-- ORDER BY
+
+-- ↓
+
+-- Final Output
+
+
+
+
+
