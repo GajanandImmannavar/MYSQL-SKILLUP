@@ -172,21 +172,21 @@
 
 
 
--- select Customer.Customer_Name, Supplier.Supplier_Name,
---        Inventory.Product_Name, Orders.Payment_Method, 
---        Inventory.Price
--- from customer   
--- join Orders
--- on Orders.Customer_ID = Customer.Customer_ID
--- join Inventory 
--- ON Orders.Product_Id = Inventory.Product_Id
--- join supplier
--- on Inventory.Supplier_ID = Supplier.Supplier_ID 
--- where Orders.Payment_Status ='PAID'
---       and  Inventory.Product_Status = 'AVAILABLE'
---       and Inventory.Rating >= 4
---       and Supplier.Supplier_City in ('BENGALURU','MUMBAI')
--- order by Supplier.Supplier_Name asc, Customer.Customer_Name asc, Inventory.Product_Name ASC;
+select Customer.Customer_Name, Supplier.Supplier_Name,
+       Inventory.Product_Name, Orders.Payment_Method, 
+       Inventory.Price
+from customer   
+join Orders
+on Orders.Customer_ID = Customer.Customer_ID
+join Inventory 
+ON Orders.Product_Id = Inventory.Product_Id
+join supplier
+on Inventory.Supplier_ID = Supplier.Supplier_ID 
+where Orders.Payment_Status ='PAID'
+      and  Inventory.Product_Status = 'AVAILABLE'
+      and Inventory.Rating >= 4
+      and Supplier.Supplier_City in ('BENGALURU','MUMBAI')
+order by Supplier.Supplier_Name asc, Customer.Customer_Name asc, Inventory.Product_Name ASC;
 
 -- ⚙ SQL Execution Trace
 
