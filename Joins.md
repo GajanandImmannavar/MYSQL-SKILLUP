@@ -2246,4 +2246,263 @@ because it never relates Inventory to another table.
 
 ---
 
+# 🗂️ Database Relationship Diagram
 
+> **Learning Goal:** Understand how the tables in the database are connected using **Primary Keys (PK)** and **Foreign Keys (FK)**.
+
+---
+
+# 📊 Entity Relationship Diagram (ERD)
+
+```text
+                        DATABASE RELATIONSHIP DIAGRAM
+
+                        +----------------------+
+                        |      Customer        |
+                        +----------------------+
+                        | Customer_ID (PK)     |
+                        | Customer_Name        |
+                        | Gender               |
+                        | City                 |
+                        | Phone                |
+                        | Email                |
+                        | Join_Date            |
+                        +----------------------+
+                                  |
+                                  | 1
+                                  |
+                                  | M
+                        +----------------------+
+                        |       Orders         |
+                        +----------------------+
+                        | Order_ID (PK)        |
+                        | Customer_ID (FK)     |────────────┐
+                        | Product_ID (FK)      |            │
+                        | Quantity             |            │
+                        | Order_Date           |            │
+                        | Payment_Method       |            │
+                        | Payment_Status       |            │
+                        +----------------------+            │
+                                                           │
+                                                           │ M
+                                                           │
+                                                           │ 1
+                                              +----------------------+
+                                              |      Inventory       |
+                                              +----------------------+
+                                              | Product_ID (PK)      |
+                                              | Product_Name         |
+                                              | Category_ID (FK)     |──────────┐
+                                              | Supplier_ID (FK)     |───────┐  │
+                                              | Brand                |       │  │
+                                              | Price                |       │  │
+                                              | Stock                |       │  │
+                                              | Rating               |       │  │
+                                              | Product_Status       |       │  │
+                                              +----------------------+       │  │
+                                                                             │  │
+                                   1                                         │  │ 1
+                                   │                                         │  │
+                                   │                                         │  │
+                                   │ M                                       │  │ M
+                        +----------------------+                  +----------------------+
+                        |     Categories       |                  |      Supplier        |
+                        +----------------------+                  +----------------------+
+                        | Category_ID (PK)     |                  | Supplier_ID (PK)     |
+                        | Category_Name        |                  | Supplier_Name        |
+                        +----------------------+                  | Supplier_City        |
+                                                                  | Phone               |
+                                                                  | Email               |
+                                                                  +----------------------+
+```
+
+---
+
+# 🔗 Relationship Overview
+
+| Parent Table | Child Table | Relationship | Foreign Key |
+|--------------|-------------|--------------|-------------|
+| Customer | Orders | One-to-Many (1:M) | `Orders.Customer_ID` |
+| Inventory | Orders | One-to-Many (1:M) | `Orders.Product_ID` |
+| Categories | Inventory | One-to-Many (1:M) | `Inventory.Category_ID` |
+| Supplier | Inventory | One-to-Many (1:M) | `Inventory.Supplier_ID` |
+
+---
+
+# 📌 Relationship Explanation
+
+## 1️⃣ Customer → Orders (1:M)
+
+```text
+One Customer
+        │
+        └────────► Many Orders
+```
+
+- One customer can place multiple orders.
+- Every order belongs to exactly one customer.
+
+**Connection**
+
+```text
+Customer.Customer_ID
+        │
+        ▼
+Orders.Customer_ID
+```
+
+---
+
+## 2️⃣ Inventory → Orders (1:M)
+
+```text
+One Product
+        │
+        └────────► Many Orders
+```
+
+- A product can be ordered many times.
+- Every order contains one product.
+
+**Connection**
+
+```text
+Inventory.Product_ID
+        │
+        ▼
+Orders.Product_ID
+```
+
+---
+
+## 3️⃣ Categories → Inventory (1:M)
+
+```text
+One Category
+        │
+        └────────► Many Products
+```
+
+- One category contains multiple products.
+- Every product belongs to one category.
+
+**Connection**
+
+```text
+Categories.Category_ID
+        │
+        ▼
+Inventory.Category_ID
+```
+
+---
+
+## 4️⃣ Supplier → Inventory (1:M)
+
+```text
+One Supplier
+        │
+        └────────► Many Products
+```
+
+- A supplier can supply many products.
+- Every product has one supplier.
+
+**Connection**
+
+```text
+Supplier.Supplier_ID
+        │
+        ▼
+Inventory.Supplier_ID
+```
+
+---
+
+# 🔑 Primary Keys (PK)
+
+| Table | Primary Key |
+|--------|-------------|
+| Customer | `Customer_ID` |
+| Orders | `Order_ID` |
+| Inventory | `Product_ID` |
+| Categories | `Category_ID` |
+| Supplier | `Supplier_ID` |
+
+A **Primary Key (PK)** uniquely identifies each row in a table.
+
+---
+
+# 🔗 Foreign Keys (FK)
+
+| Table | Foreign Key | References |
+|--------|-------------|------------|
+| Orders | `Customer_ID` | `Customer.Customer_ID` |
+| Orders | `Product_ID` | `Inventory.Product_ID` |
+| Inventory | `Category_ID` | `Categories.Category_ID` |
+| Inventory | `Supplier_ID` | `Supplier.Supplier_ID` |
+
+A **Foreign Key (FK)** creates a relationship between two tables by referencing the Primary Key of another table.
+
+---
+
+# 🧠 How Data Flows
+
+```text
+Customer
+    │
+    ▼
+Orders
+    │
+    ▼
+Inventory
+   ├────────► Categories
+   │
+   └────────► Supplier
+```
+
+This means:
+
+- A **Customer** places an **Order**.
+- An **Order** references a **Product**.
+- A **Product** belongs to a **Category**.
+- A **Product** is supplied by a **Supplier**.
+
+---
+
+# 💡 Real-World Example
+
+Suppose **Aarav** buys a **MacBook Air**.
+
+```text
+Customer
+Aarav
+   │
+   ▼
+Order #101
+   │
+   ▼
+MacBook Air
+   │
+   ├────────► Electronics
+   │
+   └────────► Tech World
+```
+
+Using SQL `JOIN`s, we can combine information from all these tables to answer business questions like:
+
+- Which customer ordered which product?
+- Which supplier supplied the product?
+- Which category does the product belong to?
+- What payment method was used?
+- Which city is the customer from?
+
+---
+
+# 📚 Summary
+
+- ✅ The database contains **5 related tables**.
+- ✅ Relationships are created using **Primary Keys (PK)** and **Foreign Keys (FK)**.
+- ✅ Most relationships are **One-to-Many (1:M)**.
+- ✅ `JOIN` uses these relationships to combine data from multiple tables.
+- ✅ Understanding the ERD makes writing SQL `JOIN` queries much easier.
