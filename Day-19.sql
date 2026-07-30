@@ -35,19 +35,19 @@
 -- ✅ NOT LIKE
 -- ✅ ORDER BY
 
--- select Customer.Customer_Name, Inventory.Product_Name,
---  Inventory.Price, Orders.Payment_Method
--- from customer  
--- join Orders 
--- on Orders.Customer_ID = Customer.Customer_ID  
--- join inventory
--- on Orders.Product_ID = Inventory.Product_ID
--- where Inventory.Product_Status = 'AVAILABLE'
---     and Orders.Payment_Status = 'PAID'
---     and Inventory.Price > 30000
---     and Customer.City in ('BENGALURU','MYSURU')
---     and Inventory.Brand not like 'A%'
---     order by Customer.Customer_Name asc, Inventory.Price desc;
+select Customer.Customer_Name, Inventory.Product_Name,
+ Inventory.Price, Orders.Payment_Method
+from customer  
+join Orders 
+on Orders.Customer_ID = Customer.Customer_ID  
+join inventory
+on Orders.Product_ID = Inventory.Product_ID
+where Inventory.Product_Status = 'AVAILABLE'
+    and Orders.Payment_Status = 'PAID'
+    and Inventory.Price > 30000
+    and Customer.City in ('BENGALURU','MYSURU')
+    and Inventory.Brand not like 'A%'
+    order by Customer.Customer_Name asc, Inventory.Price desc;
 
 
 -- 🏢 Business Scenario
@@ -76,17 +76,17 @@
 -- ✅ ORDER BY
 
 
--- select Distinct Supplier.Supplier_Name
--- from Supplier
--- join Inventory
--- on Supplier.Supplier_ID = Inventory.Supplier_ID
--- join Categories
--- on Inventory.Category_ID = Categories.Category_ID
--- where Categories.Category_Name in ('ELECTRONICS','HOME_APPLIANCES')
---        and Inventory.Rating = 5
---        and Inventory.price Between 15000 and 90000
---        and Inventory.Product_Status = 'AVAILABLE'
--- order by Supplier.Supplier_Name asc;
+select Distinct Supplier.Supplier_Name
+from Supplier
+join Inventory
+on Supplier.Supplier_ID = Inventory.Supplier_ID
+join Categories
+on Inventory.Category_ID = Categories.Category_ID
+where Categories.Category_Name in ('ELECTRONICS','HOME_APPLIANCES')
+       and Inventory.Rating = 5
+       and Inventory.price Between 15000 and 90000
+       and Inventory.Product_Status = 'AVAILABLE'
+order by Supplier.Supplier_Name asc;
 
 
 -- ⚙ SQL Execution Trace
