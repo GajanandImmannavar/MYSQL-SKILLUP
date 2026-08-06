@@ -483,3 +483,58 @@ on Inventory.Category_ID = Categories.Category_ID
     and Inventory.Product_Status = 'AVAILABLE'
 order by Supplier.Supplier_City asc;
 
+-- 🔗 Table Relationship
+-- Supplier
+--     │
+--     │ Supplier_ID
+--     ▼
+-- Inventory
+--     │
+--     │ Category_ID
+--     ▼
+-- Categories
+-- 🧠 SQL Execution Order
+-- 1. FROM Supplier
+--         │
+--         ▼
+-- 2. JOIN Inventory
+--         │
+--         ▼
+-- 3. JOIN Categories
+--         │
+--         ▼
+-- 4. WHERE
+--    • Category IN ('Furniture', 'Sports')
+--    • Rating IN (4, 5)
+--    • Price > 10000
+--    • Product_Status = 'AVAILABLE'
+--         │
+--         ▼
+-- 5. SELECT DISTINCT Supplier_City
+--         │
+--         ▼
+-- 6. ORDER BY Supplier_City ASC
+--         │
+--         ▼
+-- 7. Final Result
+-- 💡 Interview Tips
+-- 1️⃣ Why use IN (4, 5)?
+
+-- Instead of:
+
+-- WHERE Rating = 4
+--    OR Rating = 5
+
+-- Write:
+
+-- WHERE Rating IN (4, 5)
+
+-- It is shorter, cleaner, and easier to extend later.
+
+-- 2️⃣ Why use DISTINCT?
+
+-- A supplier may provide multiple products from the same city.
+
+-- Without DISTINCT, the same city could appear several times.
+
+-- DISTINCT ensures each city appears only once.
