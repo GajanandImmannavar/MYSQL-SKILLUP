@@ -267,6 +267,69 @@
 
 
 
+-- ⭐ Bonus Problem
+-- 🏢 Business Scenario
 
+-- The operations manager wants to monitor supplier performance.
+
+-- Prepare a report showing:
+
+-- Supplier Name
+-- Customer Name
+-- Product Name
+-- Category Name
+-- Order Date
+
+-- Include only:
+
+-- Available products
+-- Paid orders
+-- Products with Rating 5
+-- Categories other than Grocery
+-- Supplier cities not starting with 'C'
+
+-- Sort by:
+
+-- Category Name
+-- Supplier Name
+-- Order Date (Newest first)
+
+-- select  Customer.Customer_Name, Inventory.Product_Name, 
+--        Categories.Category_Name, Orders.Order_Date, Supplier.Supplier_Name
+-- from Customer
+-- join Orders 
+-- on Customer.Customer_ID = Orders.Customer_ID
+-- join Inventory
+-- on Orders.Product_ID = Inventory.Product_ID
+-- join Categories
+-- on Inventory.Category_ID = Categories.Category_ID
+-- join Supplier 
+-- on Inventory.Supplier_ID = Supplier.Supplier_ID
+-- where Inventory.Product_Status ='AVAILABLE' and
+--       Orders.Payment_Status = 'PAID' and
+--       Inventory.Rating = 5 and
+--       Categories.Category_Name not in ('GRocery') and
+--       Supplier.Supplier_City not like 'C%'
+-- order by Categories.Category_Name asc,
+--          Supplier.Supplier_Name asc,
+--          Orders.Order_Date desc;
+
+
+-- Relationship Flow
+
+-- Customer
+--      │
+-- Customer_ID
+--      │
+-- Orders
+--      │
+-- Product_ID
+--      │
+-- Inventory
+--    ├─────────────┐
+--    │             │
+-- Category_ID   Supplier_ID
+--    │             │
+-- Categories   Supplier
 
 
