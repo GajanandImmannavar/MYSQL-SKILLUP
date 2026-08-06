@@ -332,4 +332,123 @@
 --    │             │
 -- Categories   Supplier
 
+-- Business Scenario
+
+-- A national retail company is preparing a report for its monthly premium sales review.
+
+-- The sales manager wants to identify customers who purchased premium products supplied by trusted suppliers.
+
+-- Prepare a report showing:
+
+-- Customer Name
+-- Product Name
+-- Brand
+-- Category Name
+-- Supplier Name
+-- Price
+-- Payment Method
+
+-- Include only products that:
+
+-- are AVAILABLE
+-- have a Rating of 5
+-- cost between ₹30,000 and ₹100,000
+-- belong to Electronics or Home Appliances
+-- are not supplied by cities starting with 'M'
+-- were purchased using CARD or UPI
+-- have Payment Status = PAID
+
+-- Sort the result by:
+
+-- Category Name (A → Z)
+-- Customer Name (A → Z)
+-- Price (Highest → Lowest)
+
+
+
+
+select Customer.Customer_Name, Inventory.Product_Name, Inventory.Brand,
+       Categories.Category_Name, Supplier.Supplier_Name, Inventory.Price, Orders.Payment_Method
+from Customer
+join Orders
+on Customer.Customer_ID = Orders.Customer_ID
+join Inventory
+on Orders.Product_ID = Inventory.Product_ID
+join Categories
+on Inventory.Category_ID = Categories.Category_ID
+join Supplier
+on Inventory.Supplier_ID = Supplier.Supplier_ID
+
+where Inventory.Product_Status = 'AVAILABLE'
+    and Inventory.Rating = 5
+    and Inventory.Price between 30000 and 100000
+    and Categories.Category_Name in ('Electronics', 'Home Appliances')
+    and Supplier.Supplier_City not like 'M%'
+    and Orders.Payment_Method in ('CARD', 'UPI')
+    and Orders.Payment_Status = 'PAID'
+order by Categories.Category_Name asc, Customer.Customer_Name asc, Inventory.Price desc;
+
+
+-- Table Relationship
+
+-- Customer
+--     │
+--     │ Customer_ID
+--     ▼
+-- Orders
+--     │
+--     │ Product_ID
+--     ▼
+-- Inventory
+--    ├──────────────┐
+--    │              │
+--    ▼              ▼
+-- Categories     Supplier
+
+
+-- 🧠 SQL Execution Order
+
+-- 1. FROM Customer
+--         │
+--         ▼
+-- 2. JOIN Orders
+--         │
+--         ▼
+-- 3. JOIN Inventory
+--         │
+--         ▼
+-- 4. JOIN Categories
+--         │
+--         ▼
+-- 5. JOIN Supplier
+--         │
+--         ▼
+-- 6. WHERE
+--    • Product_Status = 'AVAILABLE'
+--    • Rating = 5
+--    • Price BETWEEN 30000 AND 100000
+--    • Category IN ('Electronics', 'Home Appliances')
+--    • Supplier_City NOT LIKE 'M%'
+--    • Payment_Method IN ('CARD', 'UPI')
+--    • Payment_Status = 'PAID'
+--         │
+--         ▼
+-- 7. SELECT
+--    • Customer Name
+--    • Product Name
+--    • Brand
+--    • Category Name
+--    • Supplier Name
+--    • Price
+--    • Payment Method
+--         │
+--         ▼
+-- 8. ORDER BY
+--    • Category Name (A → Z)
+--    • Customer Name (A → Z)
+--    • Price (Highest → Lowest)
+--         │
+--         ▼
+-- 9. Final Result
+
 
