@@ -35,21 +35,21 @@
 -- Price (Highest → Lowest)
 
 
--- select Customer.Customer_Name, Inventory.Product_Name, Inventory.Brand,
---  Supplier.Supplier_Name, Inventory.Price, Orders.Payment_Method
--- from Customer
--- join Orders
--- on Customer.Customer_ID = Orders.Customer_ID
--- join Inventory
--- on Orders.Product_ID = Inventory.Product_ID
--- join Supplier
--- on Inventory.Supplier_ID = Supplier.Supplier_ID
--- where Inventory.Product_Status = 'AVAILABLE'
---     and Inventory.Rating >= 4
---     and Inventory.Price > 40000
---     and Inventory.Brand not like 'N%'
---     and Supplier.Supplier_City in ('BENGALURU', 'HYDERABAD', 'MUMBAI')
---     order by Customer.Customer_Name asc, Inventory.Price desc;
+select Customer.Customer_Name, Inventory.Product_Name, Inventory.Brand,
+ Supplier.Supplier_Name, Inventory.Price, Orders.Payment_Method
+from Customer
+join Orders
+on Customer.Customer_ID = Orders.Customer_ID
+join Inventory
+on Orders.Product_ID = Inventory.Product_ID
+join Supplier
+on Inventory.Supplier_ID = Supplier.Supplier_ID
+where Inventory.Product_Status = 'AVAILABLE'
+    and Inventory.Rating >= 4
+    and Inventory.Price > 40000
+    and Inventory.Brand not like 'N%'
+    and Supplier.Supplier_City in ('BENGALURU', 'HYDERABAD', 'MUMBAI')
+    order by Customer.Customer_Name asc, Inventory.Price desc;
 
 
 -- ⭐ Interview Tip
@@ -192,19 +192,19 @@
 -- ✅ ORDER BY
 
 
--- select distinct Customer.City
--- from customer 
--- join Orders
--- on Orders.Customer_ID = Customer.Customer_ID
--- join Inventory
--- on Orders.Product_ID = Inventory.Product_ID
--- join Categories
--- on Inventory.Category_ID = Categories.Category_ID
--- where Categories.Category_Name in ('Electronics', 'Sports')
---     and Inventory.Product_Status = 'AVAILABLE'
---     and Orders.Payment_Status = 'PAID'
---     and Inventory.Price between 20000 and 90000
---     order by Customer.City asc;
+select distinct Customer.City
+from customer 
+join Orders
+on Orders.Customer_ID = Customer.Customer_ID
+join Inventory
+on Orders.Product_ID = Inventory.Product_ID
+join Categories
+on Inventory.Category_ID = Categories.Category_ID
+where Categories.Category_Name in ('Electronics', 'Sports')
+    and Inventory.Product_Status = 'AVAILABLE'
+    and Orders.Payment_Status = 'PAID'
+    and Inventory.Price between 20000 and 90000
+    order by Customer.City asc;
 
 
 --     ⭐ Interview Tip
@@ -294,25 +294,25 @@
 -- Supplier Name
 -- Order Date (Newest first)
 
--- select  Customer.Customer_Name, Inventory.Product_Name, 
---        Categories.Category_Name, Orders.Order_Date, Supplier.Supplier_Name
--- from Customer
--- join Orders 
--- on Customer.Customer_ID = Orders.Customer_ID
--- join Inventory
--- on Orders.Product_ID = Inventory.Product_ID
--- join Categories
--- on Inventory.Category_ID = Categories.Category_ID
--- join Supplier 
--- on Inventory.Supplier_ID = Supplier.Supplier_ID
--- where Inventory.Product_Status ='AVAILABLE' and
---       Orders.Payment_Status = 'PAID' and
---       Inventory.Rating = 5 and
---       Categories.Category_Name not in ('GRocery') and
---       Supplier.Supplier_City not like 'C%'
--- order by Categories.Category_Name asc,
---          Supplier.Supplier_Name asc,
---          Orders.Order_Date desc;
+select  Customer.Customer_Name, Inventory.Product_Name, 
+       Categories.Category_Name, Orders.Order_Date, Supplier.Supplier_Name
+from Customer
+join Orders 
+on Customer.Customer_ID = Orders.Customer_ID
+join Inventory
+on Orders.Product_ID = Inventory.Product_ID
+join Categories
+on Inventory.Category_ID = Categories.Category_ID
+join Supplier 
+on Inventory.Supplier_ID = Supplier.Supplier_ID
+where Inventory.Product_Status ='AVAILABLE' and
+      Orders.Payment_Status = 'PAID' and
+      Inventory.Rating = 5 and
+      Categories.Category_Name not in ('GRocery') and
+      Supplier.Supplier_City not like 'C%'
+order by Categories.Category_Name asc,
+         Supplier.Supplier_Name asc,
+         Orders.Order_Date desc;
 
 
 -- Relationship Flow
@@ -451,4 +451,35 @@ order by Categories.Category_Name asc, Customer.Customer_Name asc, Inventory.Pri
 --         ▼
 -- 9. Final Result
 
+-- 🔄 Revision Problem 
+-- 🏢 Business Scenario
+
+-- The HR manager wants to know the unique supplier cities from which premium products are supplied.
+
+-- Consider only products that:
+
+-- belong to Furniture or Sports
+-- have Rating 4 or 5
+-- cost more than ₹10,000
+-- are AVAILABLE
+
+-- Display only:
+
+-- Supplier City
+
+-- Remove duplicate cities.
+
+-- Sort alphabetically.
+
+select distinct Supplier.Supplier_City
+from Supplier
+join Inventory
+on Supplier.Supplier_ID = Inventory.Supplier_ID
+join Categories
+on Inventory.Category_ID = Categories.Category_ID
+    where Categories.Category_Name in ('Furniture', 'Sports')
+    and Inventory.Rating in (4, 5)
+    and Inventory.Price > 10000
+    and Inventory.Product_Status = 'AVAILABLE'
+order by Supplier.Supplier_City asc;
 
