@@ -35,25 +35,33 @@
 -- Price (Highest → Lowest)
 
 
-select Customer.Customer_Name, Inventory.Product_Name, Inventory.Brand,
- Supplier.Supplier_Name, Inventory.Price, Orders.Payment_Method
-from Customer
-join Orders
-on Customer.Customer_ID = Orders.Customer_ID
-join Inventory
-on Orders.Product_ID = Inventory.Product_ID
-join Supplier
-on Inventory.Supplier_ID = Supplier.Supplier_ID
-where Inventory.Product_Status = 'AVAILABLE'
-    and Inventory.Rating >= 4
-    and Inventory.Price > 40000
-    and Inventory.Brand not like 'N%'
-    and Supplier.Supplier_City in ('BENGALURU', 'HYDERABAD', 'MUMBAI')
-    order by Customer.Customer_Name asc, Inventory.Price desc;
+-- select Customer.Customer_Name, Inventory.Product_Name, Inventory.Brand,
+--  Supplier.Supplier_Name, Inventory.Price, Orders.Payment_Method
+-- from Customer
+-- join Orders
+-- on Customer.Customer_ID = Orders.Customer_ID
+-- join Inventory
+-- on Orders.Product_ID = Inventory.Product_ID
+-- join Supplier
+-- on Inventory.Supplier_ID = Supplier.Supplier_ID
+-- where Inventory.Product_Status = 'AVAILABLE'
+--     and Inventory.Rating >= 4
+--     and Inventory.Price > 40000
+--     and Inventory.Brand not like 'N%'
+--     and Supplier.Supplier_City in ('BENGALURU', 'HYDERABAD', 'MUMBAI')
+--     order by Customer.Customer_Name asc, Inventory.Price desc;
 
 
+-- ⭐ Interview Tip
 
+-- Interviewers love this question:
 
+-- How do you know which table should be joined next?
+
+-- Professional Answer
+
+-- I follow the relationship defined by the Primary Key and Foreign Key. I don't guess the JOIN order.
+-- I first identify which table contains the required column and then connect it through the related foreign key.
 
 --     🔗 Table Relationship
 -- Customer
@@ -182,3 +190,83 @@ where Inventory.Product_Status = 'AVAILABLE'
 -- ✅ BETWEEN
 -- ✅ IN
 -- ✅ ORDER BY
+
+
+-- select distinct Customer.City
+-- from customer 
+-- join Orders
+-- on Orders.Customer_ID = Customer.Customer_ID
+-- join Inventory
+-- on Orders.Product_ID = Inventory.Product_ID
+-- join Categories
+-- on Inventory.Category_ID = Categories.Category_ID
+-- where Categories.Category_Name in ('Electronics', 'Sports')
+--     and Inventory.Product_Status = 'AVAILABLE'
+--     and Orders.Payment_Status = 'PAID'
+--     and Inventory.Price between 20000 and 90000
+--     order by Customer.City asc;
+
+
+--     ⭐ Interview Tip
+
+-- A common interview question is:
+
+-- How do you know whether you need another JOIN?
+
+-- Professional Answer
+
+-- I check where the required column is stored.
+-- If the required column is not available in the currently joined tables, 
+-- I join the related table using its Primary Key–Foreign Key relationship.
+
+-- 🔗 Table Relationship
+
+-- Customer
+--     │
+--     │ Customer_ID
+--     ▼
+-- Orders
+--     │
+--     │ Product_ID
+--     ▼
+-- Inventory
+--     │
+--     │ Category_ID
+--     ▼
+-- Categories
+
+-- 🧠 SQL Execution Flow
+
+-- Customer
+--     │
+--     ▼
+-- JOIN Orders
+--     │
+--     ▼
+-- JOIN Inventory
+--     │
+--     ▼
+-- JOIN Categories
+--     │
+--     ▼
+-- WHERE
+--  • Category IN ('Electronics', 'Sports')
+--  • Product_Status = AVAILABLE
+--  • Payment_Status = PAID
+--  • Price BETWEEN 20000 AND 90000
+--     │
+--     ▼
+-- SELECT DISTINCT Customer.City
+--     │
+--     ▼
+-- ORDER BY Customer.City ASC
+--     │
+--     ▼
+-- Final Output
+        
+
+
+
+
+
+
