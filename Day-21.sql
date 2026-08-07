@@ -1,0 +1,3 @@
+-- use Joins;
+
+-- show tables;
