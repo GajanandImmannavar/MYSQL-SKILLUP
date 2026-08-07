@@ -3,7 +3,7 @@
 > **Learning Goal:** Understand what a JOIN is, why databases use multiple tables, how Primary Keys and Foreign Keys work, and how SQL combines data from different tables.
 
 ---
-
+## INNER JOIN
 # 📚 Table of Contents
 
 1. What is a JOIN?
