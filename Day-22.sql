@@ -25,11 +25,11 @@
 -- ✅ NULL values in the result
 
 
-select Customer.Customer_Name, Orders.Order_ID, Orders.Order_Date
-from Customer
-LEFT JOIN Orders
-on Customer.Customer_Id = Orders.Customer_ID
-ORDER BY Customer.Customer_Name asc, Orders.Order_Date asc;
+-- select Customer.Customer_Name, Orders.Order_ID, Orders.Order_Date
+-- from Customer
+-- LEFT JOIN Orders
+-- on Customer.Customer_Id = Orders.Customer_ID
+-- ORDER BY Customer.Customer_Name asc, Orders.Order_Date asc;
 
 
 
@@ -50,11 +50,11 @@ ORDER BY Customer.Customer_Name asc, Orders.Order_Date asc;
 -- Supplier Name
 
 
-select Supplier.Supplier_Name, Inventory.Product_Name
-from Supplier
-LEFT JOIN Inventory
-on Supplier.Supplier_Id = Inventory.Supplier_Id
-ORDER BY Supplier.Supplier_Name;
+-- select Supplier.Supplier_Name, Inventory.Product_Name
+-- from Supplier
+-- LEFT JOIN Inventory
+-- on Supplier.Supplier_Id = Inventory.Supplier_Id
+-- ORDER BY Supplier.Supplier_Name;
 
 
 -- If a supplier has a product:
@@ -89,11 +89,11 @@ ORDER BY Supplier.Supplier_Name;
 -- Product Name
 
 
-select Categories.Category_Name, Inventory.Product_Name, Inventory.Brand
-from  Categories
-LEFT JOIN Inventory
-on Inventory.Category_Id = Categories.Category_ID
-ORDER BY Categories.Category_Name asc, Inventory.Product_Name ASC;
+-- select Categories.Category_Name, Inventory.Product_Name, Inventory.Brand
+-- from  Categories
+-- LEFT JOIN Inventory
+-- on Inventory.Category_Id = Categories.Category_ID
+-- ORDER BY Categories.Category_Name asc, Inventory.Product_Name ASC;
 
 
 -- ⭐ Rule to remember
@@ -115,3 +115,240 @@ ORDER BY Categories.Category_Name asc, Inventory.Product_Name ASC;
 -- FROM Categories
 --      ↓
 -- LEFT JOIN Inventory
+
+-- 
+-- 💼 Professional interview answer
+-- 
+-- INNER JOIN returns only rows that have a matching relationship between the joined tables. LEFT JOIN returns all rows from the left table and the matching rows from the right table. If there is no match, the right-table columns contain NULL.
+-- 
+-- 🔑 Easy comparison
+-- INNER JOIN
+-- → Only matching rows
+-- 
+-- 
+-- LEFT JOIN
+-- → All LEFT rows
+-- → Matching RIGHT rows
+-- → No match = NULL
+-- 
+-- For our supplier problem:
+-- 
+-- Supplier
+--    ↓
+-- LEFT JOIN
+--    ↓
+-- Inventory
+-- 
+-- Even if a supplier has no product, the supplier must still appear.
+-- 
+-- Example:
+-- 
+-- Supplier	Product
+-- Tech World	iPhone 16
+-- Furniture Hub	Wooden Sofa
+-- New Supplier	NULL
+-- 
+-- That NULL is the important difference.
+
+# Questions
+-- 
+-- The query starts with:
+-- 
+-- FROM Categories
+-- LEFT JOIN Inventory
+-- 
+-- Why is Categories the LEFT table instead of Inventory?
+
+
+-- I kept Categories as the left table because the requirement is to display every category, including categories that don't currently have any products. LEFT JOIN guarantees that all categories remain in the result, while matching products are returned from Inventory. If a category has no product, the Inventory columns will contain NULL.
+
+-- 🔑 Remember this pattern
+
+-- Whenever the requirement says:
+
+-- "Show ALL X, even if X has no Y."
+
+-- Think:
+
+-- X → LEFT JOIN → Y
+
+-- Examples:
+
+-- All Customers → LEFT JOIN → Orders
+
+
+-- All Suppliers → LEFT JOIN → Inventory
+
+
+-- All Categories → LEFT JOIN → Inventory
+
+-- 🏢 Main Problem
+-- 
+-- The customer support manager wants a report of all customers and their orders.
+-- 
+-- However, the manager is specifically interested in PAID orders.
+-- 
+-- Display:
+-- Customer Name
+-- Order ID
+-- Payment Status
+-- Requirement
+-- Show every customer, including customers who have no orders.
+-- If a customer has no order, Order_ID and Payment_Status should be NULL.
+-- Sort by Customer Name alphabetically.
+-- ⚠️ Important
+-- 
+-- The manager says:
+-- 
+-- "Don't remove customers who don't have orders."
+-- 
+-- Think carefully about where the Payment_Status = 'PAID' condition should go.
+
+
+-- select Customer.Customer_Name, Orders.Order_ID, Orders.Payment_Status
+-- from Customer
+-- left JOIN Orders
+-- on Customer.Customer_ID = Orders.Customer_ID
+-- and Orders.Payment_Status = 'PAID'
+-- order by Customer.Customer_Name asc;
+
+-- ⭐ Remember this rule
+-- LEFT JOIN + condition on right table
+
+
+-- Condition in ON
+--     ↓
+-- Keep ALL left-table rows
+
+
+-- Condition in WHERE
+--     ↓
+-- Can remove unmatched left-table rows
+
+
+
+
+-- 🔄 Revision Problem
+
+-- Don't solve this yet.
+
+-- The manager wants all suppliers, including suppliers without products.
+
+-- Display:
+
+-- Supplier Name
+-- Product Name
+-- Product Status
+
+-- But if a supplier has products, show only AVAILABLE products.
+
+-- Suppliers without products must still appear.
+
+
+
+-- select Supplier.Supplier_Name, Inventory.Product_Name, Inventory.Product_Status
+-- from Supplier
+-- left Join Inventory
+-- On Supplier.Supplier_Id = Inventory.Supplier_Id
+-- and Inventory.Product_Status = 'AVAILABLE';
+
+
+
+-- Supplier
+--    │
+--    │ LEFT JOIN
+--    ▼
+-- Inventory
+--    │
+--    ├── AVAILABLE     → MATCH ✅
+--    ├── OUT_OF_STOCK  → NO MATCH → NULL
+--    ├── DISCONTINUED  → NO MATCH → NULL
+--    └── No product    → NO MATCH → NULL
+
+
+
+
+-- 🧠 Most important part
+
+-- You did this correctly:
+
+-- ON Supplier.Supplier_ID = Inventory.Supplier_ID
+-- AND Inventory.Product_Status = 'AVAILABLE'
+
+-- Do NOT move this condition into WHERE.
+
+-- Because the requirement says:
+
+-- Suppliers without products must still appear.
+
+-- With the condition in ON:
+
+-- Supplier
+--    │
+--    │ LEFT JOIN
+--    ▼
+-- Inventory
+--    │
+--    ├── AVAILABLE     → MATCH → show product
+--    │
+--    ├── OUT_OF_STOCK  → no match → NULL
+--    │
+--    ├── DISCONTINUED  → no match → NULL
+--    │
+--    └── No products   → no match → NULL
+
+-- So even if a supplier has no AVAILABLE product, the supplier remains in the result.
+
+-- ⭐ Key rule you're practicing
+-- LEFT JOIN
+--    +
+-- condition on RIGHT table
+--    ↓
+-- Put condition in ON
+--    ↓
+-- Keep ALL rows from LEFT table
+
+
+
+
+
+
+
+-- The company wants a list of all categories, including categories without products.
+-- 
+-- Display:
+-- 
+-- Category Name
+-- Product Name
+-- Price
+-- 
+-- If a category has products, show only products costing more than ₹10,000.
+-- 
+-- Categories without matching products must still appear.
+
+
+
+-- select Categories.Category_Name, Inventory.Product_Name, Inventory.Price
+-- from Categories
+-- left join Inventory
+-- on Inventory.Category_ID = Categories.Category_Id
+-- and Inventory.Price >10000;
+
+
+
+-- Categories
+--     │
+--     │ LEFT JOIN
+--     ▼
+-- Inventory
+--     │
+--     ├── Price > 10000 → MATCH ✅
+--     │
+--     ├── Price ≤ 10000 → NULL
+--     │
+--     └── No products   → NULL
+
+
+
+
+
