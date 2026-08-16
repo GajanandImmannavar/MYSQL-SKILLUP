@@ -69,7 +69,7 @@
 --         NOT NULL DEFAULT 'PENDING',
 
 --     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID),
---     FOREIGN KEY (Product_ID) REFERENCES Product(Product_ID)
+--     FOREIGN KEY (Product_ID) REFERENCES Inventory(Product_ID)
 -- );
 
 -- SHOW TABLES;
