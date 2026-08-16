@@ -7,7 +7,7 @@
 -- ('CLOTHING'),
 -- ('GROCERY'),
 -- ('SPORTS'),
--- ('BOOKS'),ss
+-- ('BOOKS'),
 -- ('TOYS'),
 -- ('BEAUTY'),
 -- ('HOME_APPLIANCES'),
