@@ -29,18 +29,18 @@
 
 -- "Only products that are AVAILABLE."
 
--- select  Inventory.Product_Name, 
---         Inventory.Price, 
---         Inventory.Product_Status, 
---         Supplier.Supplier_City, 
---         Supplier.Supplier_Name
--- from Supplier
+select  Inventory.Product_Name, 
+        Inventory.Price, 
+        Inventory.Product_Status, 
+        Supplier.Supplier_City, 
+        Supplier.Supplier_Name
+from Supplier
 
--- LEFT JOIN Inventory
---     on Supplier.Supplier_Id = Inventory.Supplier_Id
---     and Inventory.Product_Status = "AVAILABLE"
---     ORDER BY Supplier.Supplier_Name asc, 
---     Inventory.Price desc;
+LEFT JOIN Inventory
+    on Supplier.Supplier_Id = Inventory.Supplier_Id
+    and Inventory.Product_Status = "AVAILABLE"
+    ORDER BY Supplier.Supplier_Name asc, 
+    Inventory.Price desc;
 
 
 -- The customer support manager wants to see all customers and their orders.
@@ -60,14 +60,14 @@
 -- Sort by Customer Name A → Z.
 
 
--- select Customer.Customer_Name, Orders.Order_Id,
---        Orders.Payment_Status,
---        Orders.Order_Date
--- from Customer 
--- left join Orders
---         on Customer.Customer_Id = Orders.Customer_Id
---         and Orders.Payment_Status = "PAID"
--- order by Customer.Customer_Name asc;
+select Customer.Customer_Name, Orders.Order_Id,
+       Orders.Payment_Status,
+       Orders.Order_Date
+from Customer 
+left join Orders
+        on Customer.Customer_Id = Orders.Customer_Id
+        and Orders.Payment_Status = "PAID"
+order by Customer.Customer_Name asc;
 
 -- inside the ON condition.
 
