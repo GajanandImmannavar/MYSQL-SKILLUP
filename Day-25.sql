@@ -340,4 +340,60 @@
 -- order by Categories.Category_Name asc,
 --          Inventory.Price desc;
 
-       
+
+
+
+-- 💼 Business Scenario
+
+-- A sales manager wants a report of every customer and the products they purchased.
+
+-- However, the manager is interested only in purchases where:
+
+-- The payment was successfully completed.
+-- The purchased product is currently available.
+-- The product has a rating of 4 or higher.
+
+-- Important: Customers who have no purchase satisfying these requirements must still appear in the report.
+
+-- Display
+-- Customer Name
+-- Customer City
+-- Product Name
+-- Product Price
+-- Payment Status
+-- Sorting
+-- Customer City → A to Z
+-- Customer Name → A to Z
+-- Product Price → High to Low
+
+
+-- Tables
+
+-- Customer → Orders → Inventory
+
+
+
+-- select Customer.Customer_Name,
+--        Customer.City,
+--        Inventory.Product_Name,
+--        Inventory.Price,
+--        Orders.Payment_Status
+
+-- from Customer
+
+-- left join Orders
+-- on Customer.Customer_ID = Orders.Customer_ID
+
+-- and Orders.Payment_Status = 'PAID'
+
+
+-- left join Inventory
+-- on Orders.Product_Id = Inventory.Product_Id
+
+-- and Inventory.Product_Status = "AVAILABLE"
+-- and Inventory.Rating >=4
+
+-- order by Customer.City asc,
+--          Customer.Customer_Name asc,
+--          Inventory.Price desc;
+
