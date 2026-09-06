@@ -142,22 +142,22 @@
 
 
 
-select Supplier.Supplier_Name, 
-       Supplier.Supplier_City,
-       Inventory.Product_Name, 
-       Inventory.Brand
-from Supplier
+-- select Supplier.Supplier_Name, 
+--        Supplier.Supplier_City,
+--        Inventory.Product_Name, 
+--        Inventory.Brand
+-- from Supplier
 
-left join Inventory
-on Supplier.Supplier_Id = Inventory.Supplier_Id
-And Inventory.Product_Status ='AVAILABLE'
+-- left join Inventory
+-- on Supplier.Supplier_Id = Inventory.Supplier_Id
+-- And Inventory.Product_Status ='AVAILABLE'
 
-left join Categories
-on Inventory.Category_Id = Categories.Category_Id
-And Categories.Category_Name in('Electronics','Furniture')
+-- left join Categories
+-- on Inventory.Category_Id = Categories.Category_Id
+-- And Categories.Category_Name in('Electronics','Furniture')
 
 
-order by Supplier.Supplier_Name asc; 
+-- order by Supplier.Supplier_Name asc; 
 
 
 -- 🧠 What you learned today
@@ -298,3 +298,46 @@ order by Supplier.Supplier_Name asc;
 -- One JOIN = one ON. Multiple JOINs = multiple ON clauses. Multiple conditions for the same JOIN = one ON + AND.
 
 -- That's an important concept you've now added to your JOIN fundamentals.
+
+
+
+-- ⭐ Bonus Problem
+
+-- The category manager wants all categories, including categories that have no qualifying products.
+
+-- Display:
+
+-- Category Name
+-- Product Name
+-- Price
+-- Rating
+
+-- Only attach products that:
+
+-- cost between ₹20,000 and ₹80,000
+-- Rating ≥ 4
+-- are AVAILABLE
+
+-- Sort by:
+
+-- Category Name
+-- Price — highest first
+
+
+-- select Categories.Category_Name,
+--        Inventory.Product_Name,
+--        Inventory.Price,
+--        Inventory.Rating
+-- from Categories
+
+-- left join Inventory
+-- on Categories.Category_Id = Inventory.Category_Id
+
+-- and Inventory.Price between 20000 and 80000
+-- and Inventory.Rating>=4
+-- and Inventory.Product_Status = 'AVAILABLE'
+
+-- order by Categories.Category_Name asc,
+--          Inventory.Price desc;
+
+       
