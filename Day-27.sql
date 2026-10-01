@@ -95,5 +95,20 @@ and Categories.Category_Name in ("Electronics", "Sports")
 order by Inventory.Price desc;
 
 
+-- Important point
 
+-- Your placement of the category condition is exactly what makes this work:
+
+-- ON Categories.Category_Id = Inventory.Category_Id
+-- AND Categories.Category_Name IN ('Electronics', 'Sports')
+
+-- If you instead wrote:
+
+-- WHERE Categories.Category_Name IN ('Electronics', 'Sports')
+
+-- ❌ it would remove the other products, violating the requirement.
        
+9606367660 
+9742566166bb
+7676689385
+
