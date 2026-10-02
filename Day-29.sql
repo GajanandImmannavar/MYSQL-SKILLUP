@@ -156,28 +156,28 @@
 --          Inventory.Price desc;
 
 
-💼 Business Scenario
+-- 💼 Business Scenario
 
-The sales team wants to analyze every order, even when some related information is unavailable.
+-- The sales team wants to analyze every order, even when some related information is unavailable.
 
-Display:
+-- Display:
 
-Order ID
-Order Date
-Customer Name
-Product Name
-Supplier Name
-Product Price
+-- Order ID
+-- Order Date
+-- Customer Name
+-- Product Name
+-- Supplier Name
+-- Product Price
 
-Requirements:
+-- Requirements:
 
-Every order must appear.
-Customer information should be attached only when the customer is from Bengaluru, Mysuru, or Pune.
-Product information should be attached only for products that are AVAILABLE and have a rating of 4 or higher.
-Supplier information should be attached only when the supplier is from Bengaluru or Mumbai.
-An order must never disappear just because one of these conditions isn't satisfied.
-Sort by Order Date newest→oldest, then Product Price high→low.
+-- Every order must appear.
+-- Customer information should be attached only when the customer is from Bengaluru, Mysuru, or Pune.
+-- Product information should be attached only for products that are AVAILABLE and have a rating of 4 or higher.
+-- Supplier information should be attached only when the supplier is from Bengaluru or Mumbai.
+-- An order must never disappear just because one of these conditions isn't satisfied.
+-- Sort by Order Date newest→oldest, then Product Price high→low.
 
-Tables:
+-- Tables:
 
-Customer → Orders → Inventory → Supplier
+-- Customer → Orders → Inventory → Supplier
