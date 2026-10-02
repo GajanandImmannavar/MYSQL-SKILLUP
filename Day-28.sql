@@ -78,27 +78,27 @@
 
 
 
-💼 Business Scenario
+-- 💼 Business Scenario
 
-The sales manager wants a report showing every product, along with its supplier and category information.
+-- The sales manager wants a report showing every product, along with its supplier and category information.
 
-Display:
+-- Display:
 
-Product Name
-Product Price
-Supplier Name
-Category Name
-Requirements
-Every product must appear.
-Supplier information should be attached only for suppliers from Bengaluru or Mumbai.
-Category information should be attached only for Electronics or Sports.
-Products without matching supplier/category information must still appear.
-Sort by:
-Product Price — highest to lowest
-Product Name — A → Z
-Tables
+-- Product Name
+-- Product Price
+-- Supplier Name
+-- Category Name
+-- Requirements
+-- Every product must appear.
+-- Supplier information should be attached only for suppliers from Bengaluru or Mumbai.
+-- Category information should be attached only for Electronics or Sports.
+-- Products without matching supplier/category information must still appear.
+-- Sort by:
+-- Product Price — highest to lowest
+-- Product Name — A → Z
+-- Tables
 
-Supplier → Inventory ← 
+-- Supplier → Inventory ← 
 
 
 
@@ -122,3 +122,42 @@ and Categories.Category_Name in ('Electronics', 'Sports')
 
 order by Inventory.Price desc,
          Inventory.Product_Name asc;
+
+
+
+-- 🧠 Why LEFT JOIN here?
+
+-- We already established:
+
+-- Supplier RIGHT JOIN Inventory
+--                   ↑
+--             ALL PRODUCTS
+
+-- Now we must continue preserving Inventory.
+
+-- So:
+
+-- Inventory
+--     ↓
+-- LEFT JOIN Categories
+--     ↓
+-- Inventory remains preserved
+
+-- This gives us:
+
+-- ALL PRODUCTS
+--     +
+-- Bengaluru/Mumbai supplier when available
+--     +
+-- Electronics/Sports category when available
+-- ⭐ Your main learning 
+
+-- When doing multiple joins, don't simply use RIGHT JOIN for every table.
+
+-- Ask after every JOIN:
+
+-- Which table must continue to be preserved?
+
+-- Here the answer is always:
+
+-- Inventory
