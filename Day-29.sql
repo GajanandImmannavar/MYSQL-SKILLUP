@@ -181,3 +181,74 @@
 -- Tables:
 
 -- Customer → Orders → Inventory → Supplier
+
+
+
+
+
+Select Orders.Order_Id, Orders.Order_Date, Customer.Customer_Name,
+       Inventory.Product_Name, Supplier.Supplier_Name, Inventory.Price
+
+from Customer
+
+right join Orders
+on Customer.Customer_ID = Orders.Customer_ID
+
+and Customer.City in ('Bengaluru','Mysuru','Pune')
+
+
+left join Inventory
+on Orders.Product_Id = Inventory.Product_Id
+
+and Inventory.Product_Status  = 'AVAILABLE'
+and Inventory.Rating >=4
+
+left join Supplier
+on Inventory.Supplier_Id = Supplier.Supplier_Id
+
+
+and Supplier.Supplier_City in ('Bengaluru','Mumbai')
+
+
+order by Orders.Order_Date desc,
+         Inventory.Price desc;
+
+
+
+🔥 What you've learned
+
+You now understand three very important JOIN skills:
+
+1. Preserving the correct table
+RIGHT JOIN Orders
+
+means:
+
+Keep every Order.
+
+LEFT JOIN Inventory
+
+means:
+
+Keep every row coming from the left-side result.
+
+2. Conditions in ON
+
+When you want to preserve the main entity:
+
+LEFT JOIN Inventory
+ON ...
+AND Inventory.Product_Status = 'AVAILABLE'
+
+the condition controls which rows are attached, without unnecessarily removing the preserved rows.
+
+3. Following the relationship path
+Customer
+   ↓
+Orders
+   ↓
+Inventory
+   ↓
+Supplier
+
+This is especially important for 3-, 4-, and 5-table JOIN interview questions.
