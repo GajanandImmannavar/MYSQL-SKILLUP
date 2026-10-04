@@ -97,3 +97,151 @@
 
 
 
+-- select distinct Inventory.Product_Name,  
+--                 Inventory.Price, 
+--                 Supplier.Supplier_Name, 
+--                 Supplier.Supplier_city, 
+--                 Inventory.Product_Status
+
+-- from Supplier
+
+-- right join Inventory
+
+-- on Supplier.Supplier_Id = Inventory.Supplier_Id
+
+-- where Inventory.Price between 1000 and 50000
+
+-- and Inventory.Product_Name like '%a%'
+
+-- and Supplier.Supplier_City in ('Bengaluru','Mumbai')
+
+-- AND Inventory.Product_Status <> 'DISCONTINUED'
+
+-- order by Supplier.Supplier_city asc,
+--           Inventory.Price desc,
+--           Inventory.Product_Name asc;
+
+
+
+-- 🏢 Business Scenario
+
+-- The sales manager wants to see customers and their successful orders.
+
+-- Display
+-- Customer Name
+-- Customer City
+-- Order ID
+-- Order Date
+-- Payment Method
+-- Payment Status
+
+-- Requirements
+-- Every customer should appear, even if they have no successful order.
+-- Only PAID orders should be attached to customers.
+-- Customers from Bengaluru, Mysuru, or Pune should be considered.
+-- Order dates should be shown from newest to oldest.
+
+-- Sort customers by City A→Z, then Customer Name A→Z.
+
+-- Tables: Customer, Orders
+
+
+
+
+-- SELECT Customer.Customer_Name,
+--        Customer.City,
+--        Orders.Order_ID,
+--        Orders.Order_Date,
+--        Orders.Payment_Method,
+--        Orders.Payment_Status
+-- FROM Customer
+-- LEFT JOIN Orders
+-- ON Customer.Customer_ID = Orders.Customer_ID
+-- AND Orders.Payment_Status = 'PAID'
+-- AND Customer.City IN ('Bengaluru', 'Mysuru', 'Pune')
+-- ORDER BY Customer.City ASC,
+--          Customer.Customer_Name ASC,
+--          Orders.Order_Date DESC;
+
+
+
+-- 🏢 Business Scenario
+
+-- The business analyst wants to identify categories that have strong sales performance.
+
+-- Display
+-- Category Name
+-- Number of Orders
+-- Total Product Quantity
+-- Requirements
+-- Consider only successfully paid orders.
+-- Exclude the Grocery category.
+-- Consider products with a rating of 4 or higher.
+-- Consider products priced between ₹1,000 and ₹50,000.
+-- Show only categories having more than 1 order.
+-- Sort by Total Product Quantity high→low, then Category Name A→Z.
+
+-- Tables: Categories, Inventory, Orders
+
+-- SELECT Categories.Category_Name,
+--        COUNT(Orders.Order_ID) AS Number_of_Orders,
+--        SUM(Orders.Quantity) AS Total_Product_Quantity
+-- FROM Categories
+-- INNER JOIN Inventory
+--     ON Categories.Category_ID = Inventory.Category_ID
+-- INNER JOIN Orders
+--     ON Inventory.Product_ID = Orders.Product_ID
+-- WHERE Orders.Payment_Status = 'Success'
+--   AND Categories.Category_Name <> 'Grocery'
+--   AND Inventory.Rating >= 4
+--   AND Inventory.Price BETWEEN 1000 AND 50000
+-- GROUP BY Categories.Category_ID, Categories.Category_Name
+-- HAVING COUNT(Orders.Order_ID) > 1
+-- ORDER BY Total_Product_Quantity DESC,
+--          Categories.Category_Name ASC;
+
+
+
+-- 🏢 Business Scenario
+
+-- The management team wants to identify suppliers whose products are being purchased successfully.
+
+-- Display
+-- Supplier Name
+-- Supplier City
+-- Number of Orders
+-- Total Sales Quantity
+-- Requirements
+-- Only successful payments should be considered.
+-- Consider products with a rating of 4 or higher.
+-- Products from Bengaluru, Mumbai, or Hyderabad suppliers should be considered.
+-- Product names should not start with F.
+-- Consider products priced above ₹2,000.
+-- Show only suppliers having more than 1 successful order.
+-- Sort by Total Sales Quantity high→low, then Supplier Name A→Z.
+
+-- Tables: Supplier, Inventory, Orders
+
+
+
+
+-- SELECT Supplier.Supplier_Name,
+--        Supplier.Supplier_City,
+--        COUNT(Orders.Order_ID) AS Number_of_Orders,
+--        SUM(Orders.Quantity) AS Total_Sales_Quantity
+-- FROM Supplier
+-- INNER JOIN Inventory
+--     ON Supplier.Supplier_ID = Inventory.Supplier_ID
+-- INNER JOIN Orders
+--     ON Inventory.Product_ID = Orders.Product_ID
+-- WHERE Orders.Payment_Status = 'Success'
+--   AND Inventory.Rating >= 4
+--   AND Supplier.Supplier_City IN ('Bengaluru', 'Mumbai', 'Hyderabad')
+--   AND Inventory.Product_Name NOT LIKE 'F%'
+--   AND Inventory.Price > 2000
+-- GROUP BY Supplier.Supplier_ID,
+--          Supplier.Supplier_Name,
+--          Supplier.Supplier_City
+-- HAVING COUNT(Orders.Order_ID) > 1
+-- ORDER BY Total_Sales_Quantity DESC,
+--          Supplier.Supplier_Name ASC;
