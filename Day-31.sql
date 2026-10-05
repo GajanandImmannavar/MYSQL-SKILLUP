@@ -84,4 +84,4 @@ group by Customer.Customer_Id,
 having count(Orders.Order_Id)>2
 
 order by Total_Quantity_Purchased desc,
-         Customer.Customer_Name asc;
+         Customer.Customer_Name asc;    
