@@ -260,62 +260,62 @@
 
 -- Requirement:
 
--- ```text
+
 -- Show all customers
 -- Attach only PAID orders
--- ```
+
 
 -- Wrong:
 
--- ```sql
+
 -- SELECT *
 -- FROM Customer
 -- LEFT JOIN Orders
 -- ON Customer.Customer_ID = Orders.Customer_ID
 -- WHERE Orders.Payment_Status = 'PAID';
--- ```
+
 
 -- Problem:
 
--- ```text
+
 -- LEFT JOIN creates NULL values
 -- ↓
 -- WHERE removes NULL rows
 -- ↓
 -- LEFT JOIN becomes INNER JOIN
--- ```
+
 
 -- Correct:
 
--- ```sql
+
 -- SELECT *
 -- FROM Customer
 -- LEFT JOIN Orders
 -- ON Customer.Customer_ID = Orders.Customer_ID
 -- AND Orders.Payment_Status = 'PAID';
--- ```
+
 
 -- Rule:
 
--- ```text
+
 -- If you want to preserve the LEFT table,
 -- put joined-table conditions inside ON.
--- ```
+
 
 -- ---
 
--- # 7. RIGHT JOIN Filtering
+--  7. RIGHT JOIN Filtering
 
 -- Requirement:
 
--- ```text
+
 -- Every product must appear
 -- Attach supplier only if supplier city is Bengaluru
 -- ```
 
 -- Correct:
 
--- ```sql
+
 -- SELECT *
 -- FROM Supplier
 -- RIGHT JOIN Inventory
@@ -325,10 +325,10 @@
 
 -- Rule:
 
--- ```text
+
 -- If you want to preserve the RIGHT table,
 -- put joined-table conditions inside ON.
--- ```
+
 
 -- ---
 
@@ -336,23 +336,23 @@
 
 -- Use ON for:
 
--- ```text
+
 -- Matching tables
 -- Controlling what gets attached during JOIN
 -- Preserving rows in LEFT JOIN and RIGHT JOIN
--- ```
+
 
 -- Use WHERE for:
 
--- ```text
+
 -- Filtering final rows after JOIN
 -- INNER JOIN filtering
 -- Normal row conditions
--- ```
+
 
 -- ---
 
--- # 9. Biggest JOIN Rule
+--  9. Biggest JOIN Rule
 
 -- Before writing a JOIN, ask:
 
@@ -362,18 +362,18 @@
 -- 4. Is this group filtering (HAVING)?
 -- 5. Will WHERE accidentally turn my LEFT JOIN into an INNER JOIN?
 
--- ---
 
--- # 10. Quick Cheat Sheet
+
+--  10. Quick Cheat Sheet
 
 -- INNER JOIN
 
--- ```sql
+
 -- FROM A
 -- INNER JOIN B
 -- ON ...
 -- WHERE ...
--- ```
+
 
 -- Use WHERE for filtering.
 
@@ -381,12 +381,12 @@
 
 -- LEFT JOIN
 
--- ```sql
+
 -- FROM A
 -- LEFT JOIN B
 -- ON ...
 -- AND condition_on_B
--- ```
+
 
 -- Preserves table A.
 
@@ -394,12 +394,12 @@
 
 -- RIGHT JOIN
 
--- ```sql
+
 -- FROM A
 -- RIGHT JOIN B
 -- ON ...
 -- AND condition_on_A
--- ```
+
 
 -- Preserves table B.
 
@@ -407,7 +407,7 @@
 
 -- Aggregation Flow
 
--- ```text
+
 -- WHERE
 -- ↓
 -- GROUP BY
@@ -415,19 +415,19 @@
 -- HAVING
 -- ↓
 -- ORDER BY
--- ```
+
 
 -- Remember:
 
--- ```text
+
 -- WHERE  = Filter Rows
 -- HAVING = Filter Groups
 -- ON     = Control JOIN Matching
--- ```
+-- 
 
 -- Golden Rule:
 
--- ```text
+
 -- INNER JOIN → Filter in WHERE
 
 -- LEFT JOIN → If preserving LEFT table,
@@ -437,50 +437,98 @@
 -- put joined-table filters in ON
 
 -- COUNT/SUM/AVG/MIN/MAX → Use HAVING
--- ```
 
 
+-- 🏢 Business Scenario
+-- The management team wants to identify top-performing suppliers based on successful product sales.
+-- Display
+-- - Supplier Name
+-- - Supplier City
+-- - Category Name
+-- - Number of Orders
+-- - Total Quantity Sold
 
-🏢 Business Scenario
-The management team wants to identify top-performing suppliers based on successful product sales.
-Display
-- Supplier Name
-- Supplier City
-- Category Name
-- Number of Orders
-- Total Quantity Sold
-📋 Requirements
-- Consider only orders with Payment_Status = 'Success'.
-- Include only products with Rating >= 4.
-- Product price should be between ₹3,000 and ₹75,000.
-- Exclude products whose status is DISCONTINUED.
-- Exclude the Grocery category.
-- Supplier city should be either:
-  - Bengaluru
-  - Mumbai
-  - Hyderabad
-- Product name must contain the letter e.
-- Show only supplier-category combinations having:
-  - More than 2 orders
-  - Total quantity sold greater than 10
-- Sort by:
-  1. Total Quantity Sold (high → low)
-  2. Number of Orders (high → low)
-  3. Supplier Name (A → Z)
-🗂 Tables
-Supplier
-   ↓
-Inventory
-   ↓
-Categories
+-- 📋 Requirements
+-- - Consider only orders with Payment_Status = 'Success'.
+-- - Include only products with Rating >= 4.
+-- - Product price should be between ₹3,000 and ₹75,000.
+-- - Exclude products whose status is DISCONTINUED.
+-- - Exclude the Grocery category.
+-- - Supplier city should be either:
+--   - Bengaluru
+--   - Mumbai
+--   - Hyderabad
+-- - Product name must contain the letter e.
+-- - Show only supplier-category combinations having:
+--   - More than 2 orders
+--   - Total quantity sold greater than 10
+-- - Sort by:
+--   1. Total Quantity Sold (high → low)
+--   2. Number of Orders (high → low)
+--   3. Supplier Name (A → Z)
 
-Orders
-   ↓
-Inventory
+-- 🗂 Tables
+-- Supplier
+--    ↓
+-- Inventory
+--    ↓
+-- Categories
 
-🎯 Display Format
-Supplier_Name
-Supplier_City
-Category_Name
-Number_Of_Orders
-Total_Quantity_Sold
+-- Orders
+--    ↓
+-- Inventory
+
+-- 🎯 Display Format
+-- Supplier_Name
+-- Supplier_City
+-- Category_Name
+-- Number_Of_Orders
+-- Total_Quantity_Sold
+
+
+select Supplier.Supplier_Name,
+       Supplier.Supplier_City,
+       Categories.Category_Name,
+       count(Orders.Order_Id) as Number_Of_Orders,
+       sum(Orders.Quantity) as Total_Quantity_Sold
+
+from Supplier
+
+inner join Inventory
+
+on Supplier.Supplier_Id = Inventory.Supplier_Id
+
+inner join Categories
+
+on Inventory.Category_Id = Categories.Category_Id
+
+
+inner join Orders
+
+on Inventory.Product_Id = Orders.Product_Id
+
+where Orders.Payment_Status = "Paid"
+
+and Inventory.Rating>=4
+
+and Inventory.Price between 3000 and 75000
+
+and Inventory.Product_Status <> "DISCONTINUED"
+
+and Categories.Category_Name not in ("Grocery")
+
+and Supplier.Supplier_City in ("BEngaluru","Mumbai", "Hyderabad")
+
+and Inventory.Product_Name like "%e%"
+
+group by Supplier.Supplier_Name,
+         Supplier.Supplier_City,
+         Categories.Category_Name
+
+having COUNT(Orders.Order_ID) > 2
+      and  SUM(Orders.Quantity) > 10
+
+order by  Total_Quantity_Sold desc,
+           Number_Of_Orders desc,
+           Supplier.Supplier_Name asc; 
+
