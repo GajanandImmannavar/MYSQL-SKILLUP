@@ -486,49 +486,49 @@
 -- Total_Quantity_Sold
 
 
-select Supplier.Supplier_Name,
-       Supplier.Supplier_City,
-       Categories.Category_Name,
-       count(Orders.Order_Id) as Number_Of_Orders,
-       sum(Orders.Quantity) as Total_Quantity_Sold
+-- select Supplier.Supplier_Name,
+--        Supplier.Supplier_City,
+--        Categories.Category_Name,
+--        count(Orders.Order_Id) as Number_Of_Orders,
+--        sum(Orders.Quantity) as Total_Quantity_Sold
 
-from Supplier
+-- from Supplier
 
-inner join Inventory
+-- inner join Inventory
 
-on Supplier.Supplier_Id = Inventory.Supplier_Id
+-- on Supplier.Supplier_Id = Inventory.Supplier_Id
 
-inner join Categories
+-- inner join Categories
 
-on Inventory.Category_Id = Categories.Category_Id
+-- on Inventory.Category_Id = Categories.Category_Id
 
 
-inner join Orders
+-- inner join Orders
 
-on Inventory.Product_Id = Orders.Product_Id
+-- on Inventory.Product_Id = Orders.Product_Id
 
-where Orders.Payment_Status = "Paid"
+-- where Orders.Payment_Status = "Paid"
 
-and Inventory.Rating>=4
+-- and Inventory.Rating>=4
 
-and Inventory.Price between 3000 and 75000
+-- and Inventory.Price between 3000 and 75000
 
-and Inventory.Product_Status <> "DISCONTINUED"
+-- and Inventory.Product_Status <> "DISCONTINUED"
 
-and Categories.Category_Name not in ("Grocery")
+-- and Categories.Category_Name not in ("Grocery")
 
-and Supplier.Supplier_City in ("BEngaluru","Mumbai", "Hyderabad")
+-- and Supplier.Supplier_City in ("BEngaluru","Mumbai", "Hyderabad")
 
-and Inventory.Product_Name like "%e%"
+-- and Inventory.Product_Name like "%e%"
 
-group by Supplier.Supplier_Name,
-         Supplier.Supplier_City,
-         Categories.Category_Name
+-- group by Supplier.Supplier_Name,
+--          Supplier.Supplier_City,
+--          Categories.Category_Name
 
-having COUNT(Orders.Order_ID) > 2
-      and  SUM(Orders.Quantity) > 10
+-- having COUNT(Orders.Order_ID) > 2
+--       and  SUM(Orders.Quantity) > 10
 
-order by  Total_Quantity_Sold desc,
-           Number_Of_Orders desc,
-           Supplier.Supplier_Name asc; 
+-- order by  Total_Quantity_Sold desc,
+--            Number_Of_Orders desc,
+--            Supplier.Supplier_Name asc; 
 
