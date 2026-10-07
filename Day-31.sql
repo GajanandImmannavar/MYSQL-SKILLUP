@@ -486,39 +486,26 @@
 -- Total_Quantity_Sold
 
 
--- select Supplier.Supplier_Name,
---        Supplier.Supplier_City,
---        Categories.Category_Name,
---        count(Orders.Order_Id) as Number_Of_Orders,
---        sum(Orders.Quantity) as Total_Quantity_Sold
-
+-- select Supplier.Supplier_Name,Supplier.Supplier_City,Categories.Category_Name,
+--        count(Orders.Order_Id) as Number_Of_Orders,sum(Orders.Quantity) as Total_Quantity_Sold
 -- from Supplier
 
 -- inner join Inventory
-
 -- on Supplier.Supplier_Id = Inventory.Supplier_Id
 
 -- inner join Categories
-
 -- on Inventory.Category_Id = Categories.Category_Id
 
-
 -- inner join Orders
-
 -- on Inventory.Product_Id = Orders.Product_Id
 
 -- where Orders.Payment_Status = "Paid"
 
 -- and Inventory.Rating>=4
-
 -- and Inventory.Price between 3000 and 75000
-
 -- and Inventory.Product_Status <> "DISCONTINUED"
-
 -- and Categories.Category_Name not in ("Grocery")
-
 -- and Supplier.Supplier_City in ("BEngaluru","Mumbai", "Hyderabad")
-
 -- and Inventory.Product_Name like "%e%"
 
 -- group by Supplier.Supplier_Name,
@@ -532,3 +519,139 @@
 --            Number_Of_Orders desc,
 --            Supplier.Supplier_Name asc; 
 
+-- this won't give Output that doesn't  mean query is not correct because
+
+-- check debuing notes
+
+
+
+
+
+
+
+-- 🏢 Business Scenario
+-- The sales director wants to identify valuable customers who are actively purchasing high-rated products.
+-- 📋 Display
+-- - Customer Name
+-- - Customer City
+-- - Number of Successful Orders
+-- - Total Quantity Purchased
+-- - Total Amount Spent
+-- 📋 Requirements
+-- - Consider only orders with Payment_Status = 'PAID'
+-- - Include only products with Rating >= 4
+-- - Product price should be between ₹2,000 and ₹90,000
+-- - Exclude products from the GROCERY category
+-- - Product name must contain the letter a
+-- - Customer city should be either:
+--   - BENGALURU
+--   - MUMBAI
+--   - HYDERABAD
+--   - PUNE
+-- - Show only customers having:
+--   - More than 1 successful order
+--   - Total Quantity Purchased greater than 3
+-- - Sort by:
+--   1. Total Amount Spent (High → Low)
+--   2. Total Quantity Purchased (High → Low)
+--   3. Customer Name (A → Z)
+
+-- select Customer.Customer_Name, Customer.City,  count(Orders.Order_Id) as Total_Numbers_Of_Orders,
+--        sum(Orders.Quantity) as Total_Quantity_Purchased, sum(Inventory.Price*Orders.Quantity) as Total_Amount_Spent
+
+-- from Customer
+
+-- inner join Orders
+-- on Customer.Customer_Id = Orders.Customer_Id
+
+-- inner join Inventory
+-- on Inventory.Product_Id = Orders.Product_Id
+
+-- inner join Categories
+-- on Inventory.Category_Id = Categories.Category_Id
+
+-- where Orders.Payment_Status = "PAID"
+-- and Inventory.Price between 2000 and 90000
+-- and Inventory.Rating >=4
+-- and Categories.Category_Name <> "GROCERY"
+-- and Inventory.Product_Name like "%a%"
+-- and Customer.City in ("BENGALURU","MUMBAI","HYDERABAD","PUNE")
+
+-- group by Customer.Customer_Id,
+--          Customer.Customer_Name,
+--          Customer.City
+--  HAVING COUNT(Orders.Order_ID) > 1
+--    AND SUM(Orders.Quantity) > 3
+
+-- order by Total_Amount_Spent desc,
+--           Total_Quantity_Purchased desc,
+--           Customer.Customer_Name asc;
+
+
+
+🏢 Business Scenario
+The sales manager wants to identify customers who are actively purchasing products from premium categories.
+Display
+- Customer Name
+- City
+- Number Of Orders
+- Total Quantity Purchased
+Requirements
+- Consider only PAID orders.
+- Include only products from:
+  - ELECTRONICS
+  - FURNITURE
+- Product rating should be 4 or higher.
+- Product price should be greater than ₹5,000.
+- Customer name should contain the letter a.
+- Show only customers having:
+  - At least 1 order
+  - Total Quantity Purchased greater than 1
+- Sort by:
+  1. Total Quantity Purchased (High → Low)
+  2. Number Of Orders (High → Low)
+  3. Customer Name (A → Z)
+Tables
+Customer
+   ↓
+Orders
+   ↓
+Inventory
+   ↓
+Categories
+
+
+
+
+select Customer.Customer_Name, Customer.city,
+       count(Orders.Order_Id) as Number_Of_Orders,
+       sum(Orders.Quantity) as Total_Quantity_Purchased
+
+from Customer
+
+inner join Orders
+on Customer.Customer_Id = Orders.Customer_Id
+
+inner join Inventory
+on Orders.Product_Id = Inventory.Product_Id
+
+inner join Categories
+on Inventory.Category_Id = Categories.Category_id
+
+where Orders.Payment_Status = "PAID"
+
+and Categories.Category_Name in ("ELECTRONICS","FURNITURE")
+and Inventory.Rating >=4
+and Inventory.Price > 5000
+and Customer.Customer_Name like '%a%'
+
+group by Customer.Customer_Id,
+         Customer.Customer_Name,
+         Customer.City
+
+having count(Orders.order_Id)>=1 and
+        sum(Orders.Quantity)>1
+
+order by sum(Orders.Quantity)desc, 
+         count(Orders.Order_Id)desc,
+         Customer.Customer_Name asc;
