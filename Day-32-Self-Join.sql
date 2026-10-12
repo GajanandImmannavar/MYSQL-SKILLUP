@@ -1,6 +1,0 @@
-show databases;
-
-
--- use Joins;
-
-
