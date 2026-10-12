@@ -223,28 +223,28 @@
 -- 10. Sort by total purchase value from highest to lowest.
 
 
--- select Customer.Customer_Name, Customer.City, 
---     count(Orders.Order_Id) as  Total_Orders, 
---     sum(Orders.Quantity) as Total_Quantity,
---     SUM(Orders.Quantity * Inventory.Price) AS Total_Purchase_Value
+select Customer.Customer_Name, Customer.City, 
+    count(Orders.Order_Id) as  Total_Orders, 
+    sum(Orders.Quantity) as Total_Quantity,
+    SUM(Orders.Quantity * Inventory.Price) AS Total_Purchase_Value
     
--- FROM Customer
--- INNER JOIN Orders
---     ON Customer.Customer_ID = Orders.Customer_ID
--- INNER JOIN Inventory
---     ON Orders.Product_ID = Inventory.Product_ID
+FROM Customer
+INNER JOIN Orders
+    ON Customer.Customer_ID = Orders.Customer_ID
+INNER JOIN Inventory
+    ON Orders.Product_ID = Inventory.Product_ID
 
--- where Orders.Payment_Status = 'PAID'
+where Orders.Payment_Status = 'PAID'
 
--- and Orders.Order_Date between '2025-01-01' and '2026-12-31'
+and Orders.Order_Date between '2025-01-01' and '2026-12-31'
 
--- and Customer.City in ('BENGALURU','MUMBAI','HYDERABAD')
+and Customer.City in ('BENGALURU','MUMBAI','HYDERABAD')
 
--- group by Customer.Customer_Name, Customer.city
+group by Customer.Customer_Name, Customer.city
 
--- having count(Orders.Order_Id)>=2
+having count(Orders.Order_Id)>=2
 
--- order by SUM(Orders.Quantity * Inventory.Price) desc;
+order by SUM(Orders.Quantity * Inventory.Price) desc;
 
 
 
