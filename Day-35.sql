@@ -81,19 +81,23 @@
 
 
 
-SELECT Supplier.Supplier_Name,
-       Supplier.Supplier_City,
-       Categories.Category_Name,
-       COUNT(*) OVER () AS Total_Combinations
+-- SELECT Supplier.Supplier_Name,
+--        Supplier.Supplier_City,
+--        Categories.Category_Name,
+--        COUNT(*) OVER () AS Total_Combinations
 
-FROM Supplier
-CROSS JOIN Categories
+-- FROM Supplier
+-- CROSS JOIN Categories
 
-WHERE Supplier.Supplier_City IN ('BENGALURU', 'MUMBAI', 'HYDERABAD')
-AND Supplier.Supplier_Name LIKE '%a%'
-AND Supplier.Supplier_Name NOT LIKE 'S%'
-AND Categories.Category_Name LIKE '%o%'
-AND Categories.Category_Name NOT LIKE '%s'
+-- WHERE Supplier.Supplier_City IN ('BENGALURU', 'MUMBAI', 'HYDERABAD')
+-- AND Supplier.Supplier_Name LIKE '%a%'
+-- AND Supplier.Supplier_Name NOT LIKE 'S%'
+-- AND Categories.Category_Name LIKE '%o%'
+-- AND Categories.Category_Name NOT LIKE '%s'
 
-ORDER BY Supplier.Supplier_City ASC,
-         Supplier.Supplier_Name DESC;
+-- ORDER BY Supplier.Supplier_City ASC,
+--          Supplier.Supplier_Name DESC;
+
+
+
+select * from Supplier;
