@@ -32,25 +32,136 @@
 
 
 
-select Customer.Customer_Name, Customer.City, Inventory.Product_name, Inventory.Price, Inventory.Rating, count(*)  over() as Total_Combanation
+-- select Customer.Customer_Name, Customer.City, 
+--        Inventory.Product_name, Inventory.Price, Inventory.Rating, 
+--        count(*)  over() as Total_Combanation
 
-from Customer
+-- from Customer
 
-cross join Inventory
+-- cross join Inventory
 
-where Customer.City in ('BENGALURU','MUMBAI','PUNE')
-and Customer.gender <> 'Male'
-and Inventory.Rating between 3 and 5
-AND Inventory.Price BETWEEN 3000 AND 70000
-AND (
-    Inventory.Product_Name LIKE 'S%'
-    OR Inventory.Product_Name LIKE '%e%'
-)
-and Inventory.Product_Status not in ('DISCONTINUED','OUT OF STOCK')
+-- where Customer.City in ('BENGALURU','MUMBAI','PUNE')
+-- and Customer.gender <> 'Male'
+-- and Inventory.Rating between 3 and 5
+-- AND Inventory.Price BETWEEN 3000 AND 70000
+-- AND (
+--     Inventory.Product_Name LIKE 'S%'
+--     OR Inventory.Product_Name LIKE '%e%'
+-- )
+-- and Inventory.Product_Status not in ('DISCONTINUED','OUT OF STOCK')
 
 
-order by Inventory.Rating desc,
-         Inventory.Price desc,
-         Customer.Customer_Name asc;
+-- order by Inventory.Rating desc,
+--          Inventory.Price desc,
+--          Customer.Customer_Name asc;
 
          
+
+
+-- 🏢 Business Scenario
+-- The marketing team wants to analyse customer-product combinations and find which customer cities have the most qualifying combinations.
+-- Display
+-- - Customer City
+-- - Total Combinations
+-- - Average Product Price
+-- - Maximum Product Rating
+
+-- Tables
+-- Customer
+-- Inventory
+
+
+-- Requirements
+-- 1. Use CROSS JOIN to generate all possible customer-product combinations.
+-- 2. Include customers from BENGALURU, MUMBAI, or PUNE.
+-- 3. Exclude customers whose gender is Female.
+-- 4. Product price must be between ₹2,000 and ₹60,000.
+-- 5. Product rating must be at least 3.
+-- 6. Product name must contain the letter a.
+-- 7. Exclude products with status DISCONTINUED or OUT OF STOCK.
+-- 8. Count combinations using COUNT(*).
+-- 9. Calculate average product price using AVG().
+-- 10. Calculate maximum product rating using MAX().
+-- 11. Group by customer city.
+-- 12. Show only cities with more than 5 combinations using HAVING.
+-- 13. Sort by total combinations descending.
+
+
+-- select Customer.City,
+--        count(*) as Total_Combation,
+--         AVG(Inventory.Price) AS Average_Product_Price,
+--         MAX(Inventory.Rating) AS Maximum_Rating
+
+-- from Customer
+
+-- cross join Inventory
+
+-- where Customer.City in ('BENGALURU','MUMBAI','PUNE')
+
+-- and Customer.Gender <> 'Female'
+-- and Inventory.Price between 2000 and 60000
+-- and Inventory.Rating >= 3
+-- and Inventory.Product_Name like '%a%'
+-- and Inventory.Product_Status not in ('DISCONTINUED','OUT OF STOCK')
+
+-- group by Customer.City
+-- having Total_Combation > 5
+
+-- order by Total_Combation desc;
+
+
+
+-- 🏢 Business Scenario
+-- The business team wants to compare customer cities based on the possible combinations with available products.
+-- Display
+-- - Customer City
+-- - Total Combinations
+-- - Average Product Price
+-- - Minimum Product Price
+-- - Maximum Product Rating
+-- Tables
+-- Customer
+-- Inventory
+
+
+-- Requirements
+-- 1. Use CROSS JOIN.
+-- 2. Include customers from BENGALURU, HYDERABAD, MUMBAI, or PUNE.
+-- 3. Exclude customers whose gender is Male.
+-- 4. Product price must be between ₹1,000 and ₹50,000.
+-- 5. Product rating must be at least 4.
+-- 6. Product name must contain e or brand must start with S.
+-- 7. Exclude products with status DISCONTINUED or OUT OF STOCK.
+-- 8. Use COUNT(*) to count combinations.
+-- 9. Calculate average price using AVG().
+-- 10. Calculate minimum price using MIN().
+-- 11. Calculate maximum rating using MAX().
+-- 12. Group by customer city.
+-- 13. Keep only cities with more than 10 combinations using HAVING.
+-- 14. Sort by average product price from highest to lowest.
+
+
+-- select Customer.City,
+--        count(*) as Total_Combination,
+--        avg(Inventory.Price) as average_Product_Price,
+--        min(Inventory.Price) as Minimum_Product_Price,
+--        max(Inventory.Rating) as Maximum_Product_Rating
+
+-- from Customer
+-- cross join Inventory
+
+-- where Customer.City in ('BENGALURU','HYDERABAD','MUMBAI','PUNE')
+
+-- AND Customer.Gender <> 'Male'
+-- and Inventory.Price between 1000 and 50000
+-- and Inventory.Rating >= 4
+-- and (Inventory.Product_Name like '%e%' or Inventory.Brand like 'S%')
+-- and Inventory.Product_Status not in ('DISCONTINUED','OUT OF STOCK')
+
+-- group by Customer.City 
+-- having Total_Combination > 10
+
+-- order by average_Product_Price desc;
+
+
+
