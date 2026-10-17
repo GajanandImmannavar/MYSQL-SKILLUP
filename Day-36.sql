@@ -165,3 +165,43 @@
 
 
 
+-- 🏢 Business scenario
+
+-- The marketing team wants to compare customer cities based on possible combinations with products.
+
+-- Tables: Customer, Inventory
+
+-- Requirements
+
+-- 1. Use CROSS JOIN.
+-- 2. Include customers from BENGALURU, MUMBAI, and PUNE.
+-- 3. Exclude customers whose gender is Female.
+-- 4. Product price must be between ₹2,000 and ₹80,000.
+-- 5. Product rating must be at least 4.
+-- 6. Exclude products with status DISCONTINUED or OUT OF STOCK.
+-- 7. Display customer city, total combinations, average product price, and maximum product rating.
+-- 8. Group by customer city.
+-- 9. Show only cities with more than 5 combinations using HAVING.
+-- 10. Sort by total combinations descending
+
+
+select Customer.City,
+       count(*) Total_Combination,
+       avg(Inventory.Price),
+       max(Inventory.Rating)
+
+from Customer
+
+cross join Inventory
+
+where Customer.City in ('BENGALURU','MUMBAI','PUNE')
+AND   Customer.Gender <> 'Female'
+and   Inventory.Price between 2000 and 80000
+and   Inventory.Rating >=4
+and   Inventory.Product_Status not in ('DISCONTINUED','OUT OF STOCK')
+
+group by Customer.City
+
+having Total_Combination > 5
+
+order by Total_Combination desc;
