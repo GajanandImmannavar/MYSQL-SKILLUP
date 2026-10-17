@@ -185,23 +185,58 @@
 -- 10. Sort by total combinations descending
 
 
+-- select Customer.City,
+--        count(*) Total_Combination,
+--        avg(Inventory.Price),
+--        max(Inventory.Rating)
+
+-- from Customer
+
+-- cross join Inventory
+
+-- where Customer.City in ('BENGALURU','MUMBAI','PUNE')
+-- AND   Customer.Gender <> 'Female'
+-- and   Inventory.Price between 2000 and 80000
+-- and   Inventory.Rating >=4
+-- and   Inventory.Product_Status not in ('DISCONTINUED','OUT OF STOCK')
+
+-- group by Customer.City
+
+-- having Total_Combination > 5
+
+-- order by Total_Combination desc;
+
+
+-- Problem — Count products by customer city
+-- Scenario: A marketing manager wants to know how many qualifying customer-product combinations exist in each city.
+
+-- Tables: Customer, Inventory
+
+-- Requirements:
+
+-- 1. Use CROSS JOIN.
+-- 2. Include customers from BENGALURU, MUMBAI, and PUNE.
+-- 3. Exclude customers whose gender is Female.
+-- 4. Include products priced between ₹2,000 and ₹80,000.
+-- 5. Display customer city and total combinations.
+-- 6. Group by customer city.
+-- 7. Show only cities with more than five combinations using HAVING.
+-- 8. Sort by total combinations descending.
+
+
 select Customer.City,
-       count(*) Total_Combination,
-       avg(Inventory.Price),
-       max(Inventory.Rating)
+       count(*) as Total_Combination
 
 from Customer
 
 cross join Inventory
 
 where Customer.City in ('BENGALURU','MUMBAI','PUNE')
-AND   Customer.Gender <> 'Female'
-and   Inventory.Price between 2000 and 80000
-and   Inventory.Rating >=4
-and   Inventory.Product_Status not in ('DISCONTINUED','OUT OF STOCK')
+and Customer.Gender not in ('Female')
+and Inventory.Price between 2000 and 80000
 
 group by Customer.City
 
-having Total_Combination > 5
+having Count(*) > 5
 
 order by Total_Combination desc;
