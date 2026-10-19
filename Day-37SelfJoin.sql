@@ -291,10 +291,11 @@ order by Price_Ratio desc;
 
 
 -- Query review
--- Requirement	Your condition	Status
--- Match products in the same category	I1.Category_Id = I2.Category_Id	Correct
--- Ensure the first product is cheaper	I1.Price < I2.Price	Correct
--- Filter cheaper prices from ₹2,000 to ₹20,000	I1.Price BETWEEN 2000 AND 20000	Correct
--- Costlier product is at least 3 times as expensive	I2.Price / I1.Price >= 3	Correct
--- Display the price ratio	I2.Price / I1.Price AS Price_Ratio	Correct
--- Sort highest ratio first	ORDER BY Price_Ratio DESC	Correct
+
+-- Requirement      	                                Your condition	                                     Status
+-- Match products in the same category	                I1.Category_Id = I2.Category_Id	                    Correct
+-- Ensure the first product is cheaper	                I1.Price < I2.Price	                                Correct
+-- Filter cheaper prices from ₹2,000 to ₹20,000	        I1.Price BETWEEN 2000 AND 20000	                    Correct
+-- Costlier product is at least 3 times as expensive    I2.Price / I1.Price >= 3                            Correct
+-- Display the price ratio	                            I2.Price / I1.Price AS Price_Ratio                  Correct
+-- Sort highest ratio first	                            ORDER BY Price_Ratio DESC	                        Correct
