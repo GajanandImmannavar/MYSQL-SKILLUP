@@ -209,27 +209,92 @@
 
 
 
-select I1.Product_Name as Cheaper_Product,
-       I1.Price as Cheaper_Price,
-       I2.Product_Name as Costlier_Product,
-       I2.Price as  Costlier_Price,
-       I2.Price - I1.Price as Price_Difference,
-       I2.Price / I1.Price as Price_Ratio
+-- select I1.Product_Name as Cheaper_Product,
+--        I1.Price as Cheaper_Price,
+--        I2.Product_Name as Costlier_Product,
+--        I2.Price as  Costlier_Price,
+--        I2.Price - I1.Price as Price_Difference,
+--        I2.Price / I1.Price as Price_Ratio
 
-from Inventory as I1
+-- from Inventory as I1
 
-inner join Inventory as I2
+-- inner join Inventory as I2
 
-on I1.Category_Id = I2.Category_Id
+-- on I1.Category_Id = I2.Category_Id
 
-and I2.Price / I1.Price >=2
+-- and I2.Price / I1.Price >=2
 
-and I2.Price > I1.Price
+-- and I2.Price > I1.Price
 
-and I2.Price - I1.Price >=10000
+-- and I2.Price - I1.Price >=10000
 
-order by Price_difference desc;
+-- order by Price_difference desc;
 
 -- Small improvement
 -- You can write the cheaper-product condition as:
 -- I1.Price < I2.Price
+
+-- Problem 8 — SELF JOIN (Advanced)
+
+-- Business scenario: The store wants to compare products in the same category and 
+-- identify pairs where the cheaper product costs between ₹2,000 and ₹20,000, inclusive, and 
+-- the costlier product is at least three times its price.
+
+-- Write a query that:
+-- 1. Uses SELF JOIN on Inventory.
+-- 2. Matches products in the same category.
+-- 3. Ensures the first product is cheaper.
+-- 4. Filters the cheaper product's price using BETWEEN.
+-- 5. Requires a price ratio of at least 3.
+-- 6. Displays both product names, both prices, and the price ratio.
+-- 7. Sorts by price ratio in descending order.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select I1.Product_Name as Cheaper_Product,
+       I1.Price as Cheaper_Price,
+       I2.Product_Name as Costlier_Product,
+       I2.Price as Costlier_Price,
+       I2.Price / I1.Price as Price_Ratio
+
+from Inventory as I1
+
+Inner Join Inventory as I2
+
+on I1.Category_Id = I2.Category_Id
+
+and I1.Price < I2.Price
+
+and I1.Price between 2000 and 20000
+
+AND I2.Price / I1.Price >= 3
+
+
+order by Price_Ratio desc;
+
+
+-- Query review
+-- Requirement	Your condition	Status
+-- Match products in the same category	I1.Category_Id = I2.Category_Id	Correct
+-- Ensure the first product is cheaper	I1.Price < I2.Price	Correct
+-- Filter cheaper prices from ₹2,000 to ₹20,000	I1.Price BETWEEN 2000 AND 20000	Correct
+-- Costlier product is at least 3 times as expensive	I2.Price / I1.Price >= 3	Correct
+-- Display the price ratio	I2.Price / I1.Price AS Price_Ratio	Correct
+-- Sort highest ratio first	ORDER BY Price_Ratio DESC	Correct
