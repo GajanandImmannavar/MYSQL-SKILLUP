@@ -131,21 +131,105 @@
 
 
 
-select I1.Product_Name as PRoduct_1,
-       I1.Price as I1_Price,
-       I2.Product_Name as Product_2,
-       I2.Price as I2_Price,
-       I1.Category_Id as Category_Id,
-       I2.Price - I1.Price as Price_Deference
+-- select I1.Product_Name as PRoduct_1,
+--        I1.Price as I1_Price,
+--        I2.Product_Name as Product_2,
+--        I2.Price as I2_Price,
+--        I1.Category_Id as Category_Id,
+--        I2.Price - I1.Price as Price_Deference
+
+-- from Inventory as I1
+
+-- Inner Join Inventory as I2
+
+-- on I1.Category_Id = I2.Category_Id
+
+-- and I1.Price < I2.Price
+
+-- and I2.Price - I1.Price >=5000
+
+-- order by Price_Deference desc;
+
+
+-- One small point: the next problem asks for a price ratio, not a price difference. These are different calculations:
+
+-- Calculation	        Formula	                           Example
+-- Price difference	I2.Price - I1.Price	        ₹8,000 − ₹2,000 = ₹6,000
+-- Price ratio	        I2.Price / I1.Price	        ₹8,000 / ₹2,000 = 4.0
+
+
+-- Problem 6 — SELF JOIN: Price Ratio
+-- Business scenario: The store wants to find products in the same category where the costlier product costs at least twice as much as the cheaper product.
+
+-- Write a query that:
+-- 1. Uses SELF JOIN on Inventory.
+-- 2. Matches products in the same category.
+-- 3. Ensures the first product is cheaper.
+-- 4. Displays both product names and prices.
+-- 5. Calculates the price ratio.
+-- 6. Includes only pairs where the ratio is at least 2.
+-- 7. Sorts by ratio in descending order.
+
+-- select I1.Product_Name as Product_P1,
+--        I1.Price as P1_Price,
+--        I2.Product_Name as Product_P2,
+--        I2.Price as P2_Price,
+--        I2.Price / I1.Price as Price_Ratio
+
+-- from Inventory as I1
+
+-- inner join Inventory as I2
+
+-- on I1.Category_Id = I2.Category_Id
+
+-- and I1.Price < I2.Price
+
+-- and I2.Price / I1.Price >=2
+
+
+-- order by Price_Ratio desc;
+
+
+
+-- Problem 7 — SELF JOIN (Intermediate to Advanced)
+
+-- Business scenario: The store wants to find products in the same category where the costlier product costs 
+-- at least twice as much as the cheaper product, 
+-- but the price difference must also be at least ₹10,000.
+
+-- Write a query that:
+-- 1. Uses SELF JOIN on Inventory.
+-- 2. Matches products in the same category.
+-- 3. Ensures the first product is cheaper.
+-- 4. Calculates the price difference and price ratio.
+-- 5. Filters for a ratio of at least 2.
+-- 6. Filters for a price difference of at least ₹10,000.
+-- 7. Sorts by price difference from highest to lowest.
+
+
+
+
+select I1.Product_Name as Cheaper_Product,
+       I1.Price as Cheaper_Price,
+       I2.Product_Name as Costlier_Product,
+       I2.Price as  Costlier_Price,
+       I2.Price - I1.Price as Price_Difference,
+       I2.Price / I1.Price as Price_Ratio
 
 from Inventory as I1
 
-Inner Join Inventory as I2
+inner join Inventory as I2
 
 on I1.Category_Id = I2.Category_Id
 
-and I1.Price < I2.Price
+and I2.Price / I1.Price >=2
 
-and I2.Price - I1.Price >=5000
+and I2.Price > I1.Price
 
-order by Price_Deference desc;
+and I2.Price - I1.Price >=10000
+
+order by Price_difference desc;
+
+-- Small improvement
+-- You can write the cheaper-product condition as:
+-- I1.Price < I2.Price
