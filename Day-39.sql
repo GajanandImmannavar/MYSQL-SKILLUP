@@ -139,7 +139,22 @@
 -- order by Rating_Difference desc;
 
 
-Key lesson: A correct SQL query can return zero rows when the data does not satisfy the conditions. 
-Zero rows do not automatically mean your query is wrong.
+-- Key lesson: A correct SQL query can return zero rows when the data does not satisfy the conditions. 
+-- Zero rows do not automatically mean your query is wrong.
+
+
+
+-- SELF JOIN — Problem 16: Find customers who joined before another customer from the same city
+-- Business scenario: Your shopping company wants to identify pairs of customers from the same city where one customer registered
+-- earlier than the other. This can help analyse customer acquisition over time.
+
+-- Use your existing Customer table.
+-- Requirements
+-- 1. Use INNER JOIN to join Customer with itself.
+-- 2. Match customers from the same city.
+-- 3. The first customer must have an earlier Join_Date than the second.
+-- 4. Ignore records where Join_Date is NULL.
+-- 5. Display both customer names, both join dates, and the city.
+-- 6. Sort by the earlier join date, oldest first.
 
 
