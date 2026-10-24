@@ -157,4 +157,22 @@
 -- 5. Display both customer names, both join dates, and the city.
 -- 6. Sort by the earlier join date, oldest first.
 
+select C1.Customer_Name as Earlier_Customer,
+       C1.Join_Date as Earlier_Join_Date,
+       C2.Customer_Name as Later_Customer,
+       C2.Join_Date as Later_Join_Date,
+       C1.City as City
 
+from Customer as C1
+
+Inner join Customer as C2
+
+on C1.City = C2.City
+
+and C1.Join_Date < C2.Join_Date
+
+and C1.Join_Date is not Null
+
+AND C2.Join_Date IS NOT NULL
+
+order by Earlier_Join_Date, Later_Join_Date;
