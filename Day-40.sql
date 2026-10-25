@@ -198,3 +198,78 @@
 -- where I1.Rating is not null
 
 -- order by Price_Difference desc;
+
+
+
+-- Problem 20: Customers Who Ordered the Same Product
+
+-- Business scenario: An online store wants to identify customers who purchased the same product. 
+-- This helps the business understand which customers share similar buying interests.
+
+-- Use the Customer, Orders, and Inventory tables.
+-- Your task
+-- Write an SQL query to display:
+-- 1. First customer's name
+-- 2. Second customer's name
+-- 3. Product name
+-- 4. First customer's order date
+-- 5. Second customer's order date
+-- Conditions
+-- - Both customers must have ordered the same product.
+-- - They must be different customers.
+-- - Show each customer pair only once for each product.
+-- - Display only pairs where both customers ordered the product on different dates.
+-- - Sort by product name.
+
+
+
+
+
+
+SELECT
+    C1.Customer_Name AS Customer_1,
+    C2.Customer_Name AS Customer_2,
+    I.Product_Name AS Product_Name,
+    O1.Order_Date AS Order_Date1,
+    O2.Order_Date AS Order_Date2
+FROM Orders AS O1
+INNER JOIN Orders AS O2
+    ON O1.Product_ID = O2.Product_ID
+    AND O1.Customer_ID < O2.Customer_ID
+    AND O1.Order_Date <> O2.Order_Date
+INNER JOIN Customer AS C1
+    ON O1.Customer_ID = C1.Customer_ID
+INNER JOIN Customer AS C2
+    ON O2.Customer_ID = C2.Customer_ID
+INNER JOIN Inventory AS I
+    ON O1.Product_ID = I.Product_ID
+ORDER BY Product_Name ASC;
+
+
+
+
+
+
+-- select C1.Customer_Name as Customer_1,
+--        C2.Customer_Name as Customer_2,
+--        I1.Product_Name as Product_Name,
+--        O1.Order_Date as Order_Date1,
+--        O2.Order_Date as Order_Date2
+
+-- from Customer as C1 
+
+-- inner join Orders as O1
+
+-- on C1.Customer_Id = O1.Customer_Id
+
+-- from Orders as O1
+
+-- inner join Inventory as I1
+
+-- on O1.Product_Id = I1.Product_Id
+
+-- and C1.Customer_Id < C2.Customer_Id
+
+-- and I1.Product_Name = I2.Product_Name
+
+-- order by Product_Name asc;
