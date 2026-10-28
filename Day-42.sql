@@ -95,3 +95,75 @@
 
 
 
+
+
+
+
+-- SELF JOIN — Problem 24: Products from the Same Category with Different Prices
+-- Business scenario: An online store wants to compare products within the same category to identify price differences.
+
+-- Table: Inventory
+-- Your task
+-- Display these columns:
+-- - Product_1
+-- - Price_1
+-- - Product_2
+-- - Price_2
+-- - Category_ID
+-- - Price_Difference
+-- Conditions
+-- 1. Both products must belong to the same category.
+-- 2. Their prices must be different.
+-- 3. Show each product pair only once.
+-- 4. Display the more expensive product first.
+-- 5. Sort by Price_Difference in descending order.
+
+
+-- select I1.Product_Name as Product_1,
+--        I1.Price as Price_1,
+--        I2.Product_Name as Product_2,
+--        I2.Price as Price_2,
+--        I1.Category_Id as Category_Id,
+--        I1.Price - I2.Price as Price_Difference
+
+-- from Inventory as I1
+
+-- Inner join Inventory as I2
+
+-- on I1.Category_Id = I2.Category_Id
+
+-- and I1.Price > I2.Price 
+
+-- order by Price_Difference desc;
+
+
+
+SELF JOIN — Problem 25: Products with a Price Difference of at Least ₹10,000
+Business scenario: The store wants to identify products in the same category where the more expensive product costs at least ₹10,000 more than the cheaper product.
+
+Table: Inventory
+
+Display:
+- Product_1
+- Price_1
+- Product_2
+- Price_2
+- Category_ID
+- Price_Difference
+Conditions:
+1. Both products belong to the same category.
+2. The prices must differ by at least ₹10,000.
+3. Show the more expensive product first.
+4. Show each pair once.
+5. Sort by price difference descending.
+
+
+
+
+
+
+
+
+
+
+
