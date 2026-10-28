@@ -45,7 +45,7 @@
 
 
 
--- SELF JOIN — Problem 23: Products with Ratings Differing by at Least 2 Points
+-- SELF JOIN — Problem 23: Products with Ratings Differing by at Least 1 Points
 -- Business scenario: An online store wants to identify products from the same category whose customer ratings differ significantly.
 
 -- Table: Inventory
@@ -66,28 +66,32 @@
 -- 6. Sort by rating difference in descending order.
 
 
-select I1.Product_Name as Product_1,
-       I2.Product_name as Product_2,
-       I1.Category_Id as Category_Id,
-       I1.Rating as Rating_1,
-       I2.Rating as Rating_2,
-       I1.Rating - I2.Rating as Rating_Difference
+-- select I1.Product_Name as Product_1,
+--        I2.Product_name as Product_2,
+--        I1.Category_Id as Category_Id,
+--        I1.Rating as Rating_1,
+--        I2.Rating as Rating_2,
+--        I1.Rating - I2.Rating as Rating_Difference
 
-from Inventory as I1
+-- from Inventory as I1
 
-join Inventory as I2
+-- join Inventory as I2
 
-on I1.Category_Id = I2.Category_Id
+-- on I1.Category_Id = I2.Category_Id
 
-and I1.Rating > I2.Rating
+-- and I1.Rating > I2.Rating
 
-and   I1.Rating - I2.Rating < 2
+-- and   I1.Rating - I2.Rating < 2
 
-and I1.Product_Id < I2.Product_Id
+-- and I1.Product_Id < I2.Product_Id
 
-where I1.Rating is not Null
+-- where I1.Rating is not Null
 
-and I2.Rating is not Null
+-- and I2.Rating is not Null
 
 
-order by Rating_Difference desc;
+-- order by Rating_Difference desc;
+
+
+
+
