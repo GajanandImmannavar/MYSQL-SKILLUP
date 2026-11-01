@@ -182,30 +182,47 @@
 
 
 
-SELF JOIN — Problem 26: Same Rating, Different Prices
-Business scenario: The store wants to find products in the same category that have the same customer rating but different prices.
+-- SELF JOIN — Problem 26: Same Rating, Different Prices
+-- Business scenario: The store wants to find products in the same category that have the same customer rating but different prices.
 
-Table: Inventory
+-- Table: Inventory
 
-Display:
-- Product_1
-- Price_1
-- Product_2
-- Price_2
-- Category_ID
-- Rating
-Conditions
-1. Both products must belong to the same category.
-2. Both products must have the same rating.
-3. Their prices must be different.
-4. Show each pair only once.
-5. Display the more expensive product first.
-6. Sort by price difference in descending order.
-
-
+-- Display:
+-- - Product_1
+-- - Price_1
+-- - Product_2
+-- - Price_2
+-- - Category_ID
+-- - Rating
+-- Conditions
+-- 1. Both products must belong to the same category.
+-- 2. Both products must have the same rating.
+-- 3. Their prices must be different.
+-- 4. Show each pair only once.
+-- 5. Display the more expensive product first.
+-- 6. Sort by price difference in descending order.
 
 
 
+-- select I1.Product_Name as Product_1,
+--        I1.Price as price_1,
+--        I2.Product_Name as Product_2,
+--        I2.Price as Price_2,
+--        I1.Category_Id as Category_Id,
+--        I1.Rating as Rating
+
+-- from Inventory as I1
+
+-- Inner Join Inventory as I2
+
+-- on I1.Category_Id = I2.Category_Id
+
+
+-- and I1.Rating = I2.Rating
+
+-- and I1.Price > I2.Price
+
+-- order by (I1.Price - I2.Price) desc;
 
 
 
@@ -213,3 +230,4 @@ Conditions
 
 
 
+select * from Inventory;
